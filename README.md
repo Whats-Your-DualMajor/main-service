@@ -52,6 +52,7 @@
     <b>서비스 소개:</b><br/>
     https://www.miricanvas.com/v/116urx9
   </li>
+  <br/>
   <li>
     <b>개발 중 사용했던 레포지토리</b><br/>
     <a href="https://github.com/Againyunn/Whats_Your_DualMajor/" target="_blank">Repository used during initial development<a>
