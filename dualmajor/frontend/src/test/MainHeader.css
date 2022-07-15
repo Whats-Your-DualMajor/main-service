@@ -52,10 +52,6 @@
     margin-left: 10px;
 }
 
-.main-select-service-tab:hover{
-    
-}
-
 .main-select-service-tab > span:hover{
     color: #FFF;
     font-weight: bold;
@@ -64,8 +60,27 @@
     display: inline-block;
     margin-top: 39px;
     margin-left: 10px;
+
+    border-bottom: solid 2px #8d7150;
 }
 
+/* 메인-로그인 버튼 영역 */
 .login-wrap{
     width: 100px;
+}
+
+/* 특정 서비스(탭)이 선택된 상태일 때 -> 리엑트 상태관리로 처리 예정 */
+.selected-main-select-service{
+    margin-left: 10px;
+}
+.selected-main-select-service > span{
+    color: #FFF;
+    font-weight: bold;
+    font-size: 16px;
+
+    display: inline-block;
+    margin-top: 39px;
+    margin-left: 10px;
+
+    border-bottom: solid 2px #8d7150;
 }
