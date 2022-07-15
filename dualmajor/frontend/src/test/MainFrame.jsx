@@ -47,9 +47,11 @@ function MainFrame(){
             return;
         }
         
-
         //어떤 유형의 서비스를 선택했는 지 식별
-        if(type === "r"){
+        if(!type){
+            resetSelectedTab();
+        }
+        else if(type === "r"){
             //현재 선택된 탭의 기존 상태 변경
             selectRecommandService(state);
         }
@@ -68,6 +70,13 @@ function MainFrame(){
     }
 
     //각 탭별 바 표시 css변경을 위한 상태관리
+    const resetSelectedTab = () =>{
+        setRecommandService(false);
+        setPredictedRate(false);
+        setMajorInfo(false);
+        setServiceIntro(false);        
+    }
+
     const selectRecommandService = (state) =>{
         let reverseState = null;
         if(!state){
@@ -287,7 +296,7 @@ function MainFrame(){
             //현재 1페이지
             console.log("현재 1페이지, up");
 
-            setMoveToScrollIndex(false);
+            handleSelectService(false, false);
             outerDivRef.current.scrollTo({
               top: 0,
               left: 0,
@@ -298,7 +307,7 @@ function MainFrame(){
             //현재 2페이지
             console.log("현재 2페이지, up");
 
-            setMoveToScrollIndex(false);
+            handleSelectService(false, false);
             outerDivRef.current.scrollTo({
               top: 0,
               left: 0,
