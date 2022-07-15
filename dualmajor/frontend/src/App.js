@@ -136,11 +136,18 @@ import ShowMyMajorInfo from './page/majorInfoDetail/ShowMyMajorInfo';
 import SavedResultFrame from './page/recommend/savedResult/SavedResultFrame';
 import ShowMyRateInfo from './page/rate/ShowMyRateInfo';
 
+// pc버전 레이아웃 테스트
+import Test from './test/Test';
+
 function App() {
   return (
     <>
     <BrowserRouter>
       <Routes>
+        {/* pc버전 레이아웃 테스트 */}
+        <Route path='/test' element={<Test/>}/>
+
+        {/* 구버전 레이아웃 */}
         <Route path='/' element ={<Main/>} />
         <Route path='/choose' element={<Choose/>} />
         <Route path='/login' element={<Login/>} />
