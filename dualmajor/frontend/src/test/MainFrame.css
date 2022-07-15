@@ -7,7 +7,7 @@
   .outer::-webkit-scrollbar {
     display: none;
   }
-  
+
   .inner {
     height: 100vh;
     display: flex;
