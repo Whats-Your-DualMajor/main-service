@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-
+import { useNavigate } from 'react-router-dom';
 // 스타일
 import "./MainHeader.css";
 
@@ -10,6 +10,8 @@ function Test(){
     const [predictedRate, setPredictedRate] = useState(false);
     const [majorInfo, setMajorInfo] = useState(false);
     const [serviceIntro, setServiceIntro] = useState(false);
+
+    let navigate = useNavigate();
 
     const handleSelectService = (type, state) => {
         let reverseState = null;
@@ -50,7 +52,7 @@ function Test(){
     return(
         <div className='main-header'>
 
-            <div className='main-icon'>
+            <div className='main-icon' onClick={()=>navigate('/')}>
                 <img id='hufs-icon-white'src={require('../media/main/외대마크(흰색).gif')}/>
                 <span id='main-name'>너의 이중전공은?</span>
             </div>
@@ -96,7 +98,7 @@ function Test(){
                 }
             </div>
             <div className='login-wrap'>
-
+                {/* 로그인 관련 처리 로직 추가 */}
             </div>
         </div>
     )
