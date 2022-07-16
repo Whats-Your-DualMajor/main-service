@@ -5,10 +5,8 @@ import MainFrame from './MainFrame';
 function MainPage(props) {
     return (
         <div>
-            <MainHeader/>
             <MainFrame/>
         </div>
     );
 }
-
 export default MainPage;

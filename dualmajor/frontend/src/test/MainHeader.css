@@ -11,6 +11,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    z-index: 1;
 }
 
 .main-icon{
@@ -75,7 +76,7 @@
 }
 .selected-main-select-service > span{
     color: #FFF;
-    font-weight: bold;
+    font-weight:900;
     font-size: 16px;
 
     display: inline-block;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+// import $ from "jquery";
 
 // 스타일
 import "./MainHeader.css";
@@ -17,7 +18,7 @@ function MainFrame(){
 
     // 페이지 스크롤 이동 컨트롤
     const outerDivRef = useRef();
-    const [scrollIndex, setScrollIndex] = useState(1);
+    const [scrollIndex, setScrollIndex] = useState(1); // 1, 2, 3, 4, 5
 
     // 각 탭 별 페이지 스크롤 이동 컨트롤
     const [moveToScrollIndex, setMoveToScrollIndex] = useState(false); //'r','p','m','i'
@@ -32,6 +33,11 @@ function MainFrame(){
 
     useEffect(() => {
         handleMoveToScrollIndex();
+        console.log("moveToScrollIndex:",moveToScrollIndex)
+        // $(document).ready( function(){
+        //   $(".background-img .content-title .content-subtitle").fadeIn(2000);
+        // })
+
         // handleSelectService();
     }, [moveToScrollIndex])
 
@@ -47,9 +53,11 @@ function MainFrame(){
             return;
         }
         
-
         //어떤 유형의 서비스를 선택했는 지 식별
-        if(type === "r"){
+        if(!type){
+            resetSelectedTab();
+        }
+        else if(type === "r"){
             //현재 선택된 탭의 기존 상태 변경
             selectRecommandService(state);
         }
@@ -68,6 +76,13 @@ function MainFrame(){
     }
 
     //각 탭별 바 표시 css변경을 위한 상태관리
+    const resetSelectedTab = () =>{
+        setRecommandService(false);
+        setPredictedRate(false);
+        setMajorInfo(false);
+        setServiceIntro(false);        
+    }
+
     const selectRecommandService = (state) =>{
         let reverseState = null;
         if(!state){
@@ -287,7 +302,7 @@ function MainFrame(){
             //현재 1페이지
             console.log("현재 1페이지, up");
 
-            setMoveToScrollIndex(false);
+            handleSelectService(false, false);
             outerDivRef.current.scrollTo({
               top: 0,
               left: 0,
@@ -298,7 +313,7 @@ function MainFrame(){
             //현재 2페이지
             console.log("현재 2페이지, up");
 
-            setMoveToScrollIndex(false);
+            handleSelectService(false, false);
             outerDivRef.current.scrollTo({
               top: 0,
               left: 0,
@@ -344,14 +359,31 @@ function MainFrame(){
           }
         }
       };
+      
+      // 글씨 fade-in
+      const useFadeIn = (duration = 0, delay = 0) => {
+        const element = useRef();
 
+        console.log("useFadeIn 실행")
+
+        useEffect(() => {
+          if(element.current){
+            const {current} = element;
+            current.style.transition = `opacity ${duration}s ${delay}s`;
+            current.style.opacity = 1;
+          }
+        }, [moveToScrollIndex]);
+        return {ref: element, style : {opacity : 0}}
+      }
+
+      const fadeInEffect = useFadeIn(2,0.5);
 
     return (
         <div>
             <div className='main-header'>
 
                 <div className='main-icon' onClick={()=>navigate('/')}>
-                    <img id='hufs-icon-white'src={require('../media/main/외대마크(흰색).gif')}/>
+                    <img id='hufs-icon-white'src={require('../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
                 <div className='main-select-service-wrap'>
@@ -401,15 +433,58 @@ function MainFrame(){
             </div>
             <div className='main-wrap'>
                 <div ref={outerDivRef} className="outer">
-                <div className="inner bg-yellow">1</div>
+                <div className="inner main-intro">
+                  <img className='background-img' src={require("../media/main/E설캠본관.jpg")} alt="메인 인트로" />
+                  {
+                    !moveToScrollIndex?
+                    <div {...fadeInEffect}>
+                      <span className='content-title'>너무 많은 전공,<br/>어떤 전공을 이중전공으로 할까<br/>언제까지 고민하실건가요?</span>
+                      <span className='content-subtitle'>학생들에 의해, 학생에게 필요한 서비스를<br/>고민하고 개발했습니다.</span>
+                    </div>:
+                    <></>
+                  }
+                </div>
                 <div className="divider"></div>
-                <div className="inner bg-blue">2</div>
+                <div className="inner recommand-service">
+                  <img className='background-img' src={require("../media/main/E글캠백년관.jpg")} alt="이중전공추천" />
+                  {
+                    moveToScrollIndex === "r"?
+                    <div {...fadeInEffect}>
+                      <span className='content-title'>내 성향과 관심사에 맞게<br/>알고리즘이 추천해드립니다.</span>
+                      <span className='content-subtitle'>이중전공추천 서비스 바로가기</span>
+                    </div>:
+                    <></>
+                  }
+                </div>
                 <div className="divider"></div>
-                <div className="inner bg-pink">3</div>
+                <div className="inner predicted-rate">
+                  <img className='background-img' src={require("../media/main/E설캠도서관.jpg")} alt="예상경쟁률" />
+                  {
+                    moveToScrollIndex === "p"?
+                    <div {...fadeInEffect}>
+                      <span className='content-title'>제한적인 이중전공 신청 기회,<br/>정보를 통해 합격률을 높이세요.</span>
+                      <span className='content-subtitle'>예상경쟁률 서비스 바로가기<br/>*예상경쟁률 서비스는 이중전공 신청/변경 기간에만 오픈됩니다.</span>
+                    </div>:
+                    <></>
+                  }
+                </div>
                 <div className="divider"></div>
-                <div className="inner bg-green">4</div>
+                <div className="inner major-info">
+                  <img className='background-img' src={require("../media/main/E글캠도서관.jpg")} alt="전공정보 조회" />
+                  {
+                    moveToScrollIndex === "m"?
+                    <div {...fadeInEffect}>
+                      <span className='content-title'>외대에 개설된 이중전공,<br/>모든 학과를 한 눈에 살펴보세요.</span>
+                      <span className='content-subtitle'>학과정보 보러가기</span>
+                    </div>:
+                    <></>
+                  }
+                </div>
                 <div className="divider"></div>
-                <div className="inner bg-white">5</div>
+                <div className="inner service-intro">
+                  <div className='info-title'>기획의도</div>
+                  <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" />
+                </div>
             </div>
         </div>
       </div>
