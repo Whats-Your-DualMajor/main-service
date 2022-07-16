@@ -540,13 +540,13 @@ function MainFrame(){
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
-                  <div className='info-title'>1</div>
-                  {/* <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" /> */}
+                  <div className='info-title'>수요</div>
+                  <img className='background-img-info' src={require("../media/main/수요.png")} alt="기획의도" />
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
-                  <div className='info-title'>2</div>
-                  {/* <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" /> */}
+                  <div className='info-title'>개발자 소개</div>
+                  <img className='background-img-info' src={require("../media/main/개발자 소개.png")} alt="기획의도" />
                 </div>
             </div>
         </div>
