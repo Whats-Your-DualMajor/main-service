@@ -282,6 +282,34 @@ function MainFrame(){
             });
             setScrollIndex(5);
             console.log("현재 scrollTop",scrollTop);
+          } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 4) && scrollTop < (pageHeight * 5)) {
+            //현재 3페이지
+            console.log("현재 3페이지, down");
+
+            //현재 선택된 탭의 기존 상태 변경
+            handleSelectService("i", true);
+            outerDivRef.current.scrollTo({
+              top: pageHeight * 5 + DIVIDER_HEIGHT * 5,
+              left: 0,
+              behavior: "smooth",
+            });
+            setScrollIndex(6);
+            console.log("현재 scrollTop",scrollTop);
+
+          } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 5) && scrollTop < (pageHeight * 6)) {
+            //현재 3페이지
+            console.log("현재 3페이지, down");
+
+            //현재 선택된 탭의 기존 상태 변경
+            handleSelectService("i", true);
+            outerDivRef.current.scrollTo({
+              top: pageHeight * 6 + DIVIDER_HEIGHT * 6,
+              left: 0,
+              behavior: "smooth",
+            });
+            setScrollIndex(7);
+            console.log("현재 scrollTop",scrollTop);
+
           } else {
             // 현재 5페이지
             console.log("현재 4페이지, down");
@@ -289,11 +317,11 @@ function MainFrame(){
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
             outerDivRef.current.scrollTo({
-              top: pageHeight * 4 + DIVIDER_HEIGHT * 4,
+              top: pageHeight * 6 + DIVIDER_HEIGHT * 6,
               left: 0,
               behavior: "smooth",
             });
-            setScrollIndex(5);
+            setScrollIndex(7);
             console.log("현재 scrollTop",scrollTop);
           }
         } else {
@@ -344,18 +372,43 @@ function MainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(3);
-          } else {
-            // 현재 3페이지
-            console.log("현재 4페이지, up");
+          } else if (scrollTop >= pageHeight && pageHeight * 4 < scrollTop && scrollTop < pageHeight * 5) {
+            //현재 2페이지
+            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("m", true);
             outerDivRef.current.scrollTo({
-              top: pageHeight * 3 + DIVIDER_HEIGHT * 3,//pageHeight + DIVIDER_HEIGHT,
+              top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
               left: 0,
               behavior: "smooth",
             });
             setScrollIndex(4);
+          } else if (scrollTop >= pageHeight && pageHeight * 5 < scrollTop && scrollTop < pageHeight * 6) {
+            //현재 2페이지
+            console.log("현재 3페이지, up");
+
+            //현재 선택된 탭의 기존 상태 변경
+            handleSelectService("i", true);
+            outerDivRef.current.scrollTo({
+              top: pageHeight * 4 + DIVIDER_HEIGHT * 4,
+              left: 0,
+              behavior: "smooth",
+            });
+            setScrollIndex(5);
+          } 
+          else {
+            // 현재 3페이지
+            console.log("현재 4페이지, up");
+
+            //현재 선택된 탭의 기존 상태 변경
+            handleSelectService("i", true);
+            outerDivRef.current.scrollTo({
+              top: pageHeight * 5 + DIVIDER_HEIGHT * 5,//pageHeight + DIVIDER_HEIGHT,
+              left: 0,
+              behavior: "smooth",
+            });
+            setScrollIndex(6);
           }
         }
       };
@@ -484,6 +537,16 @@ function MainFrame(){
                 <div className="inner service-intro">
                   <div className='info-title'>기획의도</div>
                   <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" />
+                </div>
+                <div className="divider"></div>
+                <div className="inner service-intro">
+                  <div className='info-title'>1</div>
+                  {/* <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" /> */}
+                </div>
+                <div className="divider"></div>
+                <div className="inner service-intro">
+                  <div className='info-title'>2</div>
+                  {/* <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" /> */}
                 </div>
             </div>
         </div>
