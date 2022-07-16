@@ -434,7 +434,7 @@ function MainFrame(){
             <div className='main-wrap'>
                 <div ref={outerDivRef} className="outer">
                 <div className="inner main-intro">
-                  <img className='background-img' src={require("../media/main/설캠본관.jpg")} alt="메인 인트로" />
+                  <img className='background-img' src={require("../media/main/E설캠본관.jpg")} alt="메인 인트로" />
                   {
                     !moveToScrollIndex?
                     <div {...fadeInEffect}>
@@ -443,16 +443,48 @@ function MainFrame(){
                     </div>:
                     <></>
                   }
-                  
                 </div>
                 <div className="divider"></div>
-                <div className="inner recommand-service">2</div>
+                <div className="inner recommand-service">
+                  <img className='background-img' src={require("../media/main/E글캠백년관.jpg")} alt="이중전공추천" />
+                  {
+                    moveToScrollIndex === "r"?
+                    <div {...fadeInEffect}>
+                      <span className='content-title'>내 성향과 관심사에 맞게<br/>알고리즘이 추천해드립니다.</span>
+                      <span className='content-subtitle'>이중전공추천 서비스 바로가기</span>
+                    </div>:
+                    <></>
+                  }
+                </div>
                 <div className="divider"></div>
-                <div className="inner predicted-rate">3</div>
+                <div className="inner predicted-rate">
+                  <img className='background-img' src={require("../media/main/E설캠도서관.jpg")} alt="예상경쟁률" />
+                  {
+                    moveToScrollIndex === "p"?
+                    <div {...fadeInEffect}>
+                      <span className='content-title'>제한적인 이중전공 신청 기회,<br/>정보를 통해 합격률을 높이세요.</span>
+                      <span className='content-subtitle'>예상경쟁률 서비스 바로가기<br/>*예상경쟁률 서비스는 이중전공 신청/변경 기간에만 오픈됩니다.</span>
+                    </div>:
+                    <></>
+                  }
+                </div>
                 <div className="divider"></div>
-                <div className="inner major-info">4</div>
+                <div className="inner major-info">
+                  <img className='background-img' src={require("../media/main/E글캠도서관.jpg")} alt="전공정보 조회" />
+                  {
+                    moveToScrollIndex === "m"?
+                    <div {...fadeInEffect}>
+                      <span className='content-title'>외대에 개설된 이중전공,<br/>모든 학과를 한 눈에 살펴보세요.</span>
+                      <span className='content-subtitle'>학과정보 보러가기</span>
+                    </div>:
+                    <></>
+                  }
+                </div>
                 <div className="divider"></div>
-                <div className="inner service-intro">5</div>
+                <div className="inner service-intro">
+                  <div className='info-title'>기획의도</div>
+                  <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" />
+                </div>
             </div>
         </div>
       </div>
