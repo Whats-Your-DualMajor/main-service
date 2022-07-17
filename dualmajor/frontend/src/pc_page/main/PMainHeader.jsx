@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 // 스타일
-import "./MainHeader.css";
+import "./PMainHeader.css";
 
-function Test(){
+function PMainHeader(){
 
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
@@ -53,7 +53,7 @@ function Test(){
         <div className='main-header'>
 
             <div className='main-icon' onClick={()=>navigate('/')}>
-                <img id='hufs-icon-white'src={require('../media/main/외대마크(흰색).gif')}/>
+                <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                 <span id='main-name'>너의 이중전공은?</span>
             </div>
             <div className='main-select-service-wrap'>
@@ -103,4 +103,4 @@ function Test(){
         </div>
     )
     
-} export default Test;
+} export default PMainHeader;

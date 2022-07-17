@@ -30,9 +30,13 @@
     margin-top: 35px;
     margin-left: 5px;
     text-align: center;
-    font-size: 20px;
+    font-size: 22px;
     color: #FFF;
     font-weight: bold;
+}
+
+#main-name:hover{
+    text-shadow: -0.2px 0 #dadad3, 0 0.2px #dadad3, 0.2px 0 #dadad3, 0 -0.2px #dadad3;
 }
 .main-select-service-wrap{
     display: flex;
@@ -45,8 +49,8 @@
 }
 .main-select-service-tab > span{
     color: #FFF;
-    font-weight: bold;
-    font-size: 15px;
+    /* font-weight: bold; */
+    font-size: 20px;
 
     display: inline-block;
     margin-top: 40px;
@@ -56,7 +60,7 @@
 .main-select-service-tab > span:hover{
     color: #FFF;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 21px;
 
     display: inline-block;
     margin-top: 39px;
@@ -70,6 +74,17 @@
     width: 100px;
 }
 
+.login-tab{
+    color: #FFF;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 39px;
+    margin-left: 10px;
+}
+.login-tab:hover{
+    text-shadow: -0.2px 0 #dadad3, 0 0.2px #dadad3, 0.2px 0 #dadad3, 0 -0.2px #dadad3;
+}
+
 /* 특정 서비스(탭)이 선택된 상태일 때 -> 리엑트 상태관리로 처리 예정 */
 .selected-main-select-service{
     margin-left: 10px;
@@ -77,7 +92,7 @@
 .selected-main-select-service > span{
     color: #FFF;
     font-weight:900;
-    font-size: 16px;
+    font-size: 21px;
 
     display: inline-block;
     margin-top: 39px;
