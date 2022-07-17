@@ -139,6 +139,8 @@ import ShowMyRateInfo from './page/rate/ShowMyRateInfo';
 // pc버전 레이아웃 테스트
 import PMainPage from './pc_page/main/PMainPage';
 import PLogin from './pc_page/login/PLogin';
+import PSignup from './pc_page/userInfo/PSignup';
+import PEditUserInfo from './pc_page/userInfo/PEditUserInfo';
 
 function App() {
   return (
@@ -148,6 +150,8 @@ function App() {
         {/* pc버전 레이아웃 테스트 */}
         <Route path='/' element={<PMainPage/>}/>
         <Route path='/login' element={<PLogin/>}/>
+        <Route path='/signup' element={<PSignup/>}/>
+        <Route path='/edituserinfo' element={<PEditUserInfo/>}/>
 
         {/* 구버전 레이아웃 */}
         <Route path='/m' element ={<Main/>} />

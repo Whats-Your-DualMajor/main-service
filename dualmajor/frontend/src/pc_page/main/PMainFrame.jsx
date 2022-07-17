@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 // import $ from "jquery";
 
 // 스타일
-import "./MainHeader.css";
-import "./MainFrame.css";
+import "./PMainHeader.css";
+import "./PMainFrame.css";
 
 const DIVIDER_HEIGHT = 5;
 

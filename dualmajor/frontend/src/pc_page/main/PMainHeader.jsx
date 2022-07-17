@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 // 스타일
-import "./MainHeader.css";
+import "./PMainHeader.css";
 
 function PMainHeader(){
 

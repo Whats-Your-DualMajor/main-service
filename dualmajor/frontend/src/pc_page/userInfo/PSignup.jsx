@@ -14,7 +14,7 @@ import AuthService from '../../services/auth.service';
 // 스타일
 import "../main/PMainHeader.css";
 import "../main/PMainFrame.css";
-import "./Plogin.css";
+import "./PUserInfo.css";
 
 /**유효성 검사 함수 */
 const required = (value) => {
@@ -49,7 +49,7 @@ const vpassword = (value) => {
   }
 };
 
-function PLogin(){
+function PSignup(){
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
     const [predictedRate, setPredictedRate] = useState(false);
@@ -327,152 +327,42 @@ function PLogin(){
 
             {/* Main */}
             <div className='main-wrap'>
-               <Container className='loginContainer'>
-               <Form onSubmit={handleLogin} ref={form}>
-                <Row>
-                  <div className='login-tit'>로그인</div>
-                </Row>
-                <Row>
-                  <div className="id-pw-wrap">
-                    <Col lg={2} md={2} xs={2}>
-                      <label htmlFor="id-input" id="id-pw">ID</label>
-                    </Col>
-                    <Col lg={8} md={6} xs={6}>
+              <Container className="container-wrap">
+                <Form>
+                  <Row class="main-tit">
+                    안녕하세요,<br/>
+                    너의 이중전공은 서비스 회원가입을 환영합니다!
+                  </Row>
+                  <Row>
+
+                    <Col lg={4} md={4} xs={5}>
+                      <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
                       <Input 
-                        className="form-control" 
                         type="userstdNum"
+                        className="form-control"
                         name="userstdNum"
-                        id="id-input" 
-                        value={userstdNum}
-                        onChange={onChangeUserstdNum}
-                        // required
-                        validations={[required, vuserstdNum]}
-                        placeholder="학번/사번" 
-                        size="20"
                       />
                     </Col>
-                    <Col lg={2} md={2} xs={0}></Col>
-                  </div>
-                
-                <div className="id-pw-wrap">
-                  <Col lg={2} md={2} xs={2}>
-                    <label htmlFor="pw-input"  id="id-pw">PW</label>
-                  </Col>
-                  <Col lg={8} md={6} xs={6}>
-                    <Input 
-                      className="form-control"
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={onChangePassword}
-                      validations={[required, vpassword]}
-                      placeholder="비밀번호"
-                      id="pw-input"
-                      size="20"
-                    />
-                  </Col>
-                  <Col lg={2} md={2} xs={0}></Col>
-                </div>
-                </Row>
-                <Row>
-                  <Col lg={2} md={2} xs={2}></Col>
-                  <Col lg={8} md={6} xs={6}>
-                    <Button className='login-btn' ref={checkBtn}>Login</Button>
-                    {/* 안되면 CheckButton으로 변경 */}
-                  </Col>
-                  <Col lg={2} md={2} xs={2}></Col>
-                </Row>
-                <div className="option-wrap">
-                  <Col lg={5} md={5} xs={4}>
-                    <div className="reset-pw" onClick={handleShow}>
-                    비밀번호 재설정
-                    </div>
-                  </Col>
-                  <Col lg={1} md={1} xs={1}>/</Col>
-                  <Col lg={4} md={4} xs={3}>
-                    <div className="signup" onClick={()=>navigate('/signin')}>
-                      회원가입
-                    </div>
-                  </Col>
-                </div>
-                </Form>
-               </Container>
-            </div>
-            {/* //Main */}
-
-            {/* PW Reset Modal */}
-            <Modal show={resetPw} onHide={() => {handleClose(); setActivateResetPW(false);}}>
-            <Modal.Header closeButton>
-              <Modal.Title>비밀번호 재설정</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Container >
-                <Form>
-                  {/* API연결 시 Form 속성 값 지정 필요 */}
-                <Row><span style={{ fontSize: "12px", color: "#C4C4C4"}}>ID 입력 후 조회를 눌러주세요.</span></Row>
-                <Row>
-                  <Col md={2} xs={2}>
-                    ID
-                  </Col>
-                  <Col md={6} xs={6}>
-                    <Input 
-                      className="form-control" 
-                      type="text" 
-                      style={{fontSize: "12px"}}
-                      value={validID}
-                      onChange={onChangeValidID}
-                      placeholder="학번/사번" 
-                    ></Input>
-                  </Col>
-                  <Col md={4} xs={4}>
-                    <Button 
-                      style={{ backgroundColor: "#002F5A", opacity: "0.8", fontSize: "12px"}} 
-                      onClick={() => activatePW(validID)}
-                    >조회</Button>
-                  </Col>
-                </Row>
-                {
-                  !activateResetPW?
-                  <span></span>:
-                  <>
-                    <Row><span style={{ fontSize: "12px", color: "#C4C4C4"}}>새로운 PW 입력 후 확인을 눌러주세요.</span></Row>
-                    <Row>
-                      <Col md={2} xs={2}>
-                        PW
-                      </Col>
-                      <Col md={6} xs={6}>
-                        <Input 
-                          className="form-control" 
-                          type="password" 
-                          style={{fontSize: "12px"}}
-                          value={newPW}
-                          onChange={onChangeNewPW}
-                          placeholder="새로운 비밀번호" 
-                        ></Input>
-                      </Col>
-                      <Col md={4} xs={4}>
-                        <Button 
-                          style={{  backgroundColor: "#028799", opacity: "0.9", fontSize: "12px"}} 
-                          onClick={() => saveNewPW(validID, newPW)}
-                        >확인</Button>
-                      </Col>
-                    </Row>
-                  </>
-                }
+                    <Col lg={2} md={2} xs={4}>
+                      <div className='check-dup-btn-wrap'>
+                        <Button type="button" className='check-dup-btn'>중복확인</Button>
+                      </div>
+                    </Col>
+                    <Col lg={6} md={6} xs={8}>
+                      <label className='input-label' htmlFor='username'>닉네임</label>
+                      <Input 
+                        type="username"
+                        className="form-control"
+                        name="username"
+                      />
+                    </Col>
+                  </Row>
                 </Form>
               </Container>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={ () => {
-                handleClose();
-                setActivateResetPW(false);
-              }}>
-                닫기
-              </Button>
-            </Modal.Footer>
-          </Modal>
+            </div>
+            {/* //Main */}
         </div>
     );
 };
 
-export default PLogin;
+export default PSignup;
