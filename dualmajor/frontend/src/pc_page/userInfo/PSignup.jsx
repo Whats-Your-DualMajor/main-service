@@ -7,6 +7,7 @@ import Input from 'react-validation/build/input';
 import CheckButton from "react-validation/build/button";
 //부트스트랩
 import {Button,Container,Row,Col,Modal} from 'react-bootstrap';
+import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 //팝업
 import Swal from 'sweetalert2' 
 //API
@@ -17,11 +18,12 @@ import "../main/PMainFrame.css";
 import "./PUserInfo.css";
 
 /**유효성 검사 함수 */
+//input 값에 대한 유효성 검사
 const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
-        값을 넣어주세요!
+        값을 입력해주세요!
       </div>
     );
   }
@@ -32,7 +34,18 @@ const vuserstdNum = (value) => {
   if (value.length < 4 || value.length > 9) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
-        올바르게 입력해주세요.
+        올바른 학번/사번을 입력해주세요.
+      </div>
+    );
+  }
+};
+
+//nickName
+const vusername = (value) => {
+  if (value.length < 2 || value.length > 10) {
+    return (
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+        닉네임은 4~10글자로 구성해주세요.
       </div>
     );
   }
@@ -43,33 +56,53 @@ const vpassword = (value) => {
   if (value.length < 6 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
-        올바르게 입력해주세요.
+        비밀번호는 6~20자로 구성해주세요.
+      </div>
+    );
+  }
+};
+
+//gpa
+const vgpa = (value) => {
+  if (value <= 0 || value > 4.5) {
+    return (
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+        올바른 학점을 입력해주세요.
       </div>
     );
   }
 };
 
 function PSignup(){
+    /**헤더 상태관리 */
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
     const [predictedRate, setPredictedRate] = useState(false);
     const [majorInfo, setMajorInfo] = useState(false);
     const [serviceIntro, setServiceIntro] = useState(false);
 
-    //로그인 관련 상태관리
+    /**회원가입 상태관리 */
+    const [totalFirstMajor, setTotalFirstMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
+    const [totalDualMajor, setTotalDualMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
+    const [userType, setUserType] = useState('mentee'); //멘토 멘티 유형 값
+    const [dualmajor, setDualmajor] = useState('희망이중전공');//멘토 멘티 값에 따른 이중전공 노출 변경
+    const [show, setShow] = useState(false);//회원가입 약관 모달
+    const [confirm, setConfirm] = useState(true); //이용약관 동의여부 확인
+  
     const form = useRef();
     const checkBtn = useRef();
-  
+    const [username, setUsername] = useState("");
     const [userstdNum, setUserstdNum] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [grade, setGrade] = useState("1학년");
+    const [firstMajor,  setFirstMajor] = useState(false);
+    const [dualMajor, setDualMajor] = useState(false);
+    const [gpa, setGpa] = useState(false);
+    const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
-
-    //비밀번호 찾기 관련 상태관리
-    const [resetPw, setResetPW] = useState(false);
-    const [validID, setValidID] = useState("");
-    const [activateResetPW, setActivateResetPW] = useState(false);
-    const [newPW, setNewPW] = useState("");
+  
+    const [checkStdNum, setCheckStdNum] = useState('');
+  
 
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
@@ -167,108 +200,253 @@ function PSignup(){
       });
     }
 
-    /**로그인 로직 */
+    /**회원가입 입력 값 유효성 검사*/
+    const onChangeUsername = (e) => {
+      const username = e.target.value;
+      setUsername(username);
+    };
+  
     const onChangeUserstdNum = (e) => {
       const userstdNum = e.target.value;
       setUserstdNum(userstdNum);
+      
     };
   
     const onChangePassword = (e) => {
       const password = e.target.value;
       setPassword(password);
     };
-
-    const handleLogin = (e) => {
-      e.preventDefault();
-      setMessage("");
-      setLoading(true);
-      form.current.validateAll(); //모든 유효성검사 통과 시
-
-      //id와 pw 모두 입력된 경우
-      // if(checkUserstdNum === true && checkPassword === true){
-
-        //백엔드 서버와 통신
-        if (checkBtn.current.context._errors.length === 0) {
-          AuthService.login(userstdNum, password).then( //login(stdNum, password)
-            () => {
-              //main page로 이동
-              navigate('/');
-              // window.location.reload();
-            },
-            (error) => {
-              const resMessage =
-                "로그인 정보를 확인해주세요."
-              setLoading(false);
-              setMessage(resMessage);
-            }
-          );
+  
+    //추가 작업 필요한 것들
+    //select문의 상태값 저장 로직만 구현
+    const onChangeUserGrade = (e) => {
+      const userGrade = e.target.value;
+      setGrade(userGrade);
+    }
+  
+    const onChangeUserGpa = (e) => {
+      const userGpa = e.target.value;
+      setGpa(userGpa);
+    }
+  
+    const SelectedUserType= (selected) => {
+      //멘토로 유저 타입 변경
+      if(selected.target.value === "mento"){
+        setUserType("mento");
+        setDualmajor('이중(부)전공');
       }
-    };
-
-    /**비밀번호 재설정 로직 */
-    //비밀번호 재설정 모달창 제어 함수
-    const handleClose = () => setResetPW(false);
-    const handleShow = () => setResetPW(true);
-
-    const onChangeValidID = (e) => {
-      const validID = e.target.value;
-      setValidID(validID);
-    };
-
-    const onChangeNewPW = (e) => {
-      const newPW = e.target.value;
-      setNewPW(newPW);
-    };
-
-    //id조회 후 비밀번호 재설정 기능 활성화 함수
-    const activatePW = (validID) => {
-      //ID값 조회 API 백엔드 
-      AuthService.checkJoinedEmail(validID).then(
-        (response) => {
-          if(response.data.joinedMember == true){
-            //입력받은 ID값을 전달받은 경우
-            setActivateResetPW(true);
-          }
-          else{
+  
+      //멘티로 유저 타입 변경
+      else{
+        setUserType("mentee");
+        setDualmajor('희망이중전공');
+      }
+    }
+  
+    const onChangeUserFirstMajor = (e) =>{
+      const userFirstMajor = e.target.value;
+  
+      //본전공과 동일한 전공을 이중전공으로 선택한 경우
+      if(userFirstMajor !== dualMajor){
+        setFirstMajor(userFirstMajor);
+        return;
+      }
+      setFirstMajor(false);
+  
+      Swal.fire({
+        text: "본전공과 이중전공은 같을 수 없어요😭",
+        icon: undefined,
+        confirmButtonText: '확인',
+        confirmButtonColor: '#002F5A'
+      });
+    }
+  
+    const onChangeUserDualMajor = (e) =>{
+      const userDualMajor = e.target.value;
+  
+      //본전공과 동일한 전공을 이중전공으로 선택한 경우
+      if(userDualMajor !== firstMajor){
+        setDualMajor(userDualMajor);
+        return;
+      }
+      setDualMajor(false);
+  
+      Swal.fire({
+        text: "본전공과 이중전공은 같을 수 없어요😭",
+        icon: undefined,
+        confirmButtonText: '확인',
+        confirmButtonColor: '#002F5A'
+      });
+    }
+  
+    //stdNum 중복검사
+    const stdNumCheckDuplicate = () => {
+      //stdNum이 입력되지 않은 경우
+      if(userstdNum === ''){
+        required(userstdNum);
+      }
+      //stdNum의 자리수가 올바르지 않는 경우
+      else if(userstdNum.length < 4 || userstdNum.length > 9){
+        vuserstdNum(userstdNum);
+      }
+      //stdNum의 자리수가 정상적인 경우
+      else{
+        AuthService.checkDuplicate(userstdNum).then(
+          (response) => {
+            //입력된 stdNum으로 상태값 변경
+            // console.log(response.data.joinPossible)
+            
+            if(response.data.joinPossible === true){
+              setCheckStdNum(true);
+  
+              Swal.fire({
+                text: "가입가능한 학번/사번입니다.",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
+            }
+            else
+              Swal.fire({
+                text: "이미 가입된 학번/사번입니다.",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
+          },
+          (error) => {
             Swal.fire({
-              text: "아이디를 다시 확인해주세요.",
+              text: "오류가 발생했습니다.",
               icon: undefined,
               confirmButtonText: '확인',
               confirmButtonColor: '#002F5A'
             });
           }
-        }
-      )
+        );
+      }
     }
 
-    //새로운PW를 저장 함수
-    const saveNewPW = (validID, newPW) => {
-      //ID값과 새로운 PW를 백엔드DB에 저장하는 API
-      AuthService.editPW(validID, newPW).then(
-        (response) => {
-          if(response.data.isEditPasswordSuccess == true){
-              //비밀번호 변경이 제대로 된 경우
-              Swal.fire({
-                text: "비밀번호가 재설정되었어요😉",
-                icon: undefined,
-                confirmButtonText: '확인',
-                confirmButtonColor: '#002F5A'
-              });
-              
-              
-              AuthService.login(validID, newPW).then( //login(stdNum, password)
-              () => {
+    /**백엔드 API전송 함수 */
+    const handleRegister = (e) => {
+      e.preventDefault();
+      setMessage("");
+      setSuccessful(false);
+      form.current.validateAll();
       
-                //main page로 이동
-                navigate('/');
-                // window.location.reload();
-              }
-            );
+      //학번/사번 중복확인 여부 검사
+      if (checkStdNum === false){
+        Swal.fire({
+          text: "학번/사번 중복확인 해주세요.",
+          icon: undefined,
+          confirmButtonText: '확인',
+          confirmButtonColor: '#002F5A'
+        });
+        return;
+      }
+  
+      //본전공 선택 확인
+      if(firstMajor === false){
+        Swal.fire({
+          text: "본전공을 선택해주세요.",
+          icon: undefined,
+          confirmButtonText: '확인',
+          confirmButtonColor: '#002F5A'
+        });
+        return;
+      }
+  
+      //이중전공 선택 확인
+      if(dualMajor === false){
+        Swal.fire({
+          text: "본전공을 선택해주세요.",
+          icon: undefined,
+          confirmButtonText: '확인',
+          confirmButtonColor: '#002F5A'
+        });
+        return;
+      }
+  
+      if(firstMajor === dualMajor){
+        Swal.fire({
+          text: "본전공과 이중전공은 같을 수 없어요😭",
+          icon: undefined,
+          confirmButtonText: '확인',
+          confirmButtonColor: '#002F5A'
+        });
+        return;
+      }
+  
+      if (checkBtn.current.context._errors.length === 0) {
+        AuthService.register(userstdNum, password, username, grade, userType, firstMajor, dualMajor, gpa).then(
+          (response) => {
+            setMessage(response.data.message);
+            setSuccessful(true);
+            
+            let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "dualMajor": dualMajor, "gpa": gpa};
+            //세션에 저장
+            sessionStorage.setItem("user", JSON.stringify(newUser));
+  
+            //가입 완료 알림창 띄우기
+            Swal.fire({
+              text: "너의 이중전공은? 가입을 환영합니다😊",
+              icon: undefined,
+              confirmButtonText: '확인',
+              confirmButtonColor: '#002F5A'
+            });
+  
+            //main page로 이동
+            navigate("/");
+            window.location.reload();
+          },
+          (error) => {
+            const resMessage =
+              "입력값들을 다시 확인해주세요."
+              // (error.response &&
+              //   error.response.data &&
+              //   error.response.data.message) ||
+              // error.message ||
+              // error.toString();
+            setMessage(resMessage);
+            setSuccessful(false);
           }
-        }
-      )
-    }
+        );
+      }
+    };
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+  
+    /**선택가능한 본전공 리스트 생성(백엔드로부터 받은 API의 데이터 기반) */
+    // useEffect(  () =>{
+    //   //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
+    //   AuthService.firstMajorList();
+    //   AuthService.dualMajorList();
+  
+    //   let allFirstMajor = false;
+    //   let allDualMajor = false;
+    //   if(localStorage.getItem('firstMajor') !== null){
+    //       allFirstMajor = Object.values(JSON.parse(localStorage.getItem('firstMajor')));
+    //   }
+    //   if(localStorage.getItem('dualMajor') !== null){
+    //       allDualMajor = Object.values(JSON.parse(localStorage.getItem('dualMajor')));
+    //   }
+  
+      
+    //   //전체 본전공 정보 저장
+    //   setTotalFirstMajor(allFirstMajor);
+    //   //전체 이중전공 정보 저장
+    //   setTotalDualMajor(allDualMajor);   
+      
+      
+    //   //각 정보 초기화
+    //   setFirstMajor(allFirstMajor[0].id);
+    //   setFirstMajor(allDualMajor[0].id);
+  
+    //   //임시 학과 처리용 백엔드 연결 후 삭제 예정
+    //   // setTotalFirstMajor(exampleFirstMajor);
+    //   // setTotalDualMajor(exampleDualMajor);
+    // },[])
+  
 
     return (
         <div>
@@ -328,14 +506,19 @@ function PSignup(){
             {/* Main */}
             <div className='main-wrap'>
               <Container className="container-wrap">
-                <Form>
-                  <Row class="main-tit">
-                    안녕하세요,<br/>
-                    너의 이중전공은 서비스 회원가입을 환영합니다!
+                <Form ref={form}>
+                  <Row className='main-row'>
+                    <Col className="main-tit-wrap" lg={12} md={12} xs={8}>
+                      <span class="main-tit">
+                        안녕하세요,<br/>
+                        너의 이중전공은 서비스 회원가입을 환영합니다! 
+                      </span>
+                    </Col>
                   </Row>
-                  <Row>
-
-                    <Col lg={4} md={4} xs={5}>
+                  <Row className='main-row'>
+                    <Col lg={2} md={0} xs={0}/>
+                    {/* 학번/사번 입력 */}
+                    <Col  lg={3} md={4} xs={5}>
                       <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
                       <Input 
                         type="userstdNum"
@@ -345,16 +528,110 @@ function PSignup(){
                     </Col>
                     <Col lg={2} md={2} xs={4}>
                       <div className='check-dup-btn-wrap'>
-                        <Button type="button" className='check-dup-btn'>중복확인</Button>
+                        <Button type="button" className='check-btn check-dup'>중복확인</Button>
                       </div>
                     </Col>
-                    <Col lg={6} md={6} xs={8}>
+                    {/* 본전공 선택 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label'>본전공</label>
+                      <Select className='inputStyle' onChange={onChangeUserFirstMajor}>
+                      {
+                        !totalFirstMajor?  
+                        <option value="0">학과 없음</option>:
+                        totalFirstMajor.map(thisMajor => (
+                          <option key={thisMajor.id} value={thisMajor.id}>
+                            {thisMajor.name}
+                          </option>
+                        ))
+                      }
+                      </Select>
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row className='main-row'>
+                    <Col lg={2} md={0} xs={0}/>
+                    {/* 닉네임 */}
+                    <Col lg={3} md={4} xs={5}>
                       <label className='input-label' htmlFor='username'>닉네임</label>
                       <Input 
                         type="username"
                         className="form-control"
                         name="username"
                       />
+                    </Col>
+                    <Col lg={2} md={2} xs={4}></Col>
+                    {/* 학년선택 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label'>학년</label>
+                      <Select className='inputStyle' onChange={onChangeUserGrade}>
+                        <option value="1학년">1학년</option>
+                        <option value="2학년">2학년</option>
+                        <option value="3학년">3학년</option>
+                        <option value="4학년 이상">4학년 이상</option>
+                    </Select>
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row className='main-row'>
+                    <Col lg={2} md={0} xs={0}/>
+                    {/* 비밀번호 입력 */}
+                    <Col lg={3} md={4} xs={5}>
+                      <label className='input-label' htmlFor='password'>비밀번호</label>
+                      <Input
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        value={password}
+                        onChange={onChangePassword}
+                        validations={[required, vpassword]}
+                      />
+                    </Col>
+                    <Col lg={2} md={2} xs={4}></Col>
+                    {/* 이용 유형 선택*/}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label'>이용유형</label>
+                      <Select className='inputStyle' onChange={SelectedUserType}>
+                        <option value="mentee">멘티</option>
+                        <option value="mento">멘토</option>
+                      </Select>
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row className='main-row'>
+                    <Col lg={2} md={0} xs={0}/>
+                    {/* 이용약관 */}
+                    <Col lg={3} md={4} xs={5}>
+                      <div>
+                        <span className='input-label'>이용약관</span>
+                        <Button className='check-btn term-service-btn'>보기</Button>
+                      </div>
+                      <br/>
+                    </Col>
+                    <Col lg={2} md={2} xs={4}></Col>
+                    {/* 희망/이중(부)전공 선택 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label'>{dualmajor}</label>
+                      <Select className='inputStyle' onChange={onChangeUserDualMajor}>
+                      {
+                        !totalDualMajor?  
+                        <option value="0">학과 없음</option>:
+                        totalDualMajor.map(thisMajor => (
+                          <option key={thisMajor.id} value={thisMajor.id}>
+                            {thisMajor.name}
+                          </option>
+                        ))
+                      }
+                      </Select> 
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row>
+                    <Col className="notice-wrap" lg={12} md={12} xs={8}>
+                        <span class="notice-style">
+                          *이용약관에 동의해주셔야 가입가능합니다.
+                        </span>
+                        <br/>
+                        <Button className="register-btn" ref={checkBtn} >가입하기</Button>
                     </Col>
                   </Row>
                 </Form>
