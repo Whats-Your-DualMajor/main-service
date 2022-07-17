@@ -9,7 +9,7 @@ import "./MainFrame.css";
 
 const DIVIDER_HEIGHT = 5;
 
-function MainFrame(){
+function PMainFrame(){
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
     const [predictedRate, setPredictedRate] = useState(false);
@@ -436,7 +436,7 @@ function MainFrame(){
             <div className='main-header'>
 
                 <div className='main-icon' onClick={()=>navigate('/')}>
-                    <img id='hufs-icon-white'src={require('../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
+                    <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
                 <div className='main-select-service-wrap'>
@@ -482,12 +482,13 @@ function MainFrame(){
                 </div>
                 <div className='login-wrap'>
                     {/* 로그인 관련 처리 로직 추가 */}
+                    <div className='login-tab' onClick={()=>navigate('/login')}>로그인</div>
                 </div>
             </div>
             <div className='main-wrap'>
                 <div ref={outerDivRef} className="outer">
                 <div className="inner main-intro">
-                  <img className='background-img' src={require("../media/main/E설캠본관.jpg")} alt="메인 인트로" />
+                  <img className='background-img' src={require("../../media/main/E설캠본관.jpg")} alt="메인 인트로" />
                   {
                     !moveToScrollIndex?
                     <div {...fadeInEffect}>
@@ -499,7 +500,7 @@ function MainFrame(){
                 </div>
                 <div className="divider"></div>
                 <div className="inner recommand-service">
-                  <img className='background-img' src={require("../media/main/E글캠백년관.jpg")} alt="이중전공추천" />
+                  <img className='background-img' src={require("../../media/main/E글캠백년관.jpg")} alt="이중전공추천" />
                   {
                     moveToScrollIndex === "r"?
                     <div {...fadeInEffect}>
@@ -511,7 +512,7 @@ function MainFrame(){
                 </div>
                 <div className="divider"></div>
                 <div className="inner predicted-rate">
-                  <img className='background-img' src={require("../media/main/E설캠도서관.jpg")} alt="예상경쟁률" />
+                  <img className='background-img' src={require("../../media/main/E설캠도서관.jpg")} alt="예상경쟁률" />
                   {
                     moveToScrollIndex === "p"?
                     <div {...fadeInEffect}>
@@ -523,7 +524,7 @@ function MainFrame(){
                 </div>
                 <div className="divider"></div>
                 <div className="inner major-info">
-                  <img className='background-img' src={require("../media/main/E글캠도서관.jpg")} alt="전공정보 조회" />
+                  <img className='background-img' src={require("../../media/main/E글캠도서관.jpg")} alt="전공정보 조회" />
                   {
                     moveToScrollIndex === "m"?
                     <div {...fadeInEffect}>
@@ -536,17 +537,17 @@ function MainFrame(){
                 <div className="divider"></div>
                 <div className="inner service-intro">
                   <div className='info-title'>기획의도</div>
-                  <img className='background-img-info' src={require("../media/main/기획의도.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/기획의도.png")} alt="기획의도" />
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
                   <div className='info-title'>수요</div>
-                  <img className='background-img-info' src={require("../media/main/수요.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/수요.png")} alt="기획의도" />
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
                   <div className='info-title'>개발자 소개</div>
-                  <img className='background-img-info' src={require("../media/main/개발자 소개.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/개발자 소개.png")} alt="기획의도" />
                 </div>
             </div>
         </div>
@@ -554,4 +555,4 @@ function MainFrame(){
     );
 };
 
-export default MainFrame;
+export default PMainFrame;
