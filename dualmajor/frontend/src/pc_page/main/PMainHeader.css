@@ -36,7 +36,8 @@
 }
 
 #main-name:hover{
-    text-shadow: -0.2px 0 #dadad3, 0 0.2px #dadad3, 0.2px 0 #dadad3, 0 -0.2px #dadad3;
+    color: #FdFfF2;
+    text-shadow: -0.4px 0 #9d9fa2, 0 0.4px #9d9fa2, 0.4px 0 #9d9fa2, 0 -0.4px #9d9fa2;
 }
 .main-select-service-wrap{
     display: flex;
@@ -82,7 +83,8 @@
     margin-left: 10px;
 }
 .login-tab:hover{
-    text-shadow: -0.2px 0 #dadad3, 0 0.2px #dadad3, 0.2px 0 #dadad3, 0 -0.2px #dadad3;
+    color: #FdFfF2;
+    text-shadow: -0.4px 0 #9d9fa2, 0 0.4px #9d9fa2, 0.4px 0 #9d9fa2, 0 -0.4px #9d9fa2;
 }
 
 /* 특정 서비스(탭)이 선택된 상태일 때 -> 리엑트 상태관리로 처리 예정 */

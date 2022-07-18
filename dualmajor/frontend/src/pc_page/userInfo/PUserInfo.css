@@ -28,6 +28,12 @@
     font-weight: bold;
     display: inline-block;
 }
+
+.inputStyle{
+    font-size: 15px;
+    font-weight: normal;
+}
+
 .check-dup-btn-wrap{
     position: relative;
 }
@@ -63,23 +69,52 @@
     margin-bottom: 1vh;
 }
 
-/* 가입버튼 */
+/* 버튼 레이어 */
 .notice-wrap{
     text-align: center;
     margin-top: 5vh;
 }
+.notice-container{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
 
-.register-btn{
+/* 확인버튼 */
+.confirm-btn{
     background-color: #145f7a;
     color: #FFF;
     opacity: 0.9;
     width: 20vw;
+    border: solid 0px;
 }
-.register-btn:hover{
+.confirm-btn:hover{
     background-color: #145f7a;
     opacity: 1;
 }
-.register-btn:focus{
+.confirm-btn:focus{
     background-color: #145f7a;
     opacity: 1;
 }
+.confirm-btn:disabled{
+    background-color: #145f7a;
+    opacity: 0.7;
+}
+
+/* 탈퇴 버튼 */
+.withdrawal-btn{
+    background-color: #4d4f4f;
+    color: #FFF;
+    opacity: 0.9;
+    width: 20vw;
+    border: solid 0px;
+}
+.withdrawal-btn:hover{
+    background-color: #4d4f4f;
+    opacity: 1;
+}
+.withdrawal-btn:focus{
+    background-color: #4d4f4f;
+    opacity: 1;
+}
+

@@ -141,6 +141,11 @@ import PMainPage from './pc_page/main/PMainPage';
 import PLogin from './pc_page/login/PLogin';
 import PSignup from './pc_page/userInfo/PSignup';
 import PEditUserInfo from './pc_page/userInfo/PEditUserInfo';
+import PRecommendMain from './pc_page/recommend/PRecommendMain';
+import PQuestion1 from './pc_page/recommend/PQuestion1';
+import PQuestion2 from './pc_page/recommend/PQuestion2';
+import PResult1 from './pc_page/recommend/PResult1';
+import PResult2 from './pc_page/recommend/PResult2';
 
 function App() {
   return (
@@ -152,6 +157,11 @@ function App() {
         <Route path='/login' element={<PLogin/>}/>
         <Route path='/signup' element={<PSignup/>}/>
         <Route path='/edituserinfo' element={<PEditUserInfo/>}/>
+        <Route path='/recommend' element={<PRecommendMain/>}/>
+        <Route path='/question1' element={<PQuestion1/>}/>
+        <Route path='/question2' element={<PQuestion2/>}/>
+        <Route path='/result1' element={<PResult1/>}/>
+        <Route path='/result2' element={<PResult2/>}/>
 
         {/* 구버전 레이아웃 */}
         <Route path='/m' element ={<Main/>} />

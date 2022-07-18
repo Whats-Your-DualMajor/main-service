@@ -6,7 +6,7 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from "react-validation/build/button";
 //부트스트랩
-import {Button,Container,Row,Col,Modal} from 'react-bootstrap';
+import {Button,Container,Row,Col,Modal,Tooltip,OverlayTrigger} from 'react-bootstrap';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 //팝업
 import Swal from 'sweetalert2' 
@@ -16,6 +16,8 @@ import AuthService from '../../services/auth.service';
 import "../main/PMainHeader.css";
 import "../main/PMainFrame.css";
 import "./PUserInfo.css";
+//회원가입 동의 사항
+import ShowContract from '../../page/user/signup/component/ShowContract';
 
 /**유효성 검사 함수 */
 //input 값에 대한 유효성 검사
@@ -506,7 +508,9 @@ function PSignup(){
             {/* Main */}
             <div className='main-wrap'>
               <Container className="container-wrap">
-                <Form ref={form}>
+                <Form onSubmit={handleRegister} ref={form}>
+                {!successful && (
+                  <div>
                   <Row className='main-row'>
                     <Col className="main-tit-wrap" lg={12} md={12} xs={8}>
                       <span class="main-tit">
@@ -519,22 +523,36 @@ function PSignup(){
                     <Col lg={2} md={0} xs={0}/>
                     {/* 학번/사번 입력 */}
                     <Col  lg={3} md={4} xs={5}>
-                      <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
+                      <OverlayTrigger
+                        key='stdNumInfo'
+                        placement='top'
+                        overlay={
+                          <Tooltip id="stdNumInfo">
+                            학우님의 학번을 입력해주세요😉
+                          </Tooltip>
+                        }
+                      >
+                        <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
+                      </OverlayTrigger>
                       <Input 
                         type="userstdNum"
                         className="form-control"
                         name="userstdNum"
+                        id="userstdNum"
+                        value={userstdNum}
+                        onChange={onChangeUserstdNum}
+                        validations={[required, vuserstdNum]}
                       />
                     </Col>
                     <Col lg={2} md={2} xs={4}>
                       <div className='check-dup-btn-wrap'>
-                        <Button type="button" className='check-btn check-dup'>중복확인</Button>
+                        <Button type="button" className='check-btn check-dup' onClick={stdNumCheckDuplicate}>중복확인</Button>
                       </div>
                     </Col>
                     {/* 본전공 선택 */}
                     <Col lg={3} md={4} xs={8}>
-                      <label className='input-label'>본전공</label>
-                      <Select className='inputStyle' onChange={onChangeUserFirstMajor}>
+                      <label className='input-label' htmlFor='firstMajor'>본전공</label>
+                      <Select className='inputStyle' id="firstMajor" onChange={onChangeUserFirstMajor}>
                       {
                         !totalFirstMajor?  
                         <option value="0">학과 없음</option>:
@@ -557,13 +575,17 @@ function PSignup(){
                         type="username"
                         className="form-control"
                         name="username"
+                        id="username"
+                        value={username}
+                        onChange={onChangeUsername}
+                        validations={[required, vusername]}
                       />
                     </Col>
                     <Col lg={2} md={2} xs={4}></Col>
                     {/* 학년선택 */}
                     <Col lg={3} md={4} xs={8}>
-                      <label className='input-label'>학년</label>
-                      <Select className='inputStyle' onChange={onChangeUserGrade}>
+                      <label className='input-label' htmlFor='usergrade'>학년</label>
+                      <Select className='inputStyle' id="usergrade" onChange={onChangeUserGrade}>
                         <option value="1학년">1학년</option>
                         <option value="2학년">2학년</option>
                         <option value="3학년">3학년</option>
@@ -581,6 +603,7 @@ function PSignup(){
                         type="password"
                         className="form-control"
                         name="password"
+                        id="password"
                         value={password}
                         onChange={onChangePassword}
                         validations={[required, vpassword]}
@@ -589,8 +612,20 @@ function PSignup(){
                     <Col lg={2} md={2} xs={4}></Col>
                     {/* 이용 유형 선택*/}
                     <Col lg={3} md={4} xs={8}>
-                      <label className='input-label'>이용유형</label>
-                      <Select className='inputStyle' onChange={SelectedUserType}>
+                    <OverlayTrigger
+                        key='stdNumInfo'
+                        placement='top'
+                        overlay={
+                          <Tooltip id="stdNumInfo">
+                            선택해주세요😄<br/>
+                            멘토: 이중(부)전공을 이수하고 있어요.<br/>
+                            멘티: 아직 이중(부)전공이 없어요.
+                          </Tooltip>
+                        }
+                      >
+                        <label className='input-label' htmlFor='userType'>이용유형</label>
+                      </OverlayTrigger>
+                      <Select className='inputStyle' id="userType" onChange={SelectedUserType}>
                         <option value="mentee">멘티</option>
                         <option value="mento">멘토</option>
                       </Select>
@@ -603,15 +638,15 @@ function PSignup(){
                     <Col lg={3} md={4} xs={5}>
                       <div>
                         <span className='input-label'>이용약관</span>
-                        <Button className='check-btn term-service-btn'>보기</Button>
+                        <Button className='check-btn term-service-btn' onClick={handleShow}>보기</Button>
                       </div>
                       <br/>
                     </Col>
                     <Col lg={2} md={2} xs={4}></Col>
                     {/* 희망/이중(부)전공 선택 */}
                     <Col lg={3} md={4} xs={8}>
-                      <label className='input-label'>{dualmajor}</label>
-                      <Select className='inputStyle' onChange={onChangeUserDualMajor}>
+                      <label className='input-label' htmlFor='dualMajor'>{dualmajor}</label>
+                      <Select className='inputStyle' id="dualMajor" onChange={onChangeUserDualMajor}>
                       {
                         !totalDualMajor?  
                         <option value="0">학과 없음</option>:
@@ -626,18 +661,74 @@ function PSignup(){
                     <Col lg={2} md={2} xs={2}/>
                   </Row>
                   <Row>
+                    <Col lg={7} md={6} xs={8}/>
+                    {/* 총 평균학점 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label' htmlFor="averageGPA">총 평균학점</label>
+                      <Input
+                        type="number" 
+                        step="0.01"
+                        className="form-control"
+                        name="gpa"
+                        id="averageGPA"
+                        value={gpa}
+                        onChange={onChangeUserGpa}
+                        validations={[required, vgpa]}
+                      />
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  </div>
+                  )}
+                  <Row>
                     <Col className="notice-wrap" lg={12} md={12} xs={8}>
                         <span class="notice-style">
                           *이용약관에 동의해주셔야 가입가능합니다.
                         </span>
                         <br/>
-                        <Button className="register-btn" ref={checkBtn} >가입하기</Button>
+                        <Button type="submit" className="confirm-btn" ref={checkBtn} disabled={confirm}>가입하기</Button>
                     </Col>
                   </Row>
+                  {/* 입력 항목 별 유효성 검사 */}
+                  {message && (
+                    <div className="form-group">
+                      <div
+                        className={ successful ? "alert alert-success" : "alert alert-danger" }
+                        role="alert"
+                      >
+                        {message}
+                      </div>
+                    </div>
+                  )}
+                  <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                  {/* //입력 항목 별 유효성 검사 */}
                 </Form>
               </Container>
             </div>
             {/* //Main */}
+
+            {/* Modal */}
+            <Modal show={show} fullscreen={true} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>이용약관</Modal.Title>
+              </Modal.Header>
+              <Modal.Body><ShowContract/></Modal.Body>
+              <Modal.Footer>
+                <Button className="withdrawal-btn" onClick={ () => {
+                  handleClose();
+                  setConfirm(true);
+                }}>
+                  거부
+                </Button>
+                <Button className="confirm-btn" onClick={() => {
+                  handleClose();
+                  setConfirm(false);
+                }}>
+                  동의
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            {/* //Modal */}
         </div>
     );
 };
