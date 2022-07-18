@@ -184,7 +184,7 @@ function PSignup(){
     }
 
     /**페이지 이동 경고 팝업 표시 */
-    const showPageMovePopUp = (type) =>{
+    const showPageMovePopUp = (type, url="/") =>{
       Swal.fire({
         text: `"${type}"(으)로 이동하시겠습니까?`,
         icon: undefined,
@@ -195,7 +195,7 @@ function PSignup(){
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          navigate('/')
+          navigate(url)
         } else if (result.isDenied) {
           return
         }

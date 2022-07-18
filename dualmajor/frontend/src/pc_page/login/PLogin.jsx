@@ -85,7 +85,7 @@ function PLogin(){
         else if(type === "r"){
             //현재 선택된 탭의 기존 상태 변경
             selectRecommandService(state);
-            showPageMovePopUp("이중전공 추천 서비스");
+            showPageMovePopUp("이중전공 추천 서비스","/recommend");
         }
         else if(type === "p"){
             //현재 선택된 탭의 기존 상태 변경
@@ -149,7 +149,7 @@ function PLogin(){
     }
 
     /**페이지 이동 경고 팝업 표시 */
-    const showPageMovePopUp = (type) =>{
+    const showPageMovePopUp = (type, url="/") =>{
       Swal.fire({
         text: `"${type}"(으)로 이동하시겠습니까?`,
         icon: undefined,
@@ -160,7 +160,7 @@ function PLogin(){
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          navigate('/')
+          navigate(url)
         } else if (result.isDenied) {
           return
         }

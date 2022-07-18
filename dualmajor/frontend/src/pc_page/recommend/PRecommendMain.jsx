@@ -1,16 +1,10 @@
 import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-//폼 제어
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
-import CheckButton from "react-validation/build/button";
 //부트스트랩
-import {Button,Container,Row,Col,Modal} from 'react-bootstrap';
+import {Button,Container,Row} from 'react-bootstrap';
 //팝업
 import Swal from 'sweetalert2' 
-//API
-import AuthService from '../../services/auth.service';
 //국기 이동 캐러셀
 import PFlagsCarousel from './component/PFlagsCarousel';
 
@@ -200,7 +194,7 @@ function PRecommendMain() {
                     <PFlagsCarousel/>
                 </Row>
                 <Row>
-                    <Button className="start-recommend-service" onClick={moveToQuestion}>시작하기</Button>
+                    <Button className="confirm-btn" onClick={moveToQuestion}>시작하기</Button>
                 </Row>
                 <Row>
                     <div className="notice-wrap">
