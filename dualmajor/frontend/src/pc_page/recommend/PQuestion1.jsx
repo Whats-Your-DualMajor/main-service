@@ -30,6 +30,8 @@ function PQuestion1() {
     const[progressPercent, setProgressPercent] = useState(0);
     const[nextQuestionNum, setNextQuestionNum] = useState(1);
     const [thisAnswer, setThisAnswer] = useState(false);
+    //전역적으로 탭 제어하기 위한 상태값
+    const[controlTab, setControlTab] = useState('');
 
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
@@ -44,7 +46,7 @@ function PQuestion1() {
         }
         else if(type === "r"){
             //현재 선택된 탭의 기존 상태 변경
-            selectRecommandService(state);
+            // selectRecommandService(state);
             showPageMovePopUp("이중전공 추천 서비스","/recommend");
         }
         else if(type === "p"){
@@ -72,19 +74,9 @@ function PQuestion1() {
         setServiceIntro(false);        
     }
 
-    const selectRecommandService = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(state);
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
     const selectsetPredictedRate = (state) =>{
         let reverseState = false;
 
-        setRecommandService(reverseState);
         setPredictedRate(state);
         setMajorInfo(reverseState);
         setServiceIntro(reverseState);
@@ -93,7 +85,6 @@ function PQuestion1() {
     const selectMajorInfo = (state) =>{
         let reverseState = false;
 
-        setRecommandService(reverseState);
         setPredictedRate(reverseState);
         setMajorInfo(state);
         setServiceIntro(reverseState);
@@ -102,7 +93,6 @@ function PQuestion1() {
     const selectServiceIntro = (state) =>{
         let reverseState = false;
 
-        setRecommandService(reverseState);
         setPredictedRate(reverseState);
         setMajorInfo(reverseState);
         setServiceIntro(state);
@@ -126,6 +116,12 @@ function PQuestion1() {
           }
         });
       }
+
+
+      /**헤더 탭 선택 값 랜더링 */
+      useEffect(()=>{
+        
+      },[predictedRate, majorInfo, serviceIntro])
 
     /**1차 질문 화면 랜더링 */
     //초기 화면 랜더링 시 초기화(1번 실행)
@@ -265,7 +261,7 @@ function PQuestion1() {
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
@@ -275,7 +271,7 @@ function PQuestion1() {
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
@@ -285,7 +281,7 @@ function PQuestion1() {
                     {
                         !majorInfo?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -295,7 +291,7 @@ function PQuestion1() {
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
