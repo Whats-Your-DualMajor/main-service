@@ -1,0 +1,41 @@
+.start-main-page{
+    padding-top: 5vh;
+    /* width: 100%;
+    height: 100%; */
+    /* display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap; */
+}
+.show-flags-gif{
+    display: inline-block; 
+    margin: 0px auto;
+    border-radius: 10px;
+}
+
+/* 이중전공 추천 서비스 시작 버튼 */
+.start-recommend-service{
+    background-color: #002d56;
+    border: solid 0px;
+    opacity: 0.9;
+    max-width: 25vw;
+    margin: 0 auto;
+}
+.start-recommend-service:hover{
+    background-color: #002d56;
+    opacity: 1;
+}
+.start-recommend-service:focus{
+    background-color: #002d56;
+    opacity: 1;
+}
+
+/* 안내문자 서식 */
+.notice-wrap{
+    margin-bottom: 10vh;
+}
+.notice{
+    font-size: 15px;
+    color: #9d9fa2;
+    display: inline-block;
+    margin-bottom: 1vh;
+}

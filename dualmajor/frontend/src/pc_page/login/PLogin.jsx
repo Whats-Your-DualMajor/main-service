@@ -390,7 +390,7 @@ function PLogin(){
                   </Col>
                   <Col lg={1} md={1} xs={1}>/</Col>
                   <Col lg={4} md={4} xs={3}>
-                    <div className="signup" onClick={()=>navigate('/signin')}>
+                    <div className="signup" onClick={()=>navigate('/signup')}>
                       회원가입
                     </div>
                   </Col>

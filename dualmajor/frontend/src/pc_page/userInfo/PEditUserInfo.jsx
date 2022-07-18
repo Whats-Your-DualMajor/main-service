@@ -6,7 +6,8 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from "react-validation/build/button";
 //부트스트랩
-import {Button,Container,Row,Col,Modal} from 'react-bootstrap';
+import {Button,Container,Row,Col,Modal,Tooltip,OverlayTrigger} from 'react-bootstrap';
+import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 //팝업
 import Swal from 'sweetalert2' 
 //API
@@ -17,22 +18,35 @@ import "../main/PMainFrame.css";
 import "./PUserInfo.css";
 
 /**유효성 검사 함수 */
+
+//input 값에 대한 유효성 검사
 const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
-        값을 넣어주세요!
+        값을 입력해주세요!
       </div>
     );
   }
 };
 
-//stdNum(학번)
+//id(학번)
 const vuserstdNum = (value) => {
   if (value.length < 4 || value.length > 9) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
-        올바르게 입력해주세요.
+        학번/사번을 입력해주세요.
+      </div>
+    );
+  }
+};
+
+//nickName
+const vusername = (value) => {
+  if (value.length < 2 || value.length > 10) {
+    return (
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+        닉네임은 4~10글자로 구성해주세요.
       </div>
     );
   }
@@ -43,33 +57,55 @@ const vpassword = (value) => {
   if (value.length < 6 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
-        올바르게 입력해주세요.
+        비밀번호는 6~20자로 구성해주세요.
       </div>
     );
   }
 };
 
+//gpa
+const vgpa = (value) => {
+    if (value <= 0 || value > 4.5) {
+      return (
+        <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+          올바른 학점을 입력해주세요.
+        </div>
+      );
+    }
+  };
+
+//key값으로부터 value반환 함수
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+  }
+
 function PEditUserInfo(){
+    /**헤더 상태관리 */
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
     const [predictedRate, setPredictedRate] = useState(false);
     const [majorInfo, setMajorInfo] = useState(false);
     const [serviceIntro, setServiceIntro] = useState(false);
 
-    //로그인 관련 상태관리
+    /**회원정보수정 상태관리 */
+    const [totalFirstMajor, setTotalFirstMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
+    const [totalDualMajor, setTotalDualMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
+    const [userType, setUserType] = useState('mentee'); //멘토 멘티 유형 값
+    const [showTypeDualMajor, setShowTypeDualMajor] = useState('희망이중전공');//멘토 멘티 값에 따른 이중전공 노출 변경
+    const [show, setShow] = useState(false);//회원가입 약관 모달
+    const [resign, setResign] = useState(false); //이용약관 동의여부 확인
+
     const form = useRef();
     const checkBtn = useRef();
-  
+    const [username, setUsername] = useState("");
     const [userstdNum, setUserstdNum] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [grade, setGrade] = useState("1");
+    const [firstMajor,  setFirstMajor] = useState("1");
+    const [dualMajor, setDualMajor] = useState("0");
+    const [gpa, setGpa] = useState(false);
+    const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
-
-    //비밀번호 찾기 관련 상태관리
-    const [resetPw, setResetPW] = useState(false);
-    const [validID, setValidID] = useState("");
-    const [activateResetPW, setActivateResetPW] = useState(false);
-    const [newPW, setNewPW] = useState("");
 
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
@@ -167,107 +203,174 @@ function PEditUserInfo(){
       });
     }
 
-    /**로그인 로직 */
-    const onChangeUserstdNum = (e) => {
-      const userstdNum = e.target.value;
-      setUserstdNum(userstdNum);
-    };
-  
-    const onChangePassword = (e) => {
-      const password = e.target.value;
-      setPassword(password);
-    };
+    /**회원의 기로그인 정보 세션으로부터 불러오기 */
+    //세션에 저장된 user정보 저장
+    let thisUser = false;
+    if(sessionStorage.getItem('user') !== null){
+        thisUser = Object.values(JSON.parse(sessionStorage.getItem('user')));
+    }
 
-    const handleLogin = (e) => {
-      e.preventDefault();
-      setMessage("");
-      setLoading(true);
-      form.current.validateAll(); //모든 유효성검사 통과 시
 
-      //id와 pw 모두 입력된 경우
-      // if(checkUserstdNum === true && checkPassword === true){
+    //기존의 회원정보를 value값으로 자동 입력
+    useEffect(() => {
+        //테스트용
+        // console.log("thisUser",thisUser);
 
-        //백엔드 서버와 통신
-        if (checkBtn.current.context._errors.length === 0) {
-          AuthService.login(userstdNum, password).then( //login(stdNum, password)
-            () => {
-              //main page로 이동
-              navigate('/');
-              // window.location.reload();
-            },
-            (error) => {
-              const resMessage =
-                "로그인 정보를 확인해주세요."
-              setLoading(false);
-              setMessage(resMessage);
-            }
-          );
-      }
-    };
+        AuthService.firstMajorList();
+        AuthService.dualMajorList();
 
-    /**비밀번호 재설정 로직 */
-    //비밀번호 재설정 모달창 제어 함수
-    const handleClose = () => setResetPW(false);
-    const handleShow = () => setResetPW(true);
+        let allFirstMajor = false;
+        let allDualMajor = false;
+        if(localStorage.getItem('firstMajor') !== null){
+            allFirstMajor = Object.values(JSON.parse(localStorage.getItem('firstMajor')));
+        }
+        if(localStorage.getItem('dualMajor') !== null){
+            allDualMajor = Object.values(JSON.parse(localStorage.getItem('dualMajor')));
+        }
 
-    const onChangeValidID = (e) => {
-      const validID = e.target.value;
-      setValidID(validID);
-    };
+        //세션에 저장된 유저 데이터의 value값만 배열로 반환하여 thisUser에 저장
+        if (thisUser !== false){
+            //각 항목별로 데이터 저장(순서변경되면 값이 깨지니 주의!)
+            setUserstdNum(thisUser[0]); //학번/사번
+            setUsername(thisUser[1]);   //닉네임
+            setGrade(thisUser[2]);      //학년
+            setUserType(thisUser[3]);   //사용자 유형
+            setFirstMajor(thisUser[4]); //본전공 id
+            setDualMajor(thisUser[5]);  //이중전공  id
 
-    const onChangeNewPW = (e) => {
-      const newPW = e.target.value;
-      setNewPW(newPW);
-    };
+            //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
 
-    //id조회 후 비밀번호 재설정 기능 활성화 함수
-    const activatePW = (validID) => {
-      //ID값 조회 API 백엔드 
-      AuthService.checkJoinedEmail(validID).then(
-        (response) => {
-          if(response.data.joinedMember == true){
-            //입력받은 ID값을 전달받은 경우
-            setActivateResetPW(true);
+            //전체 본전공 정보 저장
+            setTotalFirstMajor(allFirstMajor);
+            //전체 이중전공 정보 저장
+            setTotalDualMajor(allDualMajor);             
           }
-          else{
+    },[])
+
+    /**서비스 탈퇴 로직 */
+    //서비스 탈퇴 신청 시
+    useEffect(() => {
+      //서비스 탈퇴 신청 true인 경우
+      if( resign === true){
+        AuthService.applyResign(userstdNum).then(
+          (response)=>{
+            //테스트 용
+            // console.log("서비스 탈퇴 신청");
+
             Swal.fire({
-              text: "아이디를 다시 확인해주세요.",
+              text: "서비스 탈퇴 신청되었어요.\n그동안 저희 서비스를 이용해주셔서 감사합니다.😊",
               icon: undefined,
               confirmButtonText: '확인',
               confirmButtonColor: '#002F5A'
-            });
+              });
+            
+            //로그아웃처리
+            AuthService.logout();
+
+            //main page로 이동
+            navigate("/");
+            window.location.reload();
+          },
+          (error) => {
+            Swal.fire({
+              text: "오류가 발생했어요😭\n메일로 문의 부탁드립니다.",
+              icon: undefined,
+              confirmButtonText: '확인',
+              confirmButtonColor: '#002F5A'
+              });
           }
-        }
-      )
+        )
+      }
+    }, [resign])
+
+    /**회원정보 수정 입력 값에 대한 유효성 검사 */
+    const onChangeUsername = (e) => {
+        const username = e.target.value;
+        setUsername(username);
+    };
+
+    const onChangeUserstdNum = (e) => {
+        const userstdNum = e.target.value;
+        setUserstdNum(userstdNum);
+    };
+
+    const onChangePassword = (e) => {
+        const password = e.target.value;
+        setPassword(password);
+    };
+
+    //추가 작업 필요한 것들
+    //select문의 상태값 저장 로직만 구현
+    const onChangeUserGrade = (e) => {
+        const userGrade = e.target.value;
+        setGrade(userGrade);
     }
 
-    //새로운PW를 저장 함수
-    const saveNewPW = (validID, newPW) => {
-      //ID값과 새로운 PW를 백엔드DB에 저장하는 API
-      AuthService.editPW(validID, newPW).then(
-        (response) => {
-          if(response.data.isEditPasswordSuccess == true){
-              //비밀번호 변경이 제대로 된 경우
-              Swal.fire({
-                text: "비밀번호가 재설정되었어요😉",
-                icon: undefined,
-                confirmButtonText: '확인',
-                confirmButtonColor: '#002F5A'
-              });
-              
-              
-              AuthService.login(validID, newPW).then( //login(stdNum, password)
-              () => {
-      
-                //main page로 이동
-                navigate('/');
-                // window.location.reload();
-              }
-            );
-          }
+    const onChangeUserGpa = (e) => {
+        const userGpa = e.target.value;
+        setGpa(userGpa);
+      }
+
+    const SelectedUserType= (selected) => {
+        //멘토로 유저 타입 변경
+        if(selected.target.value === "mento"){
+        setUserType("mento");
+        setShowTypeDualMajor('이중(부)전공');
         }
-      )
+        //멘티로 유저 타입 변경
+        else{
+        setUserType("mentee");
+        setShowTypeDualMajor('희망이중전공');
+        }
     }
+
+    const onChangeUserFirstMajor = (e) =>{
+        const userFirstMajor = e.target.value;
+        setFirstMajor(userFirstMajor);
+    }
+
+    const onChangeUserDualMajor = (e) =>{
+        const userDualMajor = e.target.value;
+        setDualMajor(userDualMajor);
+    }
+
+    /**백엔드 API전송 함수 */
+    const handleRegister = (e) => {
+      e.preventDefault();
+      setMessage("");
+      setSuccessful(false);
+      form.current.validateAll();
+      if (checkBtn.current.context._errors.length === 0) {
+      AuthService.changeInfo(userstdNum, password, username, grade, userType, firstMajor, dualMajor).then(
+        (response) => {
+        setMessage(response.data.message);
+        setSuccessful(true);
+        
+        let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "dualMajor": dualMajor};
+        //세션에 저장
+        sessionStorage.setItem("user", JSON.stringify(newUser));
+
+        //main page로 이동
+        navigate("/");
+        window.location.reload();
+        },
+        (error) => {
+        const resMessage =
+            "입력값들을 다시 확인해주세요."
+            // (error.response &&
+            //   error.response.data &&
+            //   error.response.data.message) ||
+            // error.message ||
+            // error.toString();
+        setMessage(resMessage);
+        setSuccessful(false);
+        }
+      );
+      }
+    };
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
 
     return (
@@ -326,7 +429,212 @@ function PEditUserInfo(){
             {/* //Header */}
 
             {/* Main */}
+            {/* Main */}
+            <div className='main-wrap'>
+              <Container className="container-wrap">
+              {/* 회원정보수정/탈퇴 Form */}
+                <Form onSubmit={handleRegister} ref={form}>
+                  <Row className='main-row'>
+                    <Col className="main-tit-wrap" lg={12} md={12} xs={8}>
+                      <span class="main-tit">
+                        회원정보 수정
+                      </span>
+                    </Col>
+                  </Row>
+                  <Row className='main-row'>
+                    <Col lg={2} md={0} xs={0}/>
+                    {/* 학번/사번 입력 */}
+                    <Col  lg={3} md={4} xs={5}>
+                      <OverlayTrigger
+                        key='stdNumInfo'
+                        placement='top'
+                        overlay={
+                          <Tooltip id="stdNumInfo">
+                            학번/사번은 수정할 수 없어요.
+                          </Tooltip>
+                        }
+                      >
+                        <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
+                      </OverlayTrigger>
+                      <Input 
+                        type="userstdNum"
+                        className="form-control"
+                        name="userstdNum"
+                        value={userstdNum}
+                        onChange={onChangeUserstdNum}
+                        validations={[required, vuserstdNum]}
+                        disabled
+                      />
+                    </Col>
+                    <Col lg={2} md={2} xs={4}/>
+                    {/* 본전공 선택 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label' htmlFor="firstMajor">본전공</label>
+                      <Select className='inputStyle' id="firstMajor" onChange={onChangeUserFirstMajor}>
+                      {
+                        !totalFirstMajor?  
+                        <option value="0">학과 없음</option>:
+                        totalFirstMajor.map(thisMajor => (
+                          <option key={thisMajor.id} value={thisMajor.id}>
+                            {thisMajor.name}
+                          </option>
+                        ))
+                      }
+                      </Select>
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row className='main-row'>
+                    <Col lg={2} md={0} xs={0}/>
+                    {/* 닉네임 */}
+                    <Col lg={3} md={4} xs={5}>
+                      <label className='input-label' htmlFor='username'>닉네임</label>
+                      <Input 
+                        type="username"
+                        className="form-control"
+                        name="username"
+                        id="username"
+                        value={username}
+                        onChange={onChangeUsername}
+                        validations={[required, vusername]}
+                      />
+                    </Col>
+                    <Col lg={2} md={2} xs={4}></Col>
+                    {/* 학년선택 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label' htmlFor='grade'>학년</label>
+                      <Select className='inputStyle' id="grade" onChange={onChangeUserGrade}>
+                        <option value="1학년">1학년</option>
+                        <option value="2학년">2학년</option>
+                        <option value="3학년">3학년</option>
+                        <option value="4학년 이상">4학년 이상</option>
+                    </Select>
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row className='main-row'>
+                    <Col lg={2} md={0} xs={0}/>
+                    {/* 비밀번호 입력 */}
+                    <Col lg={3} md={4} xs={5}>
+                      <label className='input-label' htmlFor='password'>비밀번호</label>
+                      <Input
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        id="password"
+                        value={password}
+                        onChange={onChangePassword}
+                        validations={[required, vpassword]}
+                      />
+                    </Col>
+                    <Col lg={2} md={2} xs={4}></Col>
+                    {/* 이용 유형 선택*/}
+                    <Col lg={3} md={4} xs={8}>
+                      <OverlayTrigger
+                        key='stdNumInfo'
+                        placement='top'
+                        overlay={
+                          <Tooltip id="stdNumInfo">
+                            선택해주세요😄<br/>
+                            멘토: 이중(부)전공을 이수하고 있어요.<br/>
+                            멘티: 아직 이중(부)전공이 없어요.
+                          </Tooltip>
+                        }
+                      >
+                        <label className='input-label' htmlFor='userType'>이용유형</label>
+                      </OverlayTrigger>
+                      <Select className='inputStyle' id="userType" onChange={SelectedUserType}>
+                        <option value="mentee">멘티</option>
+                        <option value="mento">멘토</option>
+                      </Select>
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row className='main-row'>
+                    <Col lg={7} md={6} xs={8}/>
+                    {/* 희망/이중(부)전공 선택 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label' htmlFor='dualMajor'>{showTypeDualMajor}</label>
+                      <Select className='inputStyle' id="dualMajor" onChange={onChangeUserDualMajor}>
+                      {
+                        !totalDualMajor?  
+                        <option value="0">학과 없음</option>:
+                        totalDualMajor.map(thisMajor => (
+                          <option key={thisMajor.id} value={thisMajor.id}>
+                            {thisMajor.name}
+                          </option>
+                        ))
+                      }
+                      </Select> 
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row>
+                    <Col lg={7} md={6} xs={8}/>
+                    {/* 총 평균학점 */}
+                    <Col lg={3} md={4} xs={8}>
+                      <label className='input-label' htmlFor='userGPA'>총 평균학점</label>
+                      <Input
+                        type="number" 
+                        step="0.01"
+                        className="form-control"
+                        name="gpa"
+                        id="userGPA"
+                        value={gpa}
+                        onChange={onChangeUserGpa}
+                        validations={[required, vgpa]}
+                      />
+                    </Col>
+                    <Col lg={2} md={2} xs={2}/>
+                  </Row>
+                  <Row>
+                    <Col className="notice-wrap" lg={12} md={12} xs={8}>
+                      <div className="notice-container">
+                        <Button className="withdrawal-btn" onClick={handleShow} >탈퇴하기</Button>
+                        <Button className="confirm-btn" ref={checkBtn} type="submit" >수정하기</Button>
+                      </div>
+                    </Col>
+                  </Row>
+                  {/* 입력 항목 별 유효성 검사 */}
+                  {message && (
+                    <div className="form-group">
+                    <div
+                        className={ successful ? "alert alert-success" : "alert alert-danger" }
+                        role="alert"
+                    >
+                        {message}
+                    </div>
+                    </div>
+                  )}
+                  {/* //입력 항목 별 유효성 검사 */}
+                </Form>
+              </Container>
+              {/* //회원정보수정/탈퇴 Form */}
 
+              {/* 회원탈퇴 Modal */}
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>서비스 탈퇴</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>'너의 이중전공은? 서비스를 정말 탈퇴하시겠어요?😢</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={ () => {
+                    handleClose();
+                    setResign(true);
+                    // setConfirm(true);
+                }}>
+                    탈퇴
+                </Button>
+                <Button style={{backgroundColor: "#002F5A", opacity: "0.8"}} onClick={() => {
+                    handleClose();
+                    // setConfirm(false);
+                }}>
+                    닫기
+                </Button>
+                </Modal.Footer>
+            </Modal>
+              {/* //회원탈퇴 Modal */}
+            </div>
             {/* //Main */}
         </div>
     );
