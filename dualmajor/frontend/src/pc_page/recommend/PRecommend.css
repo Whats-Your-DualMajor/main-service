@@ -128,3 +128,63 @@
 .question-progress{
     margin-top: 2vh;
 }
+
+
+/* 별점 프레임 */
+.star-wrap .star{
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+}
+.star-wrap .star > input{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.star-wrap .star > span{
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: #002d56;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+
+/* 개인별 기능 버튼 프레임 */
+.personal-btn-wrap{
+    text-align: center;
+}
+.personal-btn-wrap .recommend{
+    /*색*/
+    background-color: #002d56;
+    opacity: 0.8;
+
+    font-size: 14px;
+    width: 90%;
+    height: 40%;
+    margin-bottom: 8px;
+}
+.personal-btn-wrap .recommend:hover{
+    background-color: #002d56;
+    opacity: 0.9;
+}
+
+.personal-btn-wrap .compete{
+    /*색*/
+    background-color: #145f7a;
+    opacity: 0.9;
+
+    font-size: 14px;
+    width: 90%;
+    height: 40%;
+    margin-bottom: 8px;
+}
+.personal-btn-wrap .compete:hover{
+    background-color: #145f7a;
+    opacity: 1;
+}
+
