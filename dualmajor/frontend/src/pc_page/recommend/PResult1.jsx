@@ -265,7 +265,6 @@ function PResult1() {
 
     return (
         <div>
-
             {/* Header */}
             <div className='main-header'>
                 <div className='main-icon' onClick={()=>navigate('/')}>
