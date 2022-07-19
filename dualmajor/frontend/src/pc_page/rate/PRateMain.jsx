@@ -14,7 +14,6 @@ import AuthService from '../../services/auth.service';
 // 스타일
 import "../main/PMainHeader.css";
 import "../main/PMainFrame.css";
-import "./Plogin.css";
 
 /**유효성 검사 함수 */
 const required = (value) => {

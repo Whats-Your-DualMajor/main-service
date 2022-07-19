@@ -146,6 +146,9 @@ import PQuestion1 from './pc_page/recommend/PQuestion1';
 import PQuestion2 from './pc_page/recommend/PQuestion2';
 import PResult1 from './pc_page/recommend/PResult1';
 import PResult2 from './pc_page/recommend/PResult2';
+import PRateMain from './pc_page/rate/PRateMain';
+import PRateSeoul from './pc_page/rate/PRateSeoul';
+import PRateGlobal from './pc_page/rate/PRateGlobal';
 
 function App() {
   return (
@@ -162,6 +165,9 @@ function App() {
         <Route path='/question2' element={<PQuestion2/>}/>
         <Route path='/result1' element={<PResult1/>}/>
         <Route path='/result2' element={<PResult2/>}/>
+        <Route path='/rate' element={<PRateMain/>}/>
+        <Route path='/rate/seoul' element={<PRateSeoul/>}/>
+        <Route path='/rate/global' element={<PRateGlobal/>}/>
 
         {/* 구버전 레이아웃 */}
         <Route path='/m' element ={<Main/>} />
