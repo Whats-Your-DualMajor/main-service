@@ -127,60 +127,60 @@ function PQuestion2() {
     //초기 화면 랜더링 시 초기화(1번 실행)
     //백엔드로부터 질문 데이터 받아오기
     useEffect(() => {
-        // //정상적인 방법으로 테스트를 하는 지 검증
-        // let firstValidate = sessionStorage.getItem('recommendFirstResult');
-        // //임시 아이디 설정
-        // let testKeyValidate = sessionStorage.getItem('testKey');
+        //정상적인 방법으로 테스트를 하는 지 검증
+        let firstValidate = sessionStorage.getItem('recommendFirstResult');
+        //임시 아이디 설정
+        let testKeyValidate = sessionStorage.getItem('testKey');
 
-        // //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
-        // if(!firstValidate || !testKeyValidate){
-        //     Swal.fire({
-        //         text: "처음부터 테스트를 진행해주세요😁",
-        //         icon: undefined,
-        //         confirmButtonText: '확인',
-        //         confirmButtonColor: '#002F5A'
-        //       });
+        //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
+        if(!firstValidate || !testKeyValidate){
+            Swal.fire({
+                text: "처음부터 테스트를 진행해주세요😁",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
 
-        //     //recommend page로 이동
-        //     navigate("/recommend");
-        //     //window.location.reload();
-        // }
+            //recommend page로 이동
+            navigate("/recommend");
+            //window.location.reload();
+        }
 
-        // //테스트 시작
-        // let responseQuestionNum, responseTotalQuestionNum;
-        // let thisQuestionNum = Number(sessionStorage.getItem("questionNum"));
+        //테스트 시작
+        let responseQuestionNum, responseTotalQuestionNum;
+        let thisQuestionNum = Number(sessionStorage.getItem("questionNum"));
 
-        // //질문받아오기
-        // RecommendService.getSecondSectionQuestion(thisQuestionNum, testKeyValidate).then(
-        //     (response) => {
-        //         // console.log("thisData", response.data);
-        //         // console.log("thisData Type:", typeof(response.data));
+        //질문받아오기
+        RecommendService.getSecondSectionQuestion(thisQuestionNum, testKeyValidate).then(
+            (response) => {
+                // console.log("thisData", response.data);
+                // console.log("thisData Type:", typeof(response.data));
 
-        //         //테스트 사용자 식별용 세션 셋팅
-        //         sessionStorage.setItem('testKey', response.data.testKey);
+                //테스트 사용자 식별용 세션 셋팅
+                sessionStorage.setItem('testKey', response.data.testKey);
 
-        //         //현재 상태(질문)값 변경  
-        //         responseQuestionNum = Number(response.data.questionNum);
-        //         responseTotalQuestionNum = Number(response.data.totalQuestionNum);
+                //현재 상태(질문)값 변경  
+                responseQuestionNum = Number(response.data.questionNum);
+                responseTotalQuestionNum = Number(response.data.totalQuestionNum);
 
-        //         setQuestionNum(responseQuestionNum);
-        //         setTotalQuestionNum(responseTotalQuestionNum);
-        //         setQuestionContent(response.data.questionContent);
-        //         setResponse1(response.data.response1);
-        //         setResponse2(response.data.response2);
+                setQuestionNum(responseQuestionNum);
+                setTotalQuestionNum(responseTotalQuestionNum);
+                setQuestionContent(response.data.questionContent);
+                setResponse1(response.data.response1);
+                setResponse2(response.data.response2);
 
-        //         setProgressPercent(Math.round((responseQuestionNum/responseTotalQuestionNum)*100)); //진행척도를 나타내기 위한 변수
-        //     }
-        // )
+                setProgressPercent(Math.round((responseQuestionNum/responseTotalQuestionNum)*100)); //진행척도를 나타내기 위한 변수
+            }
+        )
 
         //테스트용
         // setQuestionNum(3);
-        setTotalQuestionNum(8);
-        setQuestionId(101);
-        setQuestionContent("당신은 전공을 선택할 때 개인의 성향과 진로 중 무엇을 더 중시하나요?");
-        setResponse1("개인성향이 중요해요.");
-        setResponse2("진로나 직업이 더 중요해요.");
-        setProgressPercent(1/8*100);
+        // setTotalQuestionNum(8);
+        // setQuestionId(101);
+        // setQuestionContent("당신은 전공을 선택할 때 개인의 성향과 진로 중 무엇을 더 중시하나요?");
+        // setResponse1("개인성향이 중요해요.");
+        // setResponse2("진로나 직업이 더 중요해요.");
+        // setProgressPercent(1/8*100);
 
     },[])
 
