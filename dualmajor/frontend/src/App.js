@@ -149,6 +149,11 @@ import PResult2 from './pc_page/recommend/PResult2';
 import PRateMain from './pc_page/rate/PRateMain';
 import PRateSeoul from './pc_page/rate/PRateSeoul';
 import PRateGlobal from './pc_page/rate/PRateGlobal';
+import PShowMyRateInfo from './pc_page/rate/PShowMyRateInfo';
+import PRecommendResult from './pc_page/recommend/PRecommendResult';
+import PSeoulMajorInfo from './pc_page/majorInfoDetail/PSeoulMajorInfo';
+import PGlobalMajorInfo from './pc_page/majorInfoDetail/PGlobalMajorInfo';
+import PShowMyMajorInfo from './pc_page/majorInfoDetail/PShowMyMajorInfo';
 
 function App() {
   return (
@@ -159,7 +164,7 @@ function App() {
         <Route path='/' element={<PMainPage/>}/>
         <Route path='/login' element={<PLogin/>}/>
         <Route path='/signup' element={<PSignup/>}/>
-        <Route path='/edituserinfo' element={<PEditUserInfo/>}/>
+        <Route path='/editInfo' element={<PEditUserInfo/>}/>
         <Route path='/recommend' element={<PRecommendMain/>}/>
         <Route path='/question1' element={<PQuestion1/>}/>
         <Route path='/question2' element={<PQuestion2/>}/>
@@ -168,6 +173,11 @@ function App() {
         <Route path='/rate' element={<PRateMain/>}/>
         <Route path='/rate/seoul' element={<PRateSeoul/>}/>
         <Route path='/rate/global' element={<PRateGlobal/>}/>
+        <Route path='/showMyRateInfo' element={<PShowMyRateInfo/>}/>
+        <Route path='/recommendResult' element={<PRecommendResult/>}/>
+        <Route path="/seoulMajorInfo" element={<PSeoulMajorInfo />} />
+        <Route path="/globalMajorInfo" element={<PGlobalMajorInfo />} />
+        <Route path='/showMyMajorInfo' element={<PShowMyMajorInfo/>}/>
 
         {/* 구버전 레이아웃 */}
         <Route path='/m' element ={<Main/>} />
