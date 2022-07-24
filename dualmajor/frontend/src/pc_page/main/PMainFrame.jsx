@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
-// import $ from "jquery";
-
+import { useNavigate, Link } from 'react-router-dom';
+//내 정보 Modal
+import MyModal from '../../page/main/component/MyModal';
 // 스타일
 import "./PMainHeader.css";
 import "./PMainFrame.css";
@@ -23,8 +23,27 @@ function PMainFrame(){
     // 각 탭 별 페이지 스크롤 이동 컨트롤
     const [moveToScrollIndex, setMoveToScrollIndex] = useState(false); //'r','p','m','i'
 
+    /**로그인 유무 식별 후 관련 상태관리 */
+    //로그인 여부 확인(기본 값: 로그인 false)
+    const [login, setLogin] = useState(false);
+    const [thisUser, setThisUser] = useState('');
+
+    const [modalShow, setModalShow] = useState(false); //모달을 통해 유저 정보 화면에 랜더링
+
+
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
+
+    /**(지속적으로)로그인 유무 식별 */
+    //로그인 되어있는 지 확인
+    useEffect( () =>{
+      if(sessionStorage.getItem("user")!=null){
+        setLogin(true);
+      }
+      else{
+        setLogin(false);
+      }
+    })
 
     //랜더링 옵션
     useEffect(() => {
@@ -413,7 +432,7 @@ function PMainFrame(){
         }
       };
       
-      // 글씨 fade-in
+      /**글씨 fade-in*/
       const useFadeIn = (duration = 0, delay = 0) => {
         const element = useRef();
 
@@ -481,8 +500,15 @@ function PMainFrame(){
                     }
                 </div>
                 <div className='login-wrap'>
-                    {/* 로그인 관련 처리 로직 추가 */}
-                    <div className='login-tab' onClick={()=>navigate('/login')}>로그인</div>
+                    {/* 로그인 관련 처리 로직*/}
+                    {
+                      login === false ?
+                      <div className='login-tab' onClick={()=>navigate('/login')}>로그인</div>
+                      :
+                      <div className='menu-tab' onClick={()=> setModalShow(true)}>
+                        <img src={require('../../media/tab/백메뉴.png')} alt='메뉴'/>
+                      </div>
+                    }
                 </div>
             </div>
             <div className='main-wrap'>
@@ -551,6 +577,8 @@ function PMainFrame(){
                 </div>
             </div>
         </div>
+        {/* 로그인 시 "내 정보 Modal" */}
+        <MyModal show={modalShow} onHide={() => setModalShow(false)} />
       </div>
     );
 };
