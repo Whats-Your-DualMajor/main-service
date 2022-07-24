@@ -175,7 +175,7 @@ function PRateMain(){
         // `
         // setThisMajorList(Object.values(JSON.parse(data)));
         let majorFirstSetting = '';
-        RateService.getMajorListSeoul().then(
+        RateService.getMajorListGlobal().then(
             (response) => {
                 let getData = response.data.majorListSeoul;
                 setThisMajorList(getData);

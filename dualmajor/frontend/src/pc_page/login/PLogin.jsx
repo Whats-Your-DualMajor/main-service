@@ -377,7 +377,7 @@ function PLogin(){
                 <Row>
                   <Col lg={2} md={2} xs={2}></Col>
                   <Col lg={8} md={6} xs={6}>
-                    <Button className='login-btn' ref={checkBtn}>Login</Button>
+                    <CheckButton className='login-btn' ref={checkBtn}>Login</CheckButton>
                     {/* 안되면 CheckButton으로 변경 */}
                   </Col>
                   <Col lg={2} md={2} xs={2}></Col>
