@@ -395,6 +395,15 @@ function PLogin(){
                     </div>
                   </Col>
                 </div>
+                {/* 입력 항목 별 유효성 검사 */}
+                {message && (
+                  <div className="error">
+                    <div className="alert alert-danger" role="alert">
+                      {message}
+                    </div>
+                  </div>
+                )}
+                {/* //입력 항목 별 유효성 검사 */}
                 </Form>
                </Container>
             </div>

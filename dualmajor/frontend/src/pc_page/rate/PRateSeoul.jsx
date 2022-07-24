@@ -523,6 +523,7 @@ function PRateMain(){
                         </>
                     }
                 </div>
+                <br/><br/>
                 <div className="common-apply-wrap">
                 {
                         login?
