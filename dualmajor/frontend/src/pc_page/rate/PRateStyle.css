@@ -1,0 +1,223 @@
+/* 경쟁률 페이지 - 메인 */
+.rate-main-wrap{
+    display: grid;
+    grid-template-rows: 3fr 2fr 5fr;
+    background-color: white;
+    text-align: center;
+    vertical-align: middle;
+    row-gap: 10px;
+    margin-top: 100px;
+}
+.rate-choose-campus{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    background-color: white;
+    justify-content: center;
+}
+.rate-choose-campus-btn{
+    position: relative;
+    width: 45vw;
+    z-index: 1;
+}
+.rate-choose-campus-btn img{
+    width: 45vw;
+    opacity: 0.6;
+}
+.campus-btn-tit{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: -1px 0 #9d9fa2, 0 1px #9d9fa2, 1px 0 #9d9fa2, 0 -1px #9d9fa2;
+    color: #FFF;
+    z-index: 1;
+}
+.rate-choose-campus-btn img:hover{
+    opacity: 1;
+    border-radius: 10px;
+}
+
+/* 경쟁률 페이지 - 서울 */
+.common-rate-main-wrap{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 1fr 5fr 1fr;
+    justify-content: center;
+    background-color: #FFF;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 110px;
+}
+.common-select-campus-wrap{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    font-weight: bold;
+    font-size: 20px;
+}
+.common-select-flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    
+    color: white;
+}
+.seoul-select-seoul-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 1;
+}
+.seoul-select-global-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 0.7;
+}
+.seoul-select-global-campus:hover{
+    opacity: 0.9;
+}
+.global-select-global-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 1;
+}
+.global-select-seoul-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 0.7;
+}
+.global-select-seoul-campus:hover{
+    opacity: 0.9;
+}
+.common-major-selection-filter{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    font-weight: normal;
+    font-size: 15px;
+}
+.common-major-info-wrap{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    border: 1px solid #C4C4C4;
+}
+.common-major-info-notice-apply{
+    color: #002d56;
+    opacity:0.8;
+
+    font-size: 13px;
+}
+.common-major-info-notice-avg-gpa{
+    color: #028799;
+    opacity:0.9;
+
+    font-size: 12px;
+}
+.common-apply-wrap{
+    grid-row-start:4;
+    grid-row-end:5;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    font-weight: bold;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+}
+.common-apply-warning{
+    font-size: 10px;
+}
+.common-apply-button{
+    background-color: #002d56;
+    opacity: 0.9;
+    /*모양*/
+    border-radius: 5px;
+    width: 40%;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+.common-apply-button:hover{
+    background-color: #002d56;
+    opacity: 1;
+}
+.common-apply-button:focus{
+    background-color: #002d56;
+    opacity: 1;
+}
+.common-applied-btn{
+    border-radius: 5px;
+    width: 40%;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+/* .choose-campus-btn-wrap{
+    position: relative;
+    width: 50%;
+    padding-top: 10%;
+    padding-bottom: 2%;
+    font-size: 19.5px;
+    color: white;
+    font-weight: bold;
+}
+.choose-campus-btn-wrap:after{
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+.seoul-campus-btn{
+    flex-grow: 1;
+    align-self: stretch;
+    background-color: #002d56;
+    opacity: 0.9;
+    margin-right: 5px;
+    border-radius: 10px;
+    min-height: 24vh;   
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+}
+.seoul-campus-btn:hover{
+    opacity: 1;
+}
+.seoul-campus-btn img{
+    height: 20vh;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 auto;
+    opacity: 0.8;
+}
+.global-campus-btn{
+    flex-grow: 1;
+    align-self: stretch;
+    background-color: #028799;
+    opacity: 0.9;
+    margin-left: 5px;
+    border-radius: 10px;
+
+}
+.global-campus-btn img{
+    width: 110px;
+    height: 110px;
+    border-radius: 10px;
+    opacity: 0.8; 
+}*/
