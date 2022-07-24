@@ -187,4 +187,27 @@
     background-color: #145f7a;
     opacity: 1;
 }
+/* 사용자별 이중전공 추천 결과창 */
+.result-wrap{
 
+}
+.next-btn-wrap{
+
+}
+.next-wrap{
+
+}
+.next-wrap .recommend{
+    /*색*/
+    background-color: #002d56;
+    opacity: 0.8;
+
+    font-size: 14px;
+    width: 90%;
+    height: 40%;
+    margin-bottom: 8px;
+}
+.next-wrap .recommend:hover{
+    background-color: #002d56;
+    opacity: 0.9;
+}

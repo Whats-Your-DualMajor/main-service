@@ -6,7 +6,7 @@ import {Button, Form, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 //팝업
 import Swal from 'sweetalert2' 
 //API
-import RateService from '../services/rate.service';
+import RateService from '../../services/rate.service';
 //그래프
 import GPAChart from '../../page/rate/component/GPAChart';
 import ApplyChart from "../../page/rate/component/ApplyChart";
@@ -451,8 +451,7 @@ function PShowMyRateInfo() {
             <div className='common-rate-main-wrap'>
                 <div className="common-select-campus-wrap">
                     <div className="common-select-flex-container">
-                        <div className="seoul-select-seoul-campus" id="seoul" onClick={selectCampus}>서울</div>
-                        <div className="seoul-select-global-campus" id="global" onClick={selectCampus}>글로벌</div>
+                        <div className="seoul-select-seoul-campus">내가 모의지원한 학과</div>
                     </div>
                 </div>
                 <div className="common-major-selection-filter">
@@ -502,16 +501,17 @@ function PShowMyRateInfo() {
                 }
                 </div>
                 <div className="common-apply-wrap">
+                    <br/><br/>
                 {
                     !thisApply?
-                    <Button type="button" className="applyButton" onClick={()=>navigate("/recommend")}>경쟁률 서비스로 이동</Button>:
+                    <Button type="button" className="common-apply-button" onClick={()=>navigate("/recommend")}>경쟁률 서비스로 이동</Button>:
                     <>
                         {
                             login?
                             <>
                             {
                                 thisApply == false && applyInfo.majorName != selectedMajorId?
-                                <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
+                                <Button type="button" className="common-apply-button" onClick={applyMajor}>지원하기</Button>:
                                 <>
                                 {
                                             valid == false?
@@ -527,7 +527,7 @@ function PShowMyRateInfo() {
                                                 }
                                                 >
                                                     <div>
-                                                        <Button type="button"  className="appliedButton" variant="secondary"  disabled>지원취소</Button>
+                                                        <Button type="button"  className="common-apply-button" variant="secondary"  disabled>지원취소</Button>
                                                         <br/>
                                                         <small>{applyInfo.majorName}에 지원한 상태입니다.<br/>복수지원은 불가하니 양해부탁드려요😥</small>    
                                                     </div>
@@ -535,7 +535,7 @@ function PShowMyRateInfo() {
                                                 
                                             </>:
                                             <>
-                                                <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                                <Button type="button" className="common-apply-button" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
                                                 <br/>
                                                 <small>{applyInfo.majorName}에 지원한 상태입니다.<br/>지원취소 후 변경 가능해요.</small><br/>
                                             </>
@@ -552,6 +552,7 @@ function PShowMyRateInfo() {
                     </>
                 }
                 </div>
+                <br/><br/>
             </div>
             {/* //Main */}
         </div>
