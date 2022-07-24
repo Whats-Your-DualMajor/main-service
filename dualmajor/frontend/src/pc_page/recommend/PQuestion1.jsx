@@ -127,65 +127,65 @@ function PQuestion1() {
     //초기 화면 랜더링 시 초기화(1번 실행)
     //백엔드로부터 질문 데이터 받아오기
     useEffect(() => {
-        imsi();
+        // imsi();
 
-    //     //정상적인 방법으로 테스트를 하는 지 검증
-    //     //setValidateTest(sessionStorage.getItem('recommendTest'));
-    //     let firstValidate = sessionStorage.getItem('recommendTest');
+        //정상적인 방법으로 테스트를 하는 지 검증
+        //setValidateTest(sessionStorage.getItem('recommendTest'));
+        let firstValidate = sessionStorage.getItem('recommendTest');
         
-    //     //임시 아이디 설정
-    //     let testKeyValidate = sessionStorage.getItem('testKey');
+        //임시 아이디 설정
+        let testKeyValidate = sessionStorage.getItem('testKey');
 
-    //     //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
-    //     if(!firstValidate){
-    //         Swal.fire({
-    //             text: "처음부터 테스트를 진행해주세요😁",
-    //             icon: undefined,
-    //             confirmButtonText: '확인',
-    //             confirmButtonColor: '#002F5A'
-    //           });
+        //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
+        if(!firstValidate){
+            Swal.fire({
+                text: "처음부터 테스트를 진행해주세요😁",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
 
-    //         //recommend page로 이동
-    //         navigate("/recommend");
-    //         // window.location.reload();
-    //     }
+            //recommend page로 이동
+            navigate("/recommend");
+            // window.location.reload();
+        }
         
-    //     let thisQuestionNum = Number(sessionStorage.getItem("questionNum"));
+        let thisQuestionNum = Number(sessionStorage.getItem("questionNum"));
 
-    //     //아이디 초기화 
-    //     if(thisQuestionNum === 0){
-    //         //처음 테스트용 임시 아이디를 요청할 때
-    //         testKeyValidate = null;
-    //         //처음인지 식별하기 위해 questionNum = 0을 지정했으므로, +1 처리하여 정상적인 문제의 번호 요청
-    //         thisQuestionNum += 1;
-    //         sessionStorage.setItem("questionNum", nextQuestionNum);
-    //     }
+        //아이디 초기화 
+        if(thisQuestionNum === 0){
+            //처음 테스트용 임시 아이디를 요청할 때
+            testKeyValidate = null;
+            //처음인지 식별하기 위해 questionNum = 0을 지정했으므로, +1 처리하여 정상적인 문제의 번호 요청
+            thisQuestionNum += 1;
+            sessionStorage.setItem("questionNum", nextQuestionNum);
+        }
 
-    //     //테스트 시작
-    //     let responseQuestionNum, responseTotalQuestionNum;
+        //테스트 시작
+        let responseQuestionNum, responseTotalQuestionNum;
 
-    //     //질문받아오기
-    //     RecommendService.getFirstSectionQuestion(thisQuestionNum, testKeyValidate).then(
-    //         (response) => {
-    //             // console.log("thisData", response.data);
-    //             // console.log("thisData Type:", typeof(response.data));
+        //질문받아오기
+        RecommendService.getFirstSectionQuestion(thisQuestionNum, testKeyValidate).then(
+            (response) => {
+                // console.log("thisData", response.data);
+                // console.log("thisData Type:", typeof(response.data));
 
-    //             //테스트 사용자 식별용 세션 셋팅
-    //             sessionStorage.setItem('testKey', response.data.testKey);
+                //테스트 사용자 식별용 세션 셋팅
+                sessionStorage.setItem('testKey', response.data.testKey);
                 
-    //             //현재 상태(질문)값 변경  
-    //             responseQuestionNum = Number(response.data.questionNum);
-    //             responseTotalQuestionNum = Number(response.data.totalQuestionNum);
+                //현재 상태(질문)값 변경  
+                responseQuestionNum = Number(response.data.questionNum);
+                responseTotalQuestionNum = Number(response.data.totalQuestionNum);
 
-    //             setQuestionNum(responseQuestionNum);
-    //             setTotalQuestionNum(responseTotalQuestionNum);
-    //             setQuestionContent(response.data.questionContent);
-    //             setResponse1(response.data.response1);
-    //             setResponse2(response.data.response2);
+                setQuestionNum(responseQuestionNum);
+                setTotalQuestionNum(responseTotalQuestionNum);
+                setQuestionContent(response.data.questionContent);
+                setResponse1(response.data.response1);
+                setResponse2(response.data.response2);
 
-    //             setProgressPercent(Math.round((responseQuestionNum/responseTotalQuestionNum)*100)); //진행척도를 나타내기 위한 변수
-    //         }
-    //     )
+                setProgressPercent(Math.round((responseQuestionNum/responseTotalQuestionNum)*100)); //진행척도를 나타내기 위한 변수
+            }
+        )
     },[])
 
     //임시 데이터
