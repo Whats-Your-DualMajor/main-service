@@ -45,23 +45,15 @@ function PQuestion1() {
             resetSelectedTab();
         }
         else if(type === "r"){
-            //현재 선택된 탭의 기존 상태 변경
-            // selectRecommandService(state);
             showPageMovePopUp("이중전공 추천 서비스","/recommend");
         }
         else if(type === "p"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectsetPredictedRate(state);
-            showPageMovePopUp("예상경쟁률 서비스");
+            showPageMovePopUp("예상경쟁률 서비스",'/rate');
         }
         else if(type === "m"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectMajorInfo(state);
-            showPageMovePopUp("학과정보 조회 서비스");
+            showPageMovePopUp("학과정보 조회 서비스",'/seoulMajorInfo');
         }
         else if(type === "i"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectServiceIntro(state);
             showPageMovePopUp("서비스 소개");
         }
     }
@@ -72,30 +64,6 @@ function PQuestion1() {
         setPredictedRate(false);
         setMajorInfo(false);
         setServiceIntro(false);        
-    }
-
-    const selectsetPredictedRate = (state) =>{
-        let reverseState = false;
-
-        setPredictedRate(state);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
-    const selectMajorInfo = (state) =>{
-        let reverseState = false;
-
-        setPredictedRate(reverseState);
-        setMajorInfo(state);
-        setServiceIntro(reverseState);
-    }
-
-    const selectServiceIntro = (state) =>{
-        let reverseState = false;
-
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(state);
     }
 
     /**페이지 이동 경고 팝업 표시 */
@@ -261,10 +229,10 @@ function PQuestion1() {
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
-                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
                         </div>
                     }
 

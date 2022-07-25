@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect} from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 //부트스트랩
-import {Button,Modal,OverlayTriger,Tooltip,Row,Col,Container,Accordion,ListGroup,InputGroup,FormControl} from 'react-bootstrap';
+import {Button,Modal,OverlayTrigger,Tooltip,Row,Col,Container,Accordion,ListGroup,InputGroup,FormControl} from 'react-bootstrap';
 //팝업
 import Swal from 'sweetalert2' 
 //API
@@ -14,6 +14,7 @@ import Error from '../../page/recommend/result1/Error';
 import "../main/PMainHeader.css";
 import "../main/PMainFrame.css";
 import "../login/Plogin.css";
+import "./PRecommend.css";
 
 function PResult1() {
     // 서비스 메뉴 선택 시 상태관리용
@@ -45,23 +46,15 @@ function PResult1() {
             resetSelectedTab();
         }
         else if(type === "r"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectRecommandService(state);
             showPageMovePopUp("이중전공 추천 서비스","/recommend");
         }
         else if(type === "p"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectsetPredictedRate(state);
-            showPageMovePopUp("예상경쟁률 서비스");
+            showPageMovePopUp("예상경쟁률 서비스","/rate");
         }
         else if(type === "m"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectMajorInfo(state);
-            showPageMovePopUp("학과정보 조회 서비스");
+            showPageMovePopUp("학과정보 조회 서비스","/seoulMajorInfo");
         }
         else if(type === "i"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectServiceIntro(state);
             showPageMovePopUp("서비스 소개");
         }
     }
@@ -72,42 +65,6 @@ function PResult1() {
         setPredictedRate(false);
         setMajorInfo(false);
         setServiceIntro(false);        
-    }
-
-    const selectRecommandService = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(state);
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
-    const selectsetPredictedRate = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(reverseState);
-        setPredictedRate(state);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
-    const selectMajorInfo = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(reverseState);
-        setPredictedRate(reverseState);
-        setMajorInfo(state);
-        setServiceIntro(reverseState);
-    }
-
-    const selectServiceIntro = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(reverseState);
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(state);
     }
 
     /**페이지 이동 경고 팝업 표시 */
@@ -178,6 +135,94 @@ function PResult1() {
                 <></>
             );
         }
+
+        return(
+            <>
+            {
+                !thisResult[0].intro?
+                <>
+                    {thisResult[0].departmentName}
+                </>:
+                <Accordion style={{width:"90%"}}>
+                {
+                    //testData.info.map(thisData => (
+                    thisResult.map(thisData => (
+                        <>
+                            <Accordion.Item eventKey={thisData.departmentName} style={{width:"100%"}}>
+                                <div id={`${thisData.departmentName}`} onClick={selectResult}>
+                                    <Accordion.Header>{thisData.departmentName}</Accordion.Header>
+                                </div>
+                                <Accordion.Body>
+                                    <ListGroup>
+                                        {
+                                            (thisData.campus !== null)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">캠퍼스</div><br/>
+                                                {thisData.campus}</ListGroup.Item>:
+                                            <></>
+                                        }
+                                        {
+                                            (thisData.intro !== null)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">학과소개</div><br/>
+                                                {thisData.intro}</ListGroup.Item>:
+                                            <></>
+                                        }
+                                        {
+                                            (thisData.degree !== null)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">졸업학위</div><br/>
+                                                {thisData.degree}</ListGroup.Item>:
+                                            <></>
+                                        }
+                                        {
+                                            (thisData.career !== null)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">진로</div><br/>
+                                                {thisData.career}</ListGroup.Item>:
+                                            <></>
+                                        }
+                                        {
+                                            (thisData.curriculum !== null)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">학과 커리큘럼</div><br/>
+                                                {thisData.curriculum}</ListGroup.Item>:
+                                            <></>
+                                        }
+                                        {
+                                            (thisData.certification!== null)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">관련 자격증</div><br/>
+                                                {thisData.certification}</ListGroup.Item>:
+                                            <></>                                                   
+                                        }
+                                        {
+                                            (thisData.webPage !== null)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">홈페이지</div><br/>
+                                                <a href={`${thisData.webPage}`} target="_blank" rel="noreferrer">
+                                                {thisData.webPage}</a></ListGroup.Item>:
+                                            <></>
+                                        }
+                                        {
+                                            (!thisData.phoneNum === false)?
+                                            <ListGroup.Item>
+                                                <div className="fw-bold">학과 사무실</div><br/>
+                                                <a href={`tel:${thisData.phoneNum}`}>
+                                                    {thisData.phoneNum}</a></ListGroup.Item>:
+                                            <></>
+                                        }
+                                    </ListGroup>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </>
+                    ))
+                }
+            </Accordion>
+            }
+        </>
+    )}
+
     
     /**선택된 결과 상태관리*/
     const selectResult =(event) =>{
@@ -439,95 +484,6 @@ function PResult1() {
         )
       }
 
-
-        return(
-                <>
-                {
-                    !thisResult[0].intro?
-                    <>
-                        {thisResult[0].departmentName}
-                    </>:
-                    <Accordion style={{width:"90%"}}>
-                    {
-                        //testData.info.map(thisData => (
-                        thisResult.map(thisData => (
-                            <>
-                                <Accordion.Item eventKey={thisData.departmentName} style={{width:"100%"}}>
-                                    <div id={`${thisData.departmentName}`} onClick={selectResult}>
-                                        <Accordion.Header>{thisData.departmentName}</Accordion.Header>
-                                    </div>
-                                    <Accordion.Body>
-                                        <ListGroup>
-                                            {
-                                                (thisData.campus !== null)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">캠퍼스</div><br/>
-                                                    {thisData.campus}</ListGroup.Item>:
-                                                <></>
-                                            }
-                                            {
-                                                (thisData.intro !== null)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">학과소개</div><br/>
-                                                    {thisData.intro}</ListGroup.Item>:
-                                                <></>
-                                            }
-                                            {
-                                                (thisData.degree !== null)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">졸업학위</div><br/>
-                                                    {thisData.degree}</ListGroup.Item>:
-                                                <></>
-                                            }
-                                            {
-                                                (thisData.career !== null)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">진로</div><br/>
-                                                    {thisData.career}</ListGroup.Item>:
-                                                <></>
-                                            }
-                                            {
-                                                (thisData.curriculum !== null)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">학과 커리큘럼</div><br/>
-                                                    {thisData.curriculum}</ListGroup.Item>:
-                                                <></>
-                                            }
-                                            {
-                                                (thisData.certification!== null)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">관련 자격증</div><br/>
-                                                    {thisData.certification}</ListGroup.Item>:
-                                                <></>                                                   
-                                            }
-                                            {
-                                                (thisData.webPage !== null)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">홈페이지</div><br/>
-                                                    <a href={`${thisData.webPage}`} target="_blank" rel="noreferrer">
-                                                    {thisData.webPage}</a></ListGroup.Item>:
-                                                <></>
-                                            }
-                                            {
-                                                (!thisData.phoneNum === false)?
-                                                <ListGroup.Item>
-                                                    <div className="fw-bold">학과 사무실</div><br/>
-                                                    <a href={`tel:${thisData.phoneNum}`}>
-                                                        {thisData.phoneNum}</a></ListGroup.Item>:
-                                                <></>
-                                            }
-                                        </ListGroup>
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </>
-                        ))
-                    }
-                </Accordion>
-                }
-            </>
-        )
-    }
-
     return (
         <div>
             {/* Header */}
@@ -543,14 +499,14 @@ function PResult1() {
                             <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
-                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
                         </div>
                     }
 
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
@@ -560,7 +516,7 @@ function PResult1() {
                     {
                         !majorInfo?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -570,7 +526,7 @@ function PResult1() {
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
@@ -583,22 +539,60 @@ function PResult1() {
             </div>
             {/* //Header */}
 
-            {/* 1차 결과 표시 메인 화면 */}
+            {/* 최종 결과 표시 메인 화면 */}
                 <div className="start-question-layer"/><br/>
-                    <div className="question-wrap">
-                        {
-                            !isError?
-                            <>
-                                {
-                                    !thisResult?
-                                    <></>:
-                                    <ShowResult/>  
-                                }
-                            </>:
-                                <Error/>
-                        }
+                <div className="question-wrap">
+                    <div className="notice-wrap">
+                        <h4><b>!!이중전공 추천 서비스 결과!!</b></h4>
                     </div>
-            {/* //1차 결과 표시 메인 화면 */}
+                    {
+                        !thisResult?
+                        <></>:
+                        <ShowResult/>  
+                    }
+                </div>
+                <div className="response-wrap">
+                    <br/><br/>
+                    {
+                    !thisResult?
+                    <></>:
+                    <>
+                    {
+                        !thisResult[0].intro?
+                        <>
+                            <span>다시 한번 테스트 해보시겠어요?</span>
+                            <br/>
+                            <div className='next-Btn-container'>
+                                <Button className='recommend-style-btn' onClick={() => goToStart()}>다시하기</Button>
+                            </div>
+                        </>:
+                        <>
+                            <OverlayTrigger
+                                key='dev'
+                                placement='top'
+                                overlay={
+                                <Tooltip id="dev">
+                                        <span>테스트 결과는 참고만 해주세요😊</span>
+                                </Tooltip>
+                                }
+                                >
+                                <div className='next-Btn-container'>
+                                    <Button className='recommend-style-btn' onClick={()=> setModalShow(true)}>저장하기</Button>
+                                </div>
+                            </OverlayTrigger>
+
+                            <br/>
+                            <span className='notice'>저장하기 버튼을 눌러 설문에 참여하면<br/> 추첨을 통해 베라 기프티콘을 드려요!!😁</span>
+                        </>
+                    }
+                    </>
+                }
+            </div>
+            {/* //최종 결과 표시 메인 화면 */}
+
+            {/* 설문조사 Modal */}
+            <SatisfactionModal show={modalShow} onHide={() => setModalShow(false)} />
+            {/* //설문조사 Modal */}
         </div>
     );
 }

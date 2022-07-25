@@ -3,9 +3,12 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 //내 정보 Modal
 import MyModal from '../../page/main/component/MyModal';
+//부트스트랩
+import { Dropdown,DropdownButton } from 'react-bootstrap';
 // 스타일
 import "./PMainHeader.css";
 import "./PMainFrame.css";
+
 
 const DIVIDER_HEIGHT = 5;
 
@@ -30,9 +33,18 @@ function PMainFrame(){
 
     const [modalShow, setModalShow] = useState(false); //모달을 통해 유저 정보 화면에 랜더링
 
+    /**반응형 상태관리 */
+    const [screenSize, setScreenSize] = useState(1000);
 
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
+
+    /**브라우저 창 크기 구하는 함수 */
+    const getScreenSize = () => {
+      let size = window.innerWidth;
+      setScreenSize(size);
+      return size;
+    }
 
     /**(지속적으로)로그인 유무 식별 */
     //로그인 되어있는 지 확인
@@ -48,6 +60,9 @@ function PMainFrame(){
     //랜더링 옵션
     useEffect(() => {
         handleSrcollIndex();
+
+        //브라우저 사이즈 구하기
+        getScreenSize();
     }, []);
 
     useEffect(() => {
@@ -449,6 +464,19 @@ function PMainFrame(){
       }
 
       const fadeInEffect = useFadeIn(2,0.5);
+    
+      /**각 서비스 소개 페이지의 바로가기 버튼 기능*/
+      const handleMoveRecommendService = () => {
+        navigate("/recommend");
+      }
+
+      const handleMoveRateService = () => {
+        navigate("/rate");
+      }
+
+      const handleMoveMajorInfoService = () => {
+        navigate("/seoulMajorInfo");
+      }
 
     return (
         <div>
@@ -458,7 +486,9 @@ function PMainFrame(){
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
-                <div className='main-select-service-wrap'>
+                  {
+                    screenSize > 480?
+                    <div className='main-select-service-wrap'>
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
@@ -498,7 +528,16 @@ function PMainFrame(){
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>
                     }
-                </div>
+                    </div>:
+                    <div>
+                      <DropdownButton variant='outline-light' size="sm" className="menu-dropdown-btn" title="메뉴">
+                        <Dropdown.Item onClick={()=>handleSelectService('r', true)}>이중전공추천</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('p', true)}>예상경쟁률</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('m', true)}>전공정보</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('i', true)}>서비스 소개</Dropdown.Item>
+                      </DropdownButton>
+                    </div>
+                  }
                 <div className='login-wrap'>
                     {/* 로그인 관련 처리 로직*/}
                     {
@@ -519,7 +558,7 @@ function PMainFrame(){
                     !moveToScrollIndex?
                     <div {...fadeInEffect}>
                       <span className='content-title'>너무 많은 전공,<br/>어떤 전공을 이중전공으로 할까<br/>언제까지 고민하실건가요?</span>
-                      <span className='content-subtitle'>학생들에 의해, 학생에게 필요한 서비스를<br/>고민하고 개발했습니다.</span>
+                      <span className='content-subtitle-no-hover'>학생들에 의해, 학생에게 필요한 서비스를<br/>고민하고 개발했습니다.</span>
                     </div>:
                     <></>
                   }
@@ -531,7 +570,7 @@ function PMainFrame(){
                     moveToScrollIndex === "r"?
                     <div {...fadeInEffect}>
                       <span className='content-title'>내 성향과 관심사에 맞게<br/>알고리즘이 추천해드립니다.</span>
-                      <span className='content-subtitle'>이중전공추천 서비스 바로가기</span>
+                      <span className='content-subtitle' onClick={() => handleMoveRecommendService()}>💡이중전공추천 서비스 바로가기</span>
                     </div>:
                     <></>
                   }
@@ -543,7 +582,7 @@ function PMainFrame(){
                     moveToScrollIndex === "p"?
                     <div {...fadeInEffect}>
                       <span className='content-title'>제한적인 이중전공 신청 기회,<br/>정보를 통해 합격률을 높이세요.</span>
-                      <span className='content-subtitle'>예상경쟁률 서비스 바로가기<br/>*예상경쟁률 서비스는 이중전공 신청/변경 기간에만 오픈됩니다.</span>
+                      <span className='content-subtitle' onClick={() => handleMoveRateService()}>📊예상경쟁률 서비스 바로가기<br/>*예상경쟁률 서비스는 이중전공 신청/변경 기간에만 오픈됩니다.</span>
                     </div>:
                     <></>
                   }
@@ -555,7 +594,7 @@ function PMainFrame(){
                     moveToScrollIndex === "m"?
                     <div {...fadeInEffect}>
                       <span className='content-title'>외대에 개설된 이중전공,<br/>모든 학과를 한 눈에 살펴보세요.</span>
-                      <span className='content-subtitle'>학과정보 보러가기</span>
+                      <span className='content-subtitle' onClick={() => handleMoveMajorInfoService()}>🔎학과정보 보러가기</span>
                     </div>:
                     <></>
                   }
