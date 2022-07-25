@@ -6,7 +6,7 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from "react-validation/build/button";
 //부트스트랩
-import {Button,Container,Row,Col,Modal,Tooltip,OverlayTrigger} from 'react-bootstrap';
+import {Button,Container,Row,Col,Modal,Tooltip,OverlayTrigger,DropdownButton,Dropdown} from 'react-bootstrap';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 //팝업
 import Swal from 'sweetalert2' 
@@ -107,8 +107,18 @@ function PEditUserInfo(){
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
+    /**반응형 상태관리 */
+    const [screenSize, setScreenSize] = useState(1000);
+
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
+
+    /**브라우저 창 크기 구하는 함수 */
+    const getScreenSize = () => {
+      let size = window.innerWidth;
+      setScreenSize(size);
+      return size;
+    }
 
     /**헤더 탭 제어 기능 */
     //선택한 탭에 대한 동작 제어
@@ -121,17 +131,17 @@ function PEditUserInfo(){
         else if(type === "r"){
             //현재 선택된 탭의 기존 상태 변경
             selectRecommandService(state);
-            showPageMovePopUp("이중전공 추천 서비스");
+            showPageMovePopUp("이중전공 추천 서비스",'/recommend');
         }
         else if(type === "p"){
             //현재 선택된 탭의 기존 상태 변경
             selectsetPredictedRate(state);
-            showPageMovePopUp("예상경쟁률 서비스");
+            showPageMovePopUp("예상경쟁률 서비스",'/rate');
         }
         else if(type === "m"){
             //현재 선택된 탭의 기존 상태 변경
             selectMajorInfo(state);
-            showPageMovePopUp("학과정보 조회 서비스");
+            showPageMovePopUp("학과정보 조회 서비스",'/seoulMajorInfo');
         }
         else if(type === "i"){
             //현재 선택된 탭의 기존 상태 변경
@@ -213,8 +223,8 @@ function PEditUserInfo(){
 
     //기존의 회원정보를 value값으로 자동 입력
     useEffect(() => {
-        //테스트용
-        // console.log("thisUser",thisUser);
+        //브라우저 사이즈 구하기
+        getScreenSize();
 
         AuthService.firstMajorList();
         AuthService.dualMajorList();
@@ -381,7 +391,9 @@ function PEditUserInfo(){
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
-                <div className='main-select-service-wrap'>
+                  {
+                    screenSize > 480?
+                    <div className='main-select-service-wrap'>
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
@@ -421,7 +433,16 @@ function PEditUserInfo(){
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>
                     }
-                </div>
+                    </div>:
+                    <div>
+                      <DropdownButton variant='outline-light' size="sm" className="menu-dropdown-btn" title="메뉴">
+                        <Dropdown.Item onClick={()=>handleSelectService('r', true)}>이중전공추천</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('p', true)}>예상경쟁률</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('m', true)}>전공정보</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('i', true)}>서비스 소개</Dropdown.Item>
+                      </DropdownButton>
+                    </div>
+                  }
                 <div className='login-wrap'>
                     {/* 로그인 관련 처리 로직 추가 */}
                 </div>
