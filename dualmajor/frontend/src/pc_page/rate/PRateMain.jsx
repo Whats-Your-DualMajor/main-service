@@ -29,23 +29,15 @@ function PRateMain(){
             resetSelectedTab();
         }
         else if(type === "r"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectRecommandService(state);
             showPageMovePopUp("이중전공 추천 서비스","/recommend");
         }
         else if(type === "p"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectsetPredictedRate(state);
             // showPageMovePopUp("예상경쟁률 서비스");
         }
         else if(type === "m"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectMajorInfo(state);
             showPageMovePopUp("학과정보 조회 서비스","/seoulMajorInfo");
         }
         else if(type === "i"){
-            //현재 선택된 탭의 기존 상태 변경
-            selectServiceIntro(state);
             showPageMovePopUp("서비스 소개");
         }
     }
@@ -56,42 +48,6 @@ function PRateMain(){
         setPredictedRate(false);
         setMajorInfo(false);
         setServiceIntro(false);        
-    }
-
-    const selectRecommandService = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(state);
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
-    const selectsetPredictedRate = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(reverseState);
-        setPredictedRate(state);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
-    const selectMajorInfo = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(reverseState);
-        setPredictedRate(reverseState);
-        setMajorInfo(state);
-        setServiceIntro(reverseState);
-    }
-
-    const selectServiceIntro = (state) =>{
-        let reverseState = false;
-
-        setRecommandService(reverseState);
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(state);
     }
 
     /**페이지 이동 경고 팝업 표시 */
@@ -148,10 +104,10 @@ function PRateMain(){
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
-                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
                         </div>
                     }
 
@@ -183,13 +139,12 @@ function PRateMain(){
 
             {/* Main */}
             <div className='rate-main-wrap'>
+            <div className="start-main-page"/><br/>
                 <div className="rate-choose-campus">
                     <div className='rate-choose-campus-btn' onClick={moveToSeoul}>
                         <img src={require('../../media/main/W설캠본관.jpg')} alt="추천"/>
                         <div className='campus-btn-tit'>서울캠퍼스</div>
                     </div>
-                
-
                     <div className='rate-choose-campus-btn' onClick={moveToGlobal}>
                         <img src={require('../../media/main/W글캠백년관.jpg')} alt="추천"/>
                         <div className='campus-btn-tit'>글로벌캠퍼스</div>

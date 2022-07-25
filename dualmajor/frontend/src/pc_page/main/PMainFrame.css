@@ -13,7 +13,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 100px;
   }
   
   .main-intro {
@@ -61,7 +60,9 @@
 
   .info-title{
     font-size: 30px;
+    font-weight: bold;
     margin-top: 100px;
+    color: #002d56;
   }
 
   .background-img-info{
@@ -101,9 +102,137 @@
     left: 20%;
   }
 
-  .content-subtitle{
+  .content-subtitle-no-hover{
     font-size: 15px;
+    font-weight: bold;
     position: absolute;
     top: 60%;
     left: 20%;
+    color: #002d56;
   }
+
+  .content-subtitle{
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    top: 60%;
+    left: 20%;
+    color: #002d56;
+  }
+
+  .content-subtitle:hover{
+    opacity: 0.6;
+  }
+
+/* 반응형 */
+/* 화면너비 0 ~ 960px */
+@media (max-width: 960px){
+  .background-img{
+    position: relative;
+    margin: 0 auto;
+    width: 95%;
+    max-height: 90%;
+    opacity: 0.2;
+    top: -5%;
+  }
+  .content-title{
+    font-size: 30px;
+    position: absolute;
+    top: 35%;
+    left: 20%;
+  }
+  .content-subtitle-no-hover{
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    color: #002d56;
+  }
+  .content-subtitle{
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    color: #002d56;
+  }
+}
+/* 화면너비 0 ~ 600px */
+@media (max-width: 600px){
+  .background-img{
+    position: relative;
+    margin: 0 auto;
+    width: 95%;
+    max-height: 90%;
+    opacity: 0.2;
+    top: 5%;
+  }
+  .content-title{
+    font-size: 14px;
+    position: absolute;
+    top: 45%;
+    left: 15%;
+  }
+  .content-subtitle-no-hover{
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 55%;
+    left: 15%;
+    color: #002d56;
+  }
+  .content-subtitle{
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 55%;
+    left: 15%;
+    color: #002d56;
+  }
+}
+/* 화면너비 0 ~ 480px */
+@media (max-width: 480px){
+  .background-img{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-height: 90%;
+    opacity: 0.2;
+    top: -0.5%;
+  }
+  .content-title{
+    font-size: 14px;
+    position: absolute;
+    top: 45%;
+    left: 5%;
+  }
+  .content-subtitle-no-hover{
+    font-size: 10px;
+    font-weight: bold;
+    position: absolute;
+    top: 55%;
+    left: 5%;
+    color: #002d56;
+  }
+  .content-subtitle{
+    font-size: 10px;
+    font-weight: bold;
+    position: absolute;
+    top: 55%;
+    left: 5%;
+    color: #002d56;
+  }
+  .info-title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 100px;
+    color: #002d56;
+  }
+
+  .background-img-info{
+    width: 100%;
+    max-height: 80%;
+    box-shadow: 10px 10px 10px 10px #FFF inset;
+  }
+}
