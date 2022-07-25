@@ -15,7 +15,7 @@ function PShowMyMajorInfo(props) {
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
     const [predictedRate, setPredictedRate] = useState(false);
-    const [majorInfoTab, setMajorInfoTab] = useState(false);
+    const [majorInfoTab, setMajorInfoTab] = useState(true);
     const [serviceIntro, setServiceIntro] = useState(false);
 
     /**내 전공 정보 관련 상태관리 */
@@ -431,7 +431,7 @@ function PShowMyMajorInfo(props) {
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
@@ -441,7 +441,7 @@ function PShowMyMajorInfo(props) {
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
@@ -451,7 +451,7 @@ function PShowMyMajorInfo(props) {
                     {
                         !majorInfoTab?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -461,7 +461,7 @@ function PShowMyMajorInfo(props) {
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>

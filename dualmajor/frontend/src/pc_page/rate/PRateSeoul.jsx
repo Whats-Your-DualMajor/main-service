@@ -18,7 +18,7 @@ import "./PRateStyle.css";
 function PRateMain(){
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
-    const [predictedRate, setPredictedRate] = useState(false);
+    const [predictedRate, setPredictedRate] = useState(true);
     const [majorInfoTab, setMajorInfoTab] = useState(false);
     const [serviceIntro, setServiceIntro] = useState(false);
 
@@ -63,12 +63,12 @@ function PRateMain(){
         else if(type === "p"){
             //현재 선택된 탭의 기존 상태 변경
             selectsetPredictedRate(state);
-            showPageMovePopUp("예상경쟁률 서비스");
+            // showPageMovePopUp("예상경쟁률 서비스");
         }
         else if(type === "m"){
             //현재 선택된 탭의 기존 상태 변경
             selectMajorInfo(state);
-            showPageMovePopUp("학과정보 조회 서비스");
+            showPageMovePopUp("학과정보 조회 서비스","/seoulMajorInfo");
         }
         else if(type === "i"){
             //현재 선택된 탭의 기존 상태 변경
@@ -437,7 +437,7 @@ function PRateMain(){
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
@@ -447,7 +447,7 @@ function PRateMain(){
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
@@ -457,7 +457,7 @@ function PRateMain(){
                     {
                         !majorInfo?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -467,7 +467,7 @@ function PRateMain(){
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>

@@ -14,7 +14,7 @@ import "../login/Plogin.css";
 
 function PRecommendResult(props) {
     // 서비스 메뉴 선택 시 상태관리용
-    const [recommandService, setRecommandService] = useState(false);
+    const [recommandService, setRecommandService] = useState(true);
     const [predictedRate, setPredictedRate] = useState(false);
     const [majorInfoTab, setMajorInfoTab] = useState(false);
     const [serviceIntro, setServiceIntro] = useState(false);
@@ -56,6 +56,7 @@ function PRecommendResult(props) {
             //현재 선택된 탭의 기존 상태 변경
             selectServiceIntro(state);
             showPageMovePopUp("서비스 소개");
+            
         }
     }
 
@@ -275,7 +276,7 @@ function PRecommendResult(props) {
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
@@ -285,7 +286,7 @@ function PRecommendResult(props) {
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
@@ -295,7 +296,7 @@ function PRecommendResult(props) {
                     {
                         !majorInfoTab?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -305,7 +306,7 @@ function PRecommendResult(props) {
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
