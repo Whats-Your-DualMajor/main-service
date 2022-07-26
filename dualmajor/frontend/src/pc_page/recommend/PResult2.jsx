@@ -154,82 +154,84 @@ function PResult1() {
                 <>
                     {thisResult[0].departmentName}
                 </>:
-                <Accordion style={{width:"90%"}}>
-                {
-                    //testData.info.map(thisData => (
-                    thisResult.map(thisData => (
-                        <>
-                            <Accordion.Item eventKey={thisData.departmentName} style={{width:"100%"}}>
-                                <div id={`${thisData.departmentName}`} onClick={selectResult}>
-                                    <Accordion.Header>{thisData.departmentName}</Accordion.Header>
-                                </div>
-                                <Accordion.Body>
-                                    <ListGroup>
-                                        {
-                                            (thisData.campus !== null)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">캠퍼스</div><br/>
-                                                {thisData.campus}</ListGroup.Item>:
-                                            <></>
-                                        }
-                                        {
-                                            (thisData.intro !== null)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">학과소개</div><br/>
-                                                {thisData.intro}</ListGroup.Item>:
-                                            <></>
-                                        }
-                                        {
-                                            (thisData.degree !== null)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">졸업학위</div><br/>
-                                                {thisData.degree}</ListGroup.Item>:
-                                            <></>
-                                        }
-                                        {
-                                            (thisData.career !== null)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">진로</div><br/>
-                                                {thisData.career}</ListGroup.Item>:
-                                            <></>
-                                        }
-                                        {
-                                            (thisData.curriculum !== null)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">학과 커리큘럼</div><br/>
-                                                {thisData.curriculum}</ListGroup.Item>:
-                                            <></>
-                                        }
-                                        {
-                                            (thisData.certification!== null)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">관련 자격증</div><br/>
-                                                {thisData.certification}</ListGroup.Item>:
-                                            <></>                                                   
-                                        }
-                                        {
-                                            (thisData.webPage !== null)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">홈페이지</div><br/>
-                                                <a href={`${thisData.webPage}`} target="_blank" rel="noreferrer">
-                                                {thisData.webPage}</a></ListGroup.Item>:
-                                            <></>
-                                        }
-                                        {
-                                            (!thisData.phoneNum === false)?
-                                            <ListGroup.Item>
-                                                <div className="fw-bold">학과 사무실</div><br/>
-                                                <a href={`tel:${thisData.phoneNum}`}>
-                                                    {thisData.phoneNum}</a></ListGroup.Item>:
-                                            <></>
-                                        }
-                                    </ListGroup>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </>
-                    ))
-                }
-            </Accordion>
+                <div className="response-container">
+                    <Accordion style={{width:"90%"}}>
+                    {
+                        //testData.info.map(thisData => (
+                        thisResult.map(thisData => (
+                            <>
+                                <Accordion.Item eventKey={thisData.departmentName} style={{width:"100%"}}>
+                                    <div id={`${thisData.departmentName}`} onClick={selectResult}>
+                                        <Accordion.Header>{thisData.departmentName}</Accordion.Header>
+                                    </div>
+                                    <Accordion.Body>
+                                        <ListGroup>
+                                            {
+                                                (thisData.campus !== null)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">캠퍼스</div><br/>
+                                                    {thisData.campus}</ListGroup.Item>:
+                                                <></>
+                                            }
+                                            {
+                                                (thisData.intro !== null)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">학과소개</div><br/>
+                                                    {thisData.intro}</ListGroup.Item>:
+                                                <></>
+                                            }
+                                            {
+                                                (thisData.degree !== null)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">졸업학위</div><br/>
+                                                    {thisData.degree}</ListGroup.Item>:
+                                                <></>
+                                            }
+                                            {
+                                                (thisData.career !== null)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">진로</div><br/>
+                                                    {thisData.career}</ListGroup.Item>:
+                                                <></>
+                                            }
+                                            {
+                                                (thisData.curriculum !== null)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">학과 커리큘럼</div><br/>
+                                                    {thisData.curriculum}</ListGroup.Item>:
+                                                <></>
+                                            }
+                                            {
+                                                (thisData.certification!== null)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">관련 자격증</div><br/>
+                                                    {thisData.certification}</ListGroup.Item>:
+                                                <></>                                                   
+                                            }
+                                            {
+                                                (thisData.webPage !== null)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">홈페이지</div><br/>
+                                                    <a href={`${thisData.webPage}`} target="_blank" rel="noreferrer">
+                                                    {thisData.webPage}</a></ListGroup.Item>:
+                                                <></>
+                                            }
+                                            {
+                                                (!thisData.phoneNum === false)?
+                                                <ListGroup.Item>
+                                                    <div className="fw-bold">학과 사무실</div><br/>
+                                                    <a href={`tel:${thisData.phoneNum}`}>
+                                                        {thisData.phoneNum}</a></ListGroup.Item>:
+                                                <></>
+                                            }
+                                        </ListGroup>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </>
+                        ))
+                    }
+                </Accordion>
+            </div>
             }
         </>
     )}
@@ -562,10 +564,10 @@ function PResult1() {
             {/* //Header */}
 
             {/* 최종 결과 표시 메인 화면 */}
-                <div className="start-question-layer"/><br/>
+                <div className="start-question-layer"/>
                 <div className="question-wrap">
                     <div className="notice-wrap">
-                        <h4><b>!!이중전공 추천 서비스 결과!!</b></h4>
+                        <span className='response-tit'><b>!!이중전공 추천 서비스 결과!!</b></span>
                     </div>
                     {
                         !thisResult?

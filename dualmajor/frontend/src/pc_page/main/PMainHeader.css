@@ -248,7 +248,7 @@
     }
     /* 내 정보 확인 Modal */
     .menu-tab {
-        margin-top: 15px;
+        margin-top: 20px;
         margin-left: 10px;
         opacity: 1;
     }
@@ -302,5 +302,11 @@
         margin-left: 10px;
     
         border-bottom: solid 2px #8d7150;
+    }
+    /* 내 정보 확인 Modal */
+    .menu-tab {
+        margin-top: 25px;
+        margin-left: 10px;
+        opacity: 1;
     }
 }
