@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+//내 정보 Modal
+import MyModal from '../../page/main/component/MyModal';
 //부트스트랩
 import {Button, Form, OverlayTrigger, Tooltip, DropdownButton, Dropdown } from 'react-bootstrap';
 //팝업
@@ -28,9 +30,12 @@ function PShowMyRateInfo() {
     const [selectedMajorId, setSelectedMajorId] = useState("");
     const [majorInfo, setMajorInfo] = useState("");
 
+    /**로그인 유무 식별 후 관련 상태관리 */
     //로그인 여부 확인(기본 값: 로그인 false)
     const [login, setLogin] = useState(false);
     const [thisUser, setThisUser] = useState('');
+
+    const [modalShow, setModalShow] = useState(false); //모달을 통해 유저 정보 화면에 랜더링
 
     //지원 여부 확인(기본 값: API통해서 받아오기)
     const [applyInfo, setApplyInfo] = useState(false); //stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
@@ -47,6 +52,17 @@ function PShowMyRateInfo() {
 
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
+
+    /**(지속적으로)로그인 유무 식별 */
+    //로그인 되어있는 지 확인
+    useEffect( () =>{
+        if(sessionStorage.getItem("user")!=null){
+          setLogin(true);
+        }
+        else{
+          setLogin(false);
+        }
+      })
 
     /**브라우저 창 크기 구하는 함수 */
     const getScreenSize = () => {
@@ -392,7 +408,7 @@ function PShowMyRateInfo() {
                     }
 
                     {
-                        !majorInfo?
+                        !majorInfoTab?
                         <div className='main-select-service-tab'>
                             <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
                         </div>:
@@ -421,7 +437,15 @@ function PShowMyRateInfo() {
                     </div>
                   }
                 <div className='login-wrap'>
-                    {/* 로그인 관련 처리 로직 추가 */}
+                    {/* 로그인 관련 처리 로직*/}
+                    {
+                      login === false ?
+                      <div className='login-tab' onClick={()=>navigate('/login')}>로그인</div>
+                      :
+                      <div className='menu-tab' onClick={()=> setModalShow(true)}>
+                        <img src={require('../../media/tab/백메뉴.png')} alt='메뉴'/>
+                      </div>
+                    }
                 </div>
             </div>
             {/* //Header */}
@@ -534,6 +558,9 @@ function PShowMyRateInfo() {
                 <br/><br/>
             </div>
             {/* //Main */}
+
+            {/* 로그인 시 "내 정보 Modal" */}
+            <MyModal show={modalShow} onHide={() => setModalShow(false)} />
         </div>
     );
 }
