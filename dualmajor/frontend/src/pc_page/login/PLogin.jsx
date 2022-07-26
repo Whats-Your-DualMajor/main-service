@@ -207,8 +207,10 @@ function PLogin(){
         if (checkBtn.current.context._errors.length === 0) {
           AuthService.login(userstdNum, password).then( //login(stdNum, password)
             () => {
+              //로그인하기 직전 페이지로 이동
+              window.history.back();
               //main page로 이동
-              navigate('/');
+              // navigate('/');
               // window.location.reload();
             },
             (error) => {

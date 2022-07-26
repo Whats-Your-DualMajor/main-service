@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+//내 정보 Modal
+import MyModal from '../../page/main/component/MyModal';
 //부트스트랩
 import {Button,Form,Modal,OverlayTrigger,Tooltip,DropdownButton,Dropdown} from 'react-bootstrap';
 //그래프 컴포넌트
@@ -29,10 +31,6 @@ function PRateMain(){
     const [selectedMajorId, setSelectedMajorId] = useState("");
     const [majorInfo, setMajorInfo] = useState("");
 
-    //로그인 여부 확인(기본 값: 로그인 false)
-    const [login, setLogin] = useState(false);
-    const [thisUser, setThisUser] = useState('');
-
     //지원 여부 확인(기본 값: API통해서 받아오기)
     const [applyInfo, setApplyInfo] = useState(false); //stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
     const [thisApply, setThisApply] = useState(false);
@@ -42,6 +40,13 @@ function PRateMain(){
     //학점 정보 받아오기
     const [showModal, setShowModal] = useState(false);
     const [thisGpa, setThisGpa] = useState("");
+
+    /**로그인 유무 식별 후 관련 상태관리 */
+    //로그인 여부 확인(기본 값: 로그인 false)
+    const [login, setLogin] = useState(false);
+    const [thisUser, setThisUser] = useState('');
+
+    const [modalShow, setModalShow] = useState(false); //모달을 통해 유저 정보 화면에 랜더링
 
     /**반응형 상태관리 */
     const [screenSize, setScreenSize] = useState(1000);
@@ -380,21 +385,6 @@ function PRateMain(){
 
     }
 
-    //학점 입력받을 모달 제어
-    const modalClose = () => setShowModal(false);
-    const modalShow = () => setShowModal(true);
-
-    //학점정보 받아오기
-    const putGpa = (e)=> {
-        //학점정보 업데이트
-        setThisGpa(e.target.value);   
-    }
-
-    const postApplyInfo = () => {
-        //지원하기 버튼을 누른 majorName을 thisApply에 업데이트
-        // setThisApply(true);
-    }
-
     return (
         <div>
             {/* Header */}
@@ -409,7 +399,7 @@ function PRateMain(){
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
@@ -422,14 +412,14 @@ function PRateMain(){
                             <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
-                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
                         </div>
                     }
 
                     {
-                        !majorInfo?
+                        !majorInfoTab?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -439,7 +429,7 @@ function PRateMain(){
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
@@ -456,7 +446,15 @@ function PRateMain(){
                     </div>
                   }
                 <div className='login-wrap'>
-                    {/* 로그인 관련 처리 로직 추가 */}
+                    {/* 로그인 관련 처리 로직*/}
+                    {
+                      login === false ?
+                      <div className='login-tab' onClick={()=>navigate('/login')}>로그인</div>
+                      :
+                      <div className='menu-tab' onClick={()=> setModalShow(true)}>
+                        <img src={require('../../media/tab/백메뉴.png')} alt='메뉴'/>
+                      </div>
+                    }
                 </div>
             </div>
             {/* //Header */}
@@ -555,36 +553,9 @@ function PRateMain(){
             </div>
             {/* //Main */}
 
-            {/* GPA Modal */}
-            <Modal show={showModal} onHide={modalClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title><b>{selectedMajorId} 지원하기</b></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>나의 평균 학점</Form.Label>
-                        <Form.Control
-                        type="text"
-                        placeholder="학점을 입력해주세요."
-                        value={thisGpa}
-                        onChange={putGpa}
-                        autoFocus
-                        />
-                    </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={modalClose}>
-                    취소
-                    </Button>
-                    <Button variant="dark" onClick={postApplyInfo}>
-                    입력하기
-                    </Button>
-                    
-                </Modal.Footer>
-            </Modal>
-            {/* //GPA Modal */}
+
+            {/* 로그인 시 "내 정보 Modal" */}
+            <MyModal show={modalShow} onHide={() => setModalShow(false)} />
         </div>
     );
 };

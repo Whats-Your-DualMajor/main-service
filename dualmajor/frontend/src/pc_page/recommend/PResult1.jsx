@@ -145,7 +145,9 @@ function PResult1() {
         return(
             <>
                 <div className="question-container">
-                    <span className='notice'>공부하고 싶은 학문 섹터 1개를 골라주세요!<br/>선택 섹터에 따라 최종결과가 달라질 수 있어요.</span>
+                    <span className='notice'>공부하고 싶은 학문을 골라주세요!<br/>선택 섹터에 따라 최종결과가 달라질 수 있어요.</span>
+                    <br/>
+                    <span className='notice notice-small'>* 답변에 따라, 1개의 학문 섹터만 추천될 수도 있습니다.</span>
                     </div>
                 <div className="response-container">
                     <Accordion style={{width: "90%"}}>

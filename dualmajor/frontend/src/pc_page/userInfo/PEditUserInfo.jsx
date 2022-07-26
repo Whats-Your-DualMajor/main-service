@@ -453,182 +453,373 @@ function PEditUserInfo(){
             {/* Main */}
             <div className='main-wrap'>
               <Container className="container-wrap">
-              {/* 회원정보수정/탈퇴 Form */}
+              {/* 반응형 화면 조정 */}
+              {
+                screenSize > 600?
                 <Form onSubmit={handleRegister} ref={form}>
-                  <Row className='main-row'>
-                    <Col className="main-tit-wrap" lg={12} md={12} xs={8}>
-                      <span class="main-tit">
-                        회원정보 수정
-                      </span>
-                    </Col>
-                  </Row>
-                  <Row className='main-row'>
-                    <Col lg={2} md={0} xs={0}/>
-                    {/* 학번/사번 입력 */}
-                    <Col  lg={3} md={4} xs={5}>
-                      <OverlayTrigger
-                        key='stdNumInfo'
-                        placement='top'
-                        overlay={
-                          <Tooltip id="stdNumInfo">
-                            학번/사번은 수정할 수 없어요.
-                          </Tooltip>
-                        }
-                      >
-                        <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
-                      </OverlayTrigger>
-                      <Input 
-                        type="userstdNum"
-                        className="form-control"
-                        name="userstdNum"
-                        value={userstdNum}
-                        onChange={onChangeUserstdNum}
-                        validations={[required, vuserstdNum]}
-                        disabled
-                      />
-                    </Col>
-                    <Col lg={2} md={2} xs={4}/>
-                    {/* 본전공 선택 */}
-                    <Col lg={3} md={4} xs={8}>
-                      <label className='input-label' htmlFor="firstMajor">본전공</label>
-                      <Select className='inputStyle' id="firstMajor" onChange={onChangeUserFirstMajor}>
-                      {
-                        !totalFirstMajor?  
-                        <option value="0">학과 없음</option>:
-                        totalFirstMajor.map(thisMajor => (
-                          <option key={thisMajor.id} value={thisMajor.id}>
-                            {thisMajor.name}
-                          </option>
-                        ))
+                <Row className='main-row'>
+                  <Col className="main-tit-wrap" lg={12} md={12} xs={8}>
+                    <span class="main-tit">
+                      회원정보 수정
+                    </span>
+                  </Col>
+                </Row>
+                <Row className='main-row'>
+                  <Col lg={2} md={0} xs={0}/>
+                  {/* 학번/사번 입력 */}
+                  <Col  lg={3} md={5} xs={5}>
+                    <OverlayTrigger
+                      key='stdNumInfo'
+                      placement='top'
+                      overlay={
+                        <Tooltip id="stdNumInfo">
+                          학번/사번은 수정할 수 없어요.
+                        </Tooltip>
                       }
-                      </Select>
-                    </Col>
-                    <Col lg={2} md={2} xs={2}/>
-                  </Row>
-                  <Row className='main-row'>
-                    <Col lg={2} md={0} xs={0}/>
-                    {/* 닉네임 */}
-                    <Col lg={3} md={4} xs={5}>
-                      <label className='input-label' htmlFor='username'>닉네임</label>
-                      <Input 
-                        type="username"
-                        className="form-control"
-                        name="username"
-                        id="username"
-                        value={username}
-                        onChange={onChangeUsername}
-                        validations={[required, vusername]}
-                      />
-                    </Col>
-                    <Col lg={2} md={2} xs={4}></Col>
-                    {/* 학년선택 */}
-                    <Col lg={3} md={4} xs={8}>
-                      <label className='input-label' htmlFor='grade'>학년</label>
-                      <Select className='inputStyle' id="grade" onChange={onChangeUserGrade}>
-                        <option value="1학년">1학년</option>
-                        <option value="2학년">2학년</option>
-                        <option value="3학년">3학년</option>
-                        <option value="4학년 이상">4학년 이상</option>
-                    </Select>
-                    </Col>
-                    <Col lg={2} md={2} xs={2}/>
-                  </Row>
-                  <Row className='main-row'>
-                    <Col lg={2} md={0} xs={0}/>
-                    {/* 비밀번호 입력 */}
-                    <Col lg={3} md={4} xs={5}>
-                      <label className='input-label' htmlFor='password'>비밀번호</label>
-                      <Input
-                        type="password"
-                        className="form-control"
-                        name="password"
-                        id="password"
-                        value={password}
-                        onChange={onChangePassword}
-                        validations={[required, vpassword]}
-                      />
-                    </Col>
-                    <Col lg={2} md={2} xs={4}></Col>
-                    {/* 이용 유형 선택*/}
-                    <Col lg={3} md={4} xs={8}>
-                      <OverlayTrigger
-                        key='stdNumInfo'
-                        placement='top'
-                        overlay={
-                          <Tooltip id="stdNumInfo">
-                            선택해주세요😄<br/>
-                            멘토: 이중(부)전공을 이수하고 있어요.<br/>
-                            멘티: 아직 이중(부)전공이 없어요.
-                          </Tooltip>
-                        }
-                      >
-                        <label className='input-label' htmlFor='userType'>이용유형</label>
-                      </OverlayTrigger>
-                      <Select className='inputStyle' id="userType" onChange={SelectedUserType}>
-                        <option value="mentee">멘티</option>
-                        <option value="mento">멘토</option>
-                      </Select>
-                    </Col>
-                    <Col lg={2} md={2} xs={2}/>
-                  </Row>
-                  <Row className='main-row'>
-                    <Col lg={7} md={6} xs={8}/>
-                    {/* 희망/이중(부)전공 선택 */}
-                    <Col lg={3} md={4} xs={8}>
-                      <label className='input-label' htmlFor='dualMajor'>{showTypeDualMajor}</label>
-                      <Select className='inputStyle' id="dualMajor" onChange={onChangeUserDualMajor}>
-                      {
-                        !totalDualMajor?  
-                        <option value="0">학과 없음</option>:
-                        totalDualMajor.map(thisMajor => (
-                          <option key={thisMajor.id} value={thisMajor.id}>
-                            {thisMajor.name}
-                          </option>
-                        ))
-                      }
-                      </Select> 
-                    </Col>
-                    <Col lg={2} md={2} xs={2}/>
-                  </Row>
-                  <Row>
-                    <Col lg={7} md={6} xs={8}/>
-                    {/* 총 평균학점 */}
-                    <Col lg={3} md={4} xs={8}>
-                      <label className='input-label' htmlFor='userGPA'>총 평균학점</label>
-                      <Input
-                        type="number" 
-                        step="0.01"
-                        className="form-control"
-                        name="gpa"
-                        id="userGPA"
-                        value={gpa}
-                        onChange={onChangeUserGpa}
-                        validations={[required, vgpa]}
-                      />
-                    </Col>
-                    <Col lg={2} md={2} xs={2}/>
-                  </Row>
-                  <Row>
-                    <Col className="notice-wrap" lg={12} md={12} xs={8}>
-                      <div className="notice-container">
-                        <Button className="withdrawal-btn" onClick={handleShow} >탈퇴하기</Button>
-                        <Button className="confirm-btn" ref={checkBtn} type="submit" >수정하기</Button>
-                      </div>
-                    </Col>
-                  </Row>
-                  {/* 입력 항목 별 유효성 검사 */}
-                  {message && (
-                    <div className="form-group">
-                    <div
-                        className={ successful ? "alert alert-success" : "alert alert-danger" }
-                        role="alert"
                     >
-                        {message}
-                    </div>
-                    </div>
-                  )}
-                  {/* //입력 항목 별 유효성 검사 */}
-                </Form>
+                      <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
+                    </OverlayTrigger>
+                    <Input 
+                      type="userstdNum"
+                      className="form-control"
+                      name="userstdNum"
+                      value={userstdNum}
+                      onChange={onChangeUserstdNum}
+                      validations={[required, vuserstdNum]}
+                      disabled
+                    />
+                  </Col>
+                  <Col lg={2} md={1} xs={4}/>
+                  {/* 본전공 선택 */}
+                  <Col lg={3} md={5} xs={8}>
+                    <label className='input-label' htmlFor="firstMajor">본전공</label>
+                    <Select className='inputStyle' id="firstMajor" onChange={onChangeUserFirstMajor}>
+                    {
+                      !totalFirstMajor?  
+                      <option value="0">학과 없음</option>:
+                      totalFirstMajor.map(thisMajor => (
+                        <option key={thisMajor.id} value={thisMajor.id}>
+                          {thisMajor.name}
+                        </option>
+                      ))
+                    }
+                    </Select>
+                  </Col>
+                  <Col lg={2} md={1} xs={2}/>
+                </Row>
+                <Row className='main-row'>
+                  <Col lg={2} md={0} xs={0}/>
+                  {/* 닉네임 */}
+                  <Col lg={3} md={5} xs={5}>
+                    <label className='input-label' htmlFor='username'>닉네임</label>
+                    <Input 
+                      type="username"
+                      className="form-control"
+                      name="username"
+                      id="username"
+                      value={username}
+                      onChange={onChangeUsername}
+                      validations={[required, vusername]}
+                    />
+                  </Col>
+                  <Col lg={2} md={1} xs={4}></Col>
+                  {/* 학년선택 */}
+                  <Col lg={3} md={5} xs={8}>
+                    <label className='input-label' htmlFor='grade'>학년</label>
+                    <Select className='inputStyle' id="grade" onChange={onChangeUserGrade}>
+                      <option value="1학년">1학년</option>
+                      <option value="2학년">2학년</option>
+                      <option value="3학년">3학년</option>
+                      <option value="4학년 이상">4학년 이상</option>
+                  </Select>
+                  </Col>
+                  <Col lg={2} md={1} xs={2}/>
+                </Row>
+                <Row className='main-row'>
+                  <Col lg={2} md={0} xs={0}/>
+                  {/* 비밀번호 입력 */}
+                  <Col lg={3} md={5} xs={5}>
+                    <label className='input-label' htmlFor='password'>비밀번호</label>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      id="password"
+                      value={password}
+                      onChange={onChangePassword}
+                      validations={[required, vpassword]}
+                    />
+                  </Col>
+                  <Col lg={2} md={1} xs={4}></Col>
+                  {/* 이용 유형 선택*/}
+                  <Col lg={3} md={5} xs={8}>
+                    <OverlayTrigger
+                      key='stdNumInfo'
+                      placement='top'
+                      overlay={
+                        <Tooltip id="stdNumInfo">
+                          선택해주세요😄<br/>
+                          멘토: 이중(부)전공을 이수하고 있어요.<br/>
+                          멘티: 아직 이중(부)전공이 없어요.
+                        </Tooltip>
+                      }
+                    >
+                      <label className='input-label' htmlFor='userType'>이용유형</label>
+                    </OverlayTrigger>
+                    <Select className='inputStyle' id="userType" onChange={SelectedUserType}>
+                      <option value="mentee">멘티</option>
+                      <option value="mento">멘토</option>
+                    </Select>
+                  </Col>
+                  <Col lg={2} md={1} xs={2}/>
+                </Row>
+                <Row className='main-row'>
+                  <Col lg={7} md={6} xs={8}/>
+                  {/* 희망/이중(부)전공 선택 */}
+                  <Col lg={3} md={5} xs={8}>
+                    <label className='input-label' htmlFor='dualMajor'>{showTypeDualMajor}</label>
+                    <Select className='inputStyle' id="dualMajor" onChange={onChangeUserDualMajor}>
+                    {
+                      !totalDualMajor?  
+                      <option value="0">학과 없음</option>:
+                      totalDualMajor.map(thisMajor => (
+                        <option key={thisMajor.id} value={thisMajor.id}>
+                          {thisMajor.name}
+                        </option>
+                      ))
+                    }
+                    </Select> 
+                  </Col>
+                  <Col lg={2} md={1} xs={2}/>
+                </Row>
+                <Row className='main-row'>
+                  <Col lg={7} md={6} xs={8}/>
+                  {/* 총 평균학점 */}
+                  <Col lg={3} md={5} xs={8}>
+                    <label className='input-label' htmlFor='userGPA'>총 평균학점</label>
+                    <Input
+                      type="number" 
+                      step="0.01"
+                      className="form-control"
+                      name="gpa"
+                      id="userGPA"
+                      value={gpa}
+                      onChange={onChangeUserGpa}
+                      validations={[required, vgpa]}
+                    />
+                  </Col>
+                  <Col lg={2} md={1} xs={2}/>
+                </Row>
+                <Row className='main-row'>
+                  <Col lg={1} md={1} xs={2}/>
+                  <Col  lg={5} md={5} xs={6}>
+                      <Button className="withdrawal-btn" onClick={handleShow} >탈퇴하기</Button>
+                  </Col>
+                  <Col  lg={5} md={5} xs={6}>
+                    <Button className="confirm-btn" ref={checkBtn} type="submit" >수정하기</Button>
+                  </Col>
+                  <Col lg={1} md={1} xs={2}/>
+                </Row>
+                {/* 입력 항목 별 유효성 검사 */}
+                {message && (
+                  <div className="form-group">
+                  <div
+                      className={ successful ? "alert alert-success" : "alert alert-danger" }
+                      role="alert"
+                  >
+                      {message}
+                  </div>
+                  </div>
+                )}
+                {/* //입력 항목 별 유효성 검사 */}
+              </Form>:
+              <Form onSubmit={handleRegister} ref={form}>
+              <Row className='main-row'>
+                <Col className="main-tit-wrap" lg={12} md={12} xs={8}>
+                  <span class="main-tit">
+                    회원정보 수정
+                  </span>
+                </Col>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 학번/사번 입력 */}
+                <Col md={8} xs={8}>
+                  <OverlayTrigger
+                    key='stdNumInfo'
+                    placement='top'
+                    overlay={
+                      <Tooltip id="stdNumInfo">
+                        학번/사번은 수정할 수 없어요.
+                      </Tooltip>
+                    }
+                  >
+                    <label className='input-label' htmlFor='userstdNum'>학번/사번</label>
+                  </OverlayTrigger>
+                  <Input 
+                    type="userstdNum"
+                    className="form-control"
+                    name="userstdNum"
+                    value={userstdNum}
+                    onChange={onChangeUserstdNum}
+                    validations={[required, vuserstdNum]}
+                    disabled
+                  />
+                </Col>
+                <Col md={2} xs={2}/>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 본전공 선택 */}
+                <Col md={8} xs={8}>
+                  <label className='input-label' htmlFor="firstMajor">본전공</label>
+                  <Select className='inputStyle' id="firstMajor" onChange={onChangeUserFirstMajor}>
+                  {
+                    !totalFirstMajor?  
+                    <option value="0">학과 없음</option>:
+                    totalFirstMajor.map(thisMajor => (
+                      <option key={thisMajor.id} value={thisMajor.id}>
+                        {thisMajor.name}
+                      </option>
+                    ))
+                  }
+                  </Select>
+                </Col>
+                <Col md={2} xs={2}/>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 닉네임 */}
+                <Col md={8} xs={8}>
+                  <label className='input-label' htmlFor='username'>닉네임</label>
+                  <Input 
+                    type="username"
+                    className="form-control"
+                    name="username"
+                    id="username"
+                    value={username}
+                    onChange={onChangeUsername}
+                    validations={[required, vusername]}
+                  />
+                </Col>
+                <Col md={2} xs={2}></Col>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 학년선택 */}
+                <Col md={8} xs={8}>
+                  <label className='input-label' htmlFor='grade'>학년</label>
+                  <Select className='inputStyle' id="grade" onChange={onChangeUserGrade}>
+                    <option value="1학년">1학년</option>
+                    <option value="2학년">2학년</option>
+                    <option value="3학년">3학년</option>
+                    <option value="4학년 이상">4학년 이상</option>
+                </Select>
+                </Col>
+                <Col md={2} xs={2}/>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 비밀번호 입력 */}
+                <Col md={8} xs={8}>
+                  <label className='input-label' htmlFor='password'>비밀번호</label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={onChangePassword}
+                    validations={[required, vpassword]}
+                  />
+                </Col>
+                <Col md={2} xs={2}></Col>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 이용 유형 선택*/}
+                <Col md={8} xs={8}>
+                  <OverlayTrigger
+                    key='stdNumInfo'
+                    placement='top'
+                    overlay={
+                      <Tooltip id="stdNumInfo">
+                        선택해주세요😄<br/>
+                        멘토: 이중(부)전공을 이수하고 있어요.<br/>
+                        멘티: 아직 이중(부)전공이 없어요.
+                      </Tooltip>
+                    }
+                  >
+                    <label className='input-label' htmlFor='userType'>이용유형</label>
+                  </OverlayTrigger>
+                  <Select className='inputStyle' id="userType" onChange={SelectedUserType}>
+                    <option value="mentee">멘티</option>
+                    <option value="mento">멘토</option>
+                  </Select>
+                </Col>
+                <Col md={2} xs={2}/>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 희망/이중(부)전공 선택 */}
+                <Col md={8} xs={8}>
+                  <label className='input-label' htmlFor='dualMajor'>{showTypeDualMajor}</label>
+                  <Select className='inputStyle' id="dualMajor" onChange={onChangeUserDualMajor}>
+                  {
+                    !totalDualMajor?  
+                    <option value="0">학과 없음</option>:
+                    totalDualMajor.map(thisMajor => (
+                      <option key={thisMajor.id} value={thisMajor.id}>
+                        {thisMajor.name}
+                      </option>
+                    ))
+                  }
+                  </Select> 
+                </Col>
+                <Col md={2} xs={2}/>
+              </Row>
+              <Row className='main-row'>
+                <Col md={0} xs={0}/>
+                {/* 총 평균학점 */}
+                <Col md={8} xs={8}>
+                  <label className='input-label' htmlFor='userGPA'>총 평균학점</label>
+                  <Input
+                    type="number" 
+                    step="0.01"
+                    className="form-control"
+                    name="gpa"
+                    id="userGPA"
+                    value={gpa}
+                    onChange={onChangeUserGpa}
+                    validations={[required, vgpa]}
+                  />
+                </Col>
+                <Col md={2} xs={2}/>
+              </Row>
+              <Row className='main-row'>
+                <Col md={1} xs={2}/>
+                <Col  lg={5} md={5} xs={4}>
+                      <Button className="confirm-btn gray-btn" onClick={handleShow} >탈퇴하기</Button>
+                  </Col>
+                  <Col  lg={5} md={5} xs={4}>
+                    <Button className="confirm-btn" ref={checkBtn} type="submit" >수정하기</Button>
+                  </Col>
+                <Col md={1} xs={2}/>
+              </Row>
+              {/* 입력 항목 별 유효성 검사 */}
+              {message && (
+                <div className="form-group">
+                <div
+                    className={ successful ? "alert alert-success" : "alert alert-danger" }
+                    role="alert"
+                >
+                    {message}
+                </div>
+                </div>
+              )}
+              {/* //입력 항목 별 유효성 검사 */}
+            </Form>
+              }
               </Container>
               {/* //회원정보수정/탈퇴 Form */}
 

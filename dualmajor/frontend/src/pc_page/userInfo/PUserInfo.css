@@ -74,11 +74,12 @@
     text-align: center;
     margin-top: 5vh;
 }
-.notice-container{
+/* .notice-container{
+    font-size: 15px;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
-}
+} */
 
 /* 확인버튼 */
 .confirm-btn{
@@ -86,6 +87,7 @@
     color: #FFF;
     opacity: 0.9;
     width: 20vw;
+    height: 2.5em;
     border: solid 0px;
 }
 .confirm-btn:hover{
@@ -102,11 +104,16 @@
 }
 
 /* 탈퇴 버튼 */
+.gray-btn{
+    background-color: #4d4f4f !important;
+}
+
 .withdrawal-btn{
     background-color: #4d4f4f;
     color: #FFF;
     opacity: 0.9;
     width: 20vw;
+    height: 2.5em;
     border: solid 0px;
 }
 .withdrawal-btn:hover{
@@ -117,4 +124,84 @@
     background-color: #4d4f4f;
     opacity: 1;
 }
+.whtidrawal-btn:disabled{
+    background-color: #4d4f4f;
+    opacity: 0.7;
+}
 
+/* 화면너비 0 ~ 600px */
+@media (max-width: 600px){
+    .main-tit-wrap{
+        text-align: center;
+    }
+    .main-tit{
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 1vh;
+        display: inline-block;
+        text-align: left;
+    }
+    .main-row{
+        margin-bottom: 1vh;
+    }
+    .confirm-btn{
+        background-color: #145f7a;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        height: 2.5em;
+        border: solid 0px;
+    }
+    .term-service-btn{
+        margin-left: 3vw;
+        width: 10em;
+        margin-bottom: 2vh;
+    }
+    /* 탈퇴 버튼 */
+    .withdrawal-btn{
+        background-color: #4d4f4f;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        height: 2.5em;
+        border: solid 0px;
+    }
+}
+/* 화면너비 0 ~ 480px */
+@media (max-width: 480px){
+    .main-tit{
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 0.5vh;
+        display: inline-block;
+        text-align: left;
+    }
+    .main-row{
+        margin-bottom: 0.5vh;
+    }
+    .confirm-btn{
+        background-color: #145f7a;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        font-size: 12px;
+        height: 2.5em;
+        border: solid 0px;
+    }
+    .term-service-btn{
+        margin-left: 3vw;
+        width: 6em;
+        margin-bottom: 2vh;
+        font-size: 12px;
+    }
+    /* 탈퇴 버튼 */
+    .withdrawal-btn{
+        background-color: #4d4f4f;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        font-size: 12px;
+        height: 2.5em;
+        border: solid 0px;
+    }
+}
