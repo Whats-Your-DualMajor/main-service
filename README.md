@@ -58,6 +58,11 @@
     <b>개발 중 사용했던 레포지토리</b><br/>
     <a href="https://github.com/Againyunn/Whats_Your_DualMajor/" target="_blank">Repository used during initial development<a>
   </li>
+  <br/>
+  <li>
+    <b>전체 UI/UX 개선 + 반응형 레이아웃 적용</b><br/>
+    <div>22.07.15 - 22.07.26(정재윤)</div>
+  </li>
 </ul>
 
 
