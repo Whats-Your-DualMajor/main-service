@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect} from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 //부트스트랩
-import {Button,Modal,OverlayTrigger,Tooltip,Row,Col,Container,Accordion,ListGroup,InputGroup,FormControl} from 'react-bootstrap';
+import {Button,Modal,OverlayTrigger,Tooltip,Row,Col,Container,Accordion,ListGroup,InputGroup,FormControl,DropdownButton,Dropdown} from 'react-bootstrap';
 //팝업
 import Swal from 'sweetalert2' 
 //API
@@ -24,18 +24,25 @@ function PResult1() {
     const [serviceIntro, setServiceIntro] = useState(false);
 
     /**1차 결과 상태 관리 */
-    //상태값 정의
     const [thisResult, setThisResult] = useState(false); //백엔드로부터 받아올 데이터
     const [isError, setIsError] = useState(false); //결과 값이 에러인지 여부 저장
     const [answer, setAnswer] = useState(false); //사용자가 선택한 학문 설정
 
     /**서비스 만족도 설문조사 상태 관리 */
-    
-    //만족도 조사 변수
     const [modalShow, setModalShow] = useState(false); //모달을 통해 만족도 수집
+
+    /**반응형 상태관리 */
+    const [screenSize, setScreenSize] = useState(1000);
 
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
+
+    /**브라우저 창 크기 구하는 함수 */
+    const getScreenSize = () => {
+        let size = window.innerWidth;
+        setScreenSize(size);
+        return size;
+      }
     
     /**헤더 탭 제어 기능 */
     //선택한 탭에 대한 동작 제어
@@ -88,6 +95,10 @@ function PResult1() {
 
     /**최종 결과창 노출*/
     useEffect(() => {
+
+        //브라우저 사이즈 구하기
+        getScreenSize();
+
         //임시 아이디 설정
         let testKeyValidate = sessionStorage.getItem('testKey');
         let resultType = sessionStorage.getItem('result2Type');
@@ -492,21 +503,23 @@ function PResult1() {
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
-                <div className='main-select-service-wrap'>
+                  {
+                    screenSize > 480?
+                    <div className='main-select-service-wrap'>
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
                             <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
-                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
                         </div>
                     }
 
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
@@ -516,7 +529,7 @@ function PResult1() {
                     {
                         !majorInfo?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -526,13 +539,22 @@ function PResult1() {
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>
                     }
-                </div>
+                    </div>:
+                    <div>
+                      <DropdownButton variant='outline-light' size="sm" className="menu-dropdown-btn" title="메뉴">
+                        <Dropdown.Item onClick={()=>handleSelectService('r', true)}>이중전공추천</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('p', true)}>예상경쟁률</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('m', true)}>전공정보</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('i', true)}>서비스 소개</Dropdown.Item>
+                      </DropdownButton>
+                    </div>
+                  }
                 <div className='login-wrap'>
                     {/* 로그인 관련 처리 로직 추가 */}
                 </div>

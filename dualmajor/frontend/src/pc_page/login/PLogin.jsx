@@ -6,7 +6,7 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from "react-validation/build/button";
 //부트스트랩
-import {Button,Container,Row,Col,Modal} from 'react-bootstrap';
+import {Button,Container,Row,Col,Modal,DropdownButton,Dropdown} from 'react-bootstrap';
 //팝업
 import Swal from 'sweetalert2' 
 //API
@@ -70,9 +70,25 @@ function PLogin(){
     const [validID, setValidID] = useState("");
     const [activateResetPW, setActivateResetPW] = useState(false);
     const [newPW, setNewPW] = useState("");
+  
+    /**반응형 상태관리 */
+    const [screenSize, setScreenSize] = useState(1000);
 
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
+
+    /**브라우저 창 크기 구하는 함수 */
+    const getScreenSize = () => {
+      let size = window.innerWidth;
+      setScreenSize(size);
+      return size;
+    }
+
+    /**브라우저 화면 크기 측정 */
+    useEffect(() => {
+      //브라우저 사이즈 구하기
+      getScreenSize();
+    },[])
 
     /**헤더 탭 제어 기능 */
     //선택한 탭에 대한 동작 제어
@@ -278,7 +294,9 @@ function PLogin(){
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
-                <div className='main-select-service-wrap'>
+                  {
+                    screenSize > 480?
+                    <div className='main-select-service-wrap'>
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
@@ -318,7 +336,16 @@ function PLogin(){
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>
                     }
-                </div>
+                    </div>:
+                    <div>
+                      <DropdownButton variant='outline-light' size="sm" className="menu-dropdown-btn" title="메뉴">
+                        <Dropdown.Item onClick={()=>handleSelectService('r', true)}>이중전공추천</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('p', true)}>예상경쟁률</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('m', true)}>전공정보</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('i', true)}>서비스 소개</Dropdown.Item>
+                      </DropdownButton>
+                    </div>
+                  }
                 <div className='login-wrap'>
                     {/* 로그인 관련 처리 로직 추가 */}
                 </div>
@@ -334,10 +361,10 @@ function PLogin(){
                 </Row>
                 <Row>
                   <div className="id-pw-wrap">
-                    <Col lg={2} md={2} xs={2}>
+                    <Col lg={2} md={2} xs={1}>
                       <label htmlFor="id-input" id="id-pw">ID</label>
                     </Col>
-                    <Col lg={8} md={6} xs={6}>
+                    <Col lg={8} md={10} xs={9}>
                       <Input 
                         className="form-control" 
                         type="userstdNum"
@@ -351,14 +378,14 @@ function PLogin(){
                         size="20"
                       />
                     </Col>
-                    <Col lg={2} md={2} xs={0}></Col>
+                    <Col lg={2} md={0} xs={0}></Col>
                   </div>
                 
                 <div className="id-pw-wrap">
-                  <Col lg={2} md={2} xs={2}>
+                  <Col lg={2} md={2} xs={1}>
                     <label htmlFor="pw-input"  id="id-pw">PW</label>
                   </Col>
-                  <Col lg={8} md={6} xs={6}>
+                  <Col lg={8} md={10} xs={9}>
                     <Input 
                       className="form-control"
                       type="password"
@@ -371,25 +398,25 @@ function PLogin(){
                       size="20"
                     />
                   </Col>
-                  <Col lg={2} md={2} xs={0}></Col>
+                  <Col lg={2} md={0} xs={0}></Col>
                 </div>
                 </Row>
                 <Row>
-                  <Col lg={2} md={2} xs={2}></Col>
-                  <Col lg={8} md={6} xs={6}>
+                  <Col lg={2} md={1} xs={1}></Col>
+                  <Col lg={8} md={11} xs={8}>
                     <CheckButton className='login-btn' ref={checkBtn}>Login</CheckButton>
                     {/* 안되면 CheckButton으로 변경 */}
                   </Col>
-                  <Col lg={2} md={2} xs={2}></Col>
+                  <Col lg={2} md={0} xs={1}></Col>
                 </Row>
                 <div className="option-wrap">
-                  <Col lg={5} md={5} xs={4}>
+                  <Col lg={5} md={6} xs={7}>
                     <div className="reset-pw" onClick={handleShow}>
                     비밀번호 재설정
                     </div>
                   </Col>
-                  <Col lg={1} md={1} xs={1}>/</Col>
-                  <Col lg={4} md={4} xs={3}>
+                  <Col lg={1} md={1} xs={1}></Col>
+                  <Col lg={4} md={3} xs={4}>
                     <div className="signup" onClick={()=>navigate('/signup')}>
                       회원가입
                     </div>

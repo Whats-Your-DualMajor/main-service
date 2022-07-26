@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 //부트스트랩
-import {Button,Form,ListGroup} from 'react-bootstrap';
+import {Button,Form,ListGroup,DropdownButton,Dropdown} from 'react-bootstrap';
 //API
 import RecommendService from '../../services/recommend.service';
 //팝업
@@ -23,9 +23,18 @@ function PShowMyMajorInfo(props) {
     const [selectedMajorId, setSelectedMajorId] = useState(false);
     const [majorDetailInfo, setMajorDetailInfo] = useState(false);
 
+    /**반응형 상태관리 */
+    const [screenSize, setScreenSize] = useState(1000);
+
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
 
+    /**브라우저 창 크기 구하는 함수 */
+    const getScreenSize = () => {
+        let size = window.innerWidth;
+        setScreenSize(size);
+        return size;
+      }
     
     /**헤더 탭 제어 기능 */
     //선택한 탭에 대한 동작 제어
@@ -78,6 +87,9 @@ function PShowMyMajorInfo(props) {
 
     /**처음 화면 랜더링 시 → 각 캠퍼스별 전공리스트 받아오기*/
     useEffect(() => {
+        //브라우저 사이즈 구하기
+        getScreenSize();
+
         //로컬에 기존의 majorDetailInfo가 있는 지 확인
         let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
 
@@ -383,11 +395,14 @@ function PShowMyMajorInfo(props) {
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
-                <div className='main-select-service-wrap'>
+
+                {
+                    screenSize > 480?
+                    <div className='main-select-service-wrap'>
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
@@ -397,7 +412,7 @@ function PShowMyMajorInfo(props) {
                     {
                         !predictedRate?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
@@ -410,20 +425,29 @@ function PShowMyMajorInfo(props) {
                             <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
-                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
                         </div>
                     }
 
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>
                     }
-                </div>
+                    </div>:
+                    <div>
+                      <DropdownButton variant='outline-light' size="sm" className="menu-dropdown-btn" title="메뉴">
+                        <Dropdown.Item onClick={()=>handleSelectService('r', true)}>이중전공추천</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('p', true)}>예상경쟁률</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('m', true)}>전공정보</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('i', true)}>서비스 소개</Dropdown.Item>
+                      </DropdownButton>
+                    </div>
+                  }
                 <div className='login-wrap'>
                     {/* 로그인 관련 처리 로직 추가 */}
                 </div>

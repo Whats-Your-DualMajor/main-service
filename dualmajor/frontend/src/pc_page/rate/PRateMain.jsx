@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 //부트스트랩
-import {Button,Container,Row,Col} from 'react-bootstrap';
+import {DropdownButton,Dropdown} from 'react-bootstrap';
 //팝업
 import Swal from 'sweetalert2' 
 // 스타일
@@ -17,8 +17,18 @@ function PRateMain(){
     const [majorInfo, setMajorInfo] = useState(false);
     const [serviceIntro, setServiceIntro] = useState(false);
 
+    /**반응형 상태관리 */
+    const [screenSize, setScreenSize] = useState(1000);
+
     // 페이지 이동 컨트롤
     let navigate = useNavigate();
+
+    /**브라우저 창 크기 구하는 함수 */
+    const getScreenSize = () => {
+        let size = window.innerWidth;
+        setScreenSize(size);
+        return size;
+      }
 
     /**헤더 탭 제어 기능 */
     //선택한 탭에 대한 동작 제어
@@ -69,6 +79,11 @@ function PRateMain(){
       });
     }
 
+    useEffect(()=>{
+        //브라우저 사이즈 구하기
+        getScreenSize();
+    },[])
+
     /**각 캠퍼스 별 페이지로 이동 */
     const moveToSeoul = () => {
         //SeoulMain으로 이동
@@ -90,11 +105,13 @@ function PRateMain(){
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
-                <div className='main-select-service-wrap'>
+                  {
+                    screenSize > 480?
+                    <div className='main-select-service-wrap'>
                     {
                         !recommandService?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
+                            <span onClick={()=>handleSelectService('r', true)}>이중전공추천</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('r', false)}>이중전공추천</span>
@@ -107,14 +124,14 @@ function PRateMain(){
                             <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
                         </div>:
                         <div className='selected-main-select-service'>
-                            <span onClick={()=>handleSelectService('p', true)}>예상경쟁률</span>
+                            <span onClick={()=>handleSelectService('p', false)}>예상경쟁률</span>
                         </div>
                     }
 
                     {
                         !majorInfo?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
+                            <span onClick={()=>handleSelectService('m', true)}>전공정보</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('m', false)}>전공정보</span>
@@ -124,13 +141,22 @@ function PRateMain(){
                     {
                         !serviceIntro?
                         <div className='main-select-service-tab'>
-                            <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
+                            <span onClick={()=>handleSelectService('i', true)}>서비스 소개</span>
                         </div>:
                         <div className='selected-main-select-service'>
                             <span onClick={()=>handleSelectService('i', false)}>서비스 소개</span>
                         </div>
                     }
-                </div>
+                    </div>:
+                    <div>
+                      <DropdownButton variant='outline-light' size="sm" className="menu-dropdown-btn" title="메뉴">
+                        <Dropdown.Item onClick={()=>handleSelectService('r', true)}>이중전공추천</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('p', true)}>예상경쟁률</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('m', true)}>전공정보</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>handleSelectService('i', true)}>서비스 소개</Dropdown.Item>
+                      </DropdownButton>
+                    </div>
+                  }
                 <div className='login-wrap'>
                     {/* 로그인 관련 처리 로직 추가 */}
                 </div>
@@ -141,21 +167,21 @@ function PRateMain(){
             <div className='rate-main-wrap'>
             <div className="start-main-page"/><br/>
                 <div className="rate-choose-campus">
-                    <div className='rate-choose-campus-btn' onClick={moveToSeoul}>
-                        <img src={require('../../media/main/W설캠본관.jpg')} alt="추천"/>
+                    <div className='rate-seoul-campus-btn' onClick={moveToSeoul}>
                         <div className='campus-btn-tit'>서울캠퍼스</div>
                     </div>
-                    <div className='rate-choose-campus-btn' onClick={moveToGlobal}>
-                        <img src={require('../../media/main/W글캠백년관.jpg')} alt="추천"/>
+                    <div className='rate-global-campus-btn' onClick={moveToGlobal}>
                         <div className='campus-btn-tit'>글로벌캠퍼스</div>
                     </div>
                 </div>
-                <div className="sub-tit">
+                <div className="rate-sub-tit-wrap">
+                    <div className="rate-sub-tit">
                     여러분의 꿈을 응원합니다.
-                </div>
-                <div className="notice">
-                    학과별 예상 경쟁률은 "지원하기"를<br/> 선택한 이용자의 통계입니다.<br/>
-                    한번 지원하면 <b>6시간</b> 후에 수정이<br/> 가능하니 참고부탁드립니다.
+                    </div>
+                    <div className="rate-notice">
+                        학과별 예상 경쟁률은 "지원하기"를<br/> 선택한 이용자의 통계입니다.<br/>
+                        한번 지원하면 <b>6시간</b> 후에 수정이<br/> 가능하니 참고부탁드립니다.
+                    </div>
                 </div>
             </div>
             {/* //Main */}
