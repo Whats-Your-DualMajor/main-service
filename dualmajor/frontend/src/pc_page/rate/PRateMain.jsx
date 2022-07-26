@@ -167,21 +167,21 @@ function PRateMain(){
             <div className='rate-main-wrap'>
             <div className="start-main-page"/><br/>
                 <div className="rate-choose-campus">
-                    <div className='rate-choose-campus-btn' onClick={moveToSeoul}>
-                        <img src={require('../../media/main/W설캠본관.jpg')} alt="추천"/>
+                    <div className='rate-seoul-campus-btn' onClick={moveToSeoul}>
                         <div className='campus-btn-tit'>서울캠퍼스</div>
                     </div>
-                    <div className='rate-choose-campus-btn' onClick={moveToGlobal}>
-                        <img src={require('../../media/main/W글캠백년관.jpg')} alt="추천"/>
+                    <div className='rate-global-campus-btn' onClick={moveToGlobal}>
                         <div className='campus-btn-tit'>글로벌캠퍼스</div>
                     </div>
                 </div>
-                <div className="sub-tit">
+                <div className="rate-sub-tit-wrap">
+                    <div className="rate-sub-tit">
                     여러분의 꿈을 응원합니다.
-                </div>
-                <div className="notice">
-                    학과별 예상 경쟁률은 "지원하기"를<br/> 선택한 이용자의 통계입니다.<br/>
-                    한번 지원하면 <b>6시간</b> 후에 수정이<br/> 가능하니 참고부탁드립니다.
+                    </div>
+                    <div className="rate-notice">
+                        학과별 예상 경쟁률은 "지원하기"를<br/> 선택한 이용자의 통계입니다.<br/>
+                        한번 지원하면 <b>6시간</b> 후에 수정이<br/> 가능하니 참고부탁드립니다.
+                    </div>
                 </div>
             </div>
             {/* //Main */}
