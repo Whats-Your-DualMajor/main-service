@@ -9,10 +9,10 @@ import { Dropdown,DropdownButton } from 'react-bootstrap';
 import "./PMainHeader.css";
 import "./PMainFrame.css";
 
-
 const DIVIDER_HEIGHT = 5;
 
-function PMainFrame(){
+function MMainFrame(props) {
+
     // 서비스 메뉴 선택 시 상태관리용
     const [recommandService, setRecommandService] = useState(false);
     const [predictedRate, setPredictedRate] = useState(false);
@@ -32,8 +32,9 @@ function PMainFrame(){
     const [thisUser, setThisUser] = useState('');
 
     const [modalShow, setModalShow] = useState(false); //모달을 통해 유저 정보 화면에 랜더링
-
+    
     /**반응형 상태관리 */
+    const [carouselImgSize, setCarouselImgSize] = useState('d-block w-70 show-flags-gif');
     const [screenSize, setScreenSize] = useState(1000);
 
     // 페이지 이동 컨트롤
@@ -43,8 +44,17 @@ function PMainFrame(){
     const getScreenSize = () => {
       let size = window.innerWidth;
       setScreenSize(size);
-      return size;
-    }
+      
+      if( size > 600){
+          return
+      }
+      else if( 480 < size && size < 600 ){
+          setCarouselImgSize("d-block w-50 show-flags-gif")
+      }
+      else if(size < 480){
+          setCarouselImgSize("d-block w-50 show-flags-gif")
+      }
+  }
 
     /**(지속적으로)로그인 유무 식별 */
     //로그인 되어있는 지 확인
@@ -636,5 +646,4 @@ function PMainFrame(){
     );
 };
 
-
-export default PMainFrame;
+export default MMainFrame;

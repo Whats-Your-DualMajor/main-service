@@ -46,9 +46,9 @@
   .background-img{
     position: relative;
     margin: 0 auto;
+    height: 80vh;
     top:5%;
     width: 95%;
-    max-height: 80%;
     opacity: 0.2;
     box-shadow: 10px 10px 10px 10px #FFF inset;
   }
@@ -130,8 +130,8 @@
   .background-img{
     position: relative;
     margin: 0 auto;
-    width: 95%;
-    max-height: 90%;
+    width: 95vw;
+    max-height: 40vh;
     opacity: 0.2;
     top: -5%;
   }
@@ -163,8 +163,8 @@
   .background-img{
     position: relative;
     margin: 0 auto;
-    width: 95%;
-    max-height: 90%;
+    width: 95vw;
+    max-height: 40vh;
     opacity: 0.2;
     top: 5%;
   }
@@ -196,10 +196,9 @@
   .background-img{
     position: relative;
     margin: 0 auto;
-    width: 100%;
-    max-height: 90%;
+    width: 95vw;
+    max-height: 40vh;
     opacity: 0.2;
-    top: -0.5%;
   }
   .content-title{
     font-size: 14px;
@@ -229,7 +228,6 @@
     margin-top: 100px;
     color: #002d56;
   }
-
   .background-img-info{
     width: 100%;
     max-height: 80%;
