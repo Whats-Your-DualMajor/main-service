@@ -32,6 +32,14 @@
   }
 
   .service-intro{
+    padding-top: 2vh;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .m-service-intro{
     background-color: #FFF;
     display: flex;
     flex-direction: column;
@@ -73,8 +81,8 @@
   }
 
   .background-img-info{
-    width: 85%;
-    max-height: 80%;
+    width: 80%;
+    max-height: 70%;
     box-shadow: 10px 10px 10px 10px #FFF inset;
   }
 
@@ -176,9 +184,9 @@
     top: -5%;
   }
   .m-content-title{
-    font-size: 20px;
+    font-size: 17px;
     position: absolute;
-    top: 25%;
+    top: 20%;
     left: 20%;
   }
   .m-content-subtitle-no-hover{

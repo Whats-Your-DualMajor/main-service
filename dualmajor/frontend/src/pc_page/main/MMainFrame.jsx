@@ -236,7 +236,7 @@ function MMainFrame(props) {
                       <span className='m-content-subtitle' onClick={() => handleMoveMajorInfoService()}>🔎학과정보 보러가기</span>
                   </Carousel.Item>
                   <Carousel.Item interval={3000}>
-                    <div className="service-intro">
+                    <div className="m-service-intro">
                         <div className='info-title'>기획의도</div>
                       <img
                           className={`${carouselImgSize} m-background-img-info`}
@@ -246,7 +246,7 @@ function MMainFrame(props) {
                     </div>
                   </Carousel.Item>
                   <Carousel.Item interval={3000}>
-                    <div className="service-intro">
+                    <div className="m-service-intro">
                       <div className='info-title'>수요</div>
                       <img
                           className={`${carouselImgSize} m-background-img-info`}
@@ -256,7 +256,7 @@ function MMainFrame(props) {
                     </div>
                   </Carousel.Item>
                   <Carousel.Item interval={3000}>
-                    <div className="service-intro">
+                    <div className="m-service-intro">
                       <div className='info-title'>개발자 소개</div>
                       <img
                           className={`${carouselImgSize} m-background-img-info`}
