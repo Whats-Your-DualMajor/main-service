@@ -129,129 +129,6 @@ function MMainFrame(props) {
         setMajorInfo(false);
         setServiceIntro(false);        
     }
-
-    const selectRecommandService = (state) =>{
-        let reverseState = null;
-        if(!state){
-            reverseState = true;
-        }
-        else{
-            reverseState = false;
-        }
-
-        setRecommandService(state);
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
-    const selectsetPredictedRate = (state) =>{
-        let reverseState = null;
-        if(!state){
-            reverseState = true;
-        }
-        else{
-            reverseState = false;
-        }
-
-        setRecommandService(reverseState);
-        setPredictedRate(state);
-        setMajorInfo(reverseState);
-        setServiceIntro(reverseState);
-    }
-
-    const selectMajorInfo = (state) =>{
-        let reverseState = null;
-        if(!state){
-            reverseState = true;
-        }
-        else{
-            reverseState = false;
-        }
-
-        setRecommandService(reverseState);
-        setPredictedRate(reverseState);
-        setMajorInfo(state);
-        setServiceIntro(reverseState);
-    }
-
-    const selectServiceIntro = (state) =>{
-        let reverseState = null;
-        if(!state){
-            reverseState = true;
-        }
-        else{
-            reverseState = false;
-        }
-
-        setRecommandService(reverseState);
-        setPredictedRate(reverseState);
-        setMajorInfo(reverseState);
-        setServiceIntro(state);
-    }
-
-    // // 각 탭 별 페이지 스크롤 이동 컨트롤
-    // const handleMoveToScrollIndex = () => {
-    //     const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-
-    //     // 초기값인 경우 아무 동작x
-    //     if(!moveToScrollIndex){
-    //         return
-    //     }
-        
-    //     /**어떤 탭이 눌렸는 지 식별 */
-    //     //이중전공추천
-    //     if(moveToScrollIndex === "r"){
-    //         // 헤더의 해당 서비스 탭이 선택된 것으로 처리
-    //         handleSelectService("r", true);
-
-    //         outerDivRef.current.scrollTo({
-    //             top: pageHeight + DIVIDER_HEIGHT,
-    //             left: 0,
-    //             behavior: "smooth",
-    //           });
-    //           setScrollIndex(2);
-    //     }
-    //     //예상경쟁률
-    //     else if(moveToScrollIndex === "p"){
-    //         // 헤더의 해당 서비스 탭이 선택된 것으로 처리
-    //         handleSelectService("p", true);
-            
-    //         outerDivRef.current.scrollTo({
-    //             top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-    //             left: 0,
-    //             behavior: "smooth",
-    //           });
-    //           setScrollIndex(3);
-    //     }
-    //     //전공정보
-    //     else if(moveToScrollIndex === "m"){
-    //         // 헤더의 해당 서비스 탭이 선택된 것으로 처리
-    //         handleSelectService("m", true);
-            
-    //         outerDivRef.current.scrollTo({
-    //             top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
-    //             left: 0,
-    //             behavior: "smooth",
-    //           });
-    //           setScrollIndex(4);
-    //     }
-    //     //서비스 소개
-    //     else if(moveToScrollIndex === "i"){
-    //         // 헤더의 해당 서비스 탭이 선택된 것으로 처리
-    //         handleSelectService("i", true);
-            
-    //         outerDivRef.current.scrollTo({
-    //             top: pageHeight * 4 + DIVIDER_HEIGHT * 4,
-    //             left: 0,
-    //             behavior: "smooth",
-    //           });
-    //           setScrollIndex(5);
-    //     }
-    // }
-
-      
-
     
       /**각 서비스 소개 페이지의 바로가기 버튼 기능*/
       const handleMoveRecommendService = () => {
@@ -274,7 +151,7 @@ function MMainFrame(props) {
         <div>
             <div className='main-header'>
 
-                <div className='main-icon' onClick={()=>navigate('/')}>
+                <div className='main-icon' onClick={()=>handleSelect(0)}>
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
