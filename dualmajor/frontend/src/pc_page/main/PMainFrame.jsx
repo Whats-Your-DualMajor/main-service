@@ -67,7 +67,6 @@ function PMainFrame(){
 
     useEffect(() => {
         handleMoveToScrollIndex();
-        console.log("moveToScrollIndex:",moveToScrollIndex)
         // $(document).ready( function(){
         //   $(".background-img .content-title .content-subtitle").fadeIn(2000);
         // })
@@ -263,8 +262,6 @@ function PMainFrame(){
         if (deltaY > 0) {
           // 스크롤 내릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
-            //현재 1페이지
-            console.log("현재 1페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("r", true);
@@ -274,12 +271,9 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(2);
-            console.log("현재 scrollTop",scrollTop);
           } 
         
           else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            //현재 2페이지
-            console.log("현재 2페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("p", true);
@@ -289,10 +283,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(3);
-            console.log("현재 scrollTop",scrollTop);
+
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 2) && scrollTop < (pageHeight * 3)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
             
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("m", true);
@@ -302,10 +294,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(4);
-            console.log("현재 scrollTop",scrollTop);
+
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 3) && scrollTop < (pageHeight * 4)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -315,10 +305,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(5);
-            console.log("현재 scrollTop",scrollTop);
+
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 4) && scrollTop < (pageHeight * 5)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -328,11 +316,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(6);
-            console.log("현재 scrollTop",scrollTop);
 
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 5) && scrollTop < (pageHeight * 6)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -342,11 +327,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(7);
-            console.log("현재 scrollTop",scrollTop);
 
           } else {
-            // 현재 5페이지
-            console.log("현재 4페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -356,13 +338,10 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(7);
-            console.log("현재 scrollTop",scrollTop);
           }
         } else {
           // 스크롤 올릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
-            //현재 1페이지
-            console.log("현재 1페이지, up");
 
             handleSelectService(false, false);
             outerDivRef.current.scrollTo({
@@ -372,8 +351,6 @@ function PMainFrame(){
             });
             setScrollIndex(1);
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            //현재 2페이지
-            console.log("현재 2페이지, up");
 
             handleSelectService(false, false);
             outerDivRef.current.scrollTo({
@@ -383,8 +360,6 @@ function PMainFrame(){
             });
             setScrollIndex(1);
           } else if (scrollTop >= pageHeight && pageHeight * 2 < scrollTop && scrollTop < pageHeight * 3) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("r", true);
@@ -395,8 +370,6 @@ function PMainFrame(){
             });
             setScrollIndex(2);
           } else if (scrollTop >= pageHeight && pageHeight * 3 < scrollTop && scrollTop < pageHeight * 4) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("p", true);
@@ -407,8 +380,6 @@ function PMainFrame(){
             });
             setScrollIndex(3);
           } else if (scrollTop >= pageHeight && pageHeight * 4 < scrollTop && scrollTop < pageHeight * 5) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("m", true);
@@ -419,8 +390,6 @@ function PMainFrame(){
             });
             setScrollIndex(4);
           } else if (scrollTop >= pageHeight && pageHeight * 5 < scrollTop && scrollTop < pageHeight * 6) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -432,8 +401,6 @@ function PMainFrame(){
             setScrollIndex(5);
           } 
           else {
-            // 현재 3페이지
-            console.log("현재 4페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -450,8 +417,6 @@ function PMainFrame(){
       /**글씨 fade-in*/
       const useFadeIn = (duration = 0, delay = 0) => {
         const element = useRef();
-
-        console.log("useFadeIn 실행")
 
         useEffect(() => {
           if(element.current){
