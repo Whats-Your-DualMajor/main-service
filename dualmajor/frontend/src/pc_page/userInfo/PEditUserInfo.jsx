@@ -206,7 +206,8 @@ function PEditUserInfo(){
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          navigate(url)
+          navigate(url);
+          window.location.reload();
         } else if (result.isDenied) {
           return
         }
@@ -381,13 +382,17 @@ function PEditUserInfo(){
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const moveToMain = () => {
+      navigate('/');
+      window.location.reload();
+    }
 
 
     return (
         <div>
             {/* Header */}
             <div className='main-header'>
-                <div className='main-icon' onClick={()=>navigate('/')}>
+                <div className='main-icon' onClick={moveToMain}>
                     <img id='hufs-icon-white'src={require('../../media/main/외대마크(흰색).gif')} alt="외대 마크"/>
                     <span id='main-name'>너의 이중전공은?</span>
                 </div>
