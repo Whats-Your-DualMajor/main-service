@@ -618,14 +618,14 @@ function PMainFrame(){
                 <div className="inner service-intro">
                   {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" />                   */}
                   <div className='info-title'>수요</div>
-                  <img className='background-img-info' src={require("../../media/main/수요.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/수요.png")} alt="수요" />
                   {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
                   {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" />                   */}
                   <div className='info-title'>개발자 소개</div>
-                  <img className='background-img-info' src={require("../../media/main/개발자 소개.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/개발자 소개.png")} alt="개발자 소개" />
                   {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                 </div>
             </div>
