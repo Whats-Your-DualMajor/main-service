@@ -55,7 +55,7 @@
   </li>
   <br/>
   <li>
-    <b>개발 중 사용했던 레포지토리</b><br/>
+    <b>개발 중 사용했던 레포지토리(학기 중 개발에 사용한 레포지토리)</b><br/>
     <a href="https://github.com/Againyunn/Whats_Your_DualMajor/" target="_blank">Repository used during initial development<a>
   </li>
   <br/>
