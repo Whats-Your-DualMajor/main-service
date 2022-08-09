@@ -209,9 +209,7 @@ function PLogin(){
             () => {
               //로그인하기 직전 페이지로 이동
               window.history.back();
-              //main page로 이동
-              // navigate('/');
-              // window.location.reload();
+
             },
             (error) => {
               const resMessage =

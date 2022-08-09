@@ -110,30 +110,6 @@ function PSeoulMajorInfo() {
     /**처음 화면 랜더링 시 → 각 캠퍼스별 전공리스트 받아오기*/
     useEffect(() => {
 
-        // //테스트용
-        // console.log("rendering")
-        // let data = `
-        //     [
-        //         {
-        //             "id": "1",
-        //             "name": "경영학부"
-        //         },
-        //         {
-        //             "id": "2",
-        //             "name": "국제학부"
-        //         },
-        //         {
-        //             "id": "3",
-        //             "name": "경제학부"
-        //         },
-        //         {
-        //             "id": "4",
-        //             "name": "미디어커뮤니케이션학부"
-        //         }
-        //     ]
-        // `
-        // let getData = Object.values(JSON.parse(data));
-        // setThisMajorList(getData);
 
         // setSelectedMajorId(getData[0].name);
 
@@ -154,27 +130,7 @@ function PSeoulMajorInfo() {
 
     /**사용자가 선택한 전공에 대한 정보 받아오기 */
     useEffect(() => {
-        // //테스트
-        // let majorData =`[
-        //         {
-        //             "departmentName": "GBT학부",
-        //             "campus": "글로벌",
-        //             "intro": "inf4",
-        //             "degree": "deg4",
-        //             "career": "career4",
-        //             "curriculum": "cur4",
-        //             "certification": "cer4",
-        //             "webPage": "www.hufs.ac.kr",
-        //             "phoneNum": "031-0000-0000"
-        //         }
-        //     ]
-        // `
-        // // setMajorInfo(JSON.parse(majorData));
-        // let allMajorData = JSON.parse(majorData);
-        // console.log("allMajorData:",allMajorData);
-        // let targetIndex = allMajorData.findIndex(obj => obj.departmentName == selectedMajorId);
-        // console.log("targetIndex:",targetIndex);
-        // setMajorDetailInfo(allMajorData[targetIndex]);
+
         
         RecommendService.getDepartmentInfo(selectedMajorId).then(
             (response) => {
