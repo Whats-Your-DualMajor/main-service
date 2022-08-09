@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.a09f81da.css",
-    "main.js": "/static/js/main.170fa869.js",
+    "main.js": "/static/js/main.3311ad5d.js",
     "static/media/개발자 소개.png": "/static/media/개발자 소개.77e52b8916254cf4e5d1.png",
     "static/media/기획의도.png": "/static/media/기획의도.97599b3cf8f2efe37406.png",
     "static/media/수요.png": "/static/media/수요.90691af972a93628d2c7.png",
@@ -21,10 +21,10 @@
     "static/media/백메뉴.png": "/static/media/백메뉴.c3f1e610b466ce67847c.png",
     "index.html": "/index.html",
     "main.a09f81da.css.map": "/static/css/main.a09f81da.css.map",
-    "main.170fa869.js.map": "/static/js/main.170fa869.js.map"
+    "main.3311ad5d.js.map": "/static/js/main.3311ad5d.js.map"
   },
   "entrypoints": [
     "static/css/main.a09f81da.css",
-    "static/js/main.170fa869.js"
+    "static/js/main.3311ad5d.js"
   ]
 }

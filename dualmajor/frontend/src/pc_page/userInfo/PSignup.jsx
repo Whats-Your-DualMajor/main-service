@@ -434,35 +434,35 @@ function PSignup(){
     const handleShow = () => setShow(true);
   
     /**선택가능한 본전공 리스트 생성(백엔드로부터 받은 API의 데이터 기반) */
-    // useEffect(  () =>{
-    //   //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
-    //   AuthService.firstMajorList();
-    //   AuthService.dualMajorList();
+    useEffect(  () =>{
+      //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
+      AuthService.firstMajorList();
+      AuthService.dualMajorList();
   
-    //   let allFirstMajor = false;
-    //   let allDualMajor = false;
-    //   if(localStorage.getItem('firstMajor') !== null){
-    //       allFirstMajor = Object.values(JSON.parse(localStorage.getItem('firstMajor')));
-    //   }
-    //   if(localStorage.getItem('dualMajor') !== null){
-    //       allDualMajor = Object.values(JSON.parse(localStorage.getItem('dualMajor')));
-    //   }
+      let allFirstMajor = false;
+      let allDualMajor = false;
+      if(localStorage.getItem('firstMajor') !== null){
+          allFirstMajor = Object.values(JSON.parse(localStorage.getItem('firstMajor')));
+      }
+      if(localStorage.getItem('dualMajor') !== null){
+          allDualMajor = Object.values(JSON.parse(localStorage.getItem('dualMajor')));
+      }
   
       
-    //   //전체 본전공 정보 저장
-    //   setTotalFirstMajor(allFirstMajor);
-    //   //전체 이중전공 정보 저장
-    //   setTotalDualMajor(allDualMajor);   
+      //전체 본전공 정보 저장
+      setTotalFirstMajor(allFirstMajor);
+      //전체 이중전공 정보 저장
+      setTotalDualMajor(allDualMajor);   
       
       
-    //   //각 정보 초기화
-    //   setFirstMajor(allFirstMajor[0].id);
-    //   setFirstMajor(allDualMajor[0].id);
+      //각 정보 초기화
+      setFirstMajor(allFirstMajor[0].id);
+      setFirstMajor(allDualMajor[0].id);
   
-    //   //임시 학과 처리용 백엔드 연결 후 삭제 예정
-    //   // setTotalFirstMajor(exampleFirstMajor);
-    //   // setTotalDualMajor(exampleDualMajor);
-    // },[])
+      //임시 학과 처리용 백엔드 연결 후 삭제 예정
+      // setTotalFirstMajor(exampleFirstMajor);
+      // setTotalDualMajor(exampleDualMajor);
+    },[])
   
 
     return (
@@ -536,7 +536,7 @@ function PSignup(){
               <Container className="container-wrap">
               {/* 반응형 화면 조정 */}
               {
-                screenSize > 600?
+                screenSize > 800?
                 <Form onSubmit={handleRegister} ref={form}>
                 {!successful && (
                   <div>
