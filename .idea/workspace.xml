@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="19dfcfb2-b13a-4370-ae90-8fe6b6732fcd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/login/PLogin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/login/PLogin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/majorInfoDetail/PSeoulMajorInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/majorInfoDetail/PSeoulMajorInfo.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/userInfo/PEditUserInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/userInfo/PEditUserInfo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/userInfo/PSignup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dualmajor/frontend/src/pc_page/userInfo/PSignup.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dualmajor/src/main/resources/static/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/dualmajor/src/main/resources/static/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dualmajor/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dualmajor/src/main/resources/static/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
